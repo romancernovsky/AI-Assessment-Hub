@@ -1,0 +1,17 @@
+{
+    "skillSync.repositories": [
+        {
+            "url": "git@gitlab.internal.com:team/claude-skills.git",
+            "branch": "main",
+            "skillsPath": ""
+        },
+        {
+            "url": "https://github.com/Claude-Skills-Org/skills-main",
+            "branch": "main",
+            "skillsPath": ""
+        }
+    ],
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true
+    }
+}

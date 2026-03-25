@@ -1,0 +1,42 @@
+# node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# next.js
+.next/
+out/
+build/
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+next-env.d.ts
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# agent
+.agent/
+
+# generated prisma
+src/generated/prisma/
+
+# Subdirectory specific
+ai-hub-assessment/node_modules/
+ai-hub-assessment/.next/
+ai-hub-assessment/out/
+ai-hub-assessment/build/
+ai-hub-assessment/.env*.local
+ai-hub-assessment/.env
+ai-hub-assessment/src/generated/prisma/
+ai-hub-assessment/next-env.d.ts
+
+# Database backup dumps (binary, excluded from git — batch file and guide are committed)
+db-backups/*.dump

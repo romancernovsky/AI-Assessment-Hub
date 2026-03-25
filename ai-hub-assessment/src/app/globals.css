@@ -1,0 +1,444 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AURA AI Design System — CSS Custom Properties & Components
+   ============================================================ */
+
+@layer base {
+  /* ---- Light Mode (default :root) ---- */
+  :root {
+    --background:          0 0% 100%;
+    --foreground:          200 25% 12%;
+    --card:                200 10% 97%;
+    --card-foreground:     200 25% 12%;
+    --card-border:         200 15% 90%;
+    --sidebar:             200 15% 96%;
+    --sidebar-foreground:  200 20% 20%;
+    --sidebar-border:      200 15% 88%;
+    --popover:             0 0% 100%;
+    --popover-foreground:  200 25% 12%;
+    --popover-border:      200 15% 88%;
+
+    --primary:             175 70% 38%;
+    --primary-foreground:  0 0% 100%;
+    --accent:              45 85% 50%;
+    --accent-foreground:   0 0% 100%;
+
+    --secondary:           200 12% 92%;
+    --secondary-foreground:200 20% 20%;
+    --muted:               200 10% 94%;
+    --muted-foreground:    200 10% 40%;
+    --border:              200 15% 88%;
+    --input:               200 15% 90%;
+    --ring:                175 70% 40%;
+    --destructive:         0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --sidebar-primary:     175 70% 40%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent:      200 15% 93%;
+    --sidebar-accent-foreground: 200 20% 15%;
+    --sidebar-ring:        175 70% 40%;
+
+    --chart-1: 175 70% 40%;
+    --chart-2: 45 85% 50%;
+    --chart-3: 140 60% 40%;
+    --chart-4: 280 60% 50%;
+    --chart-5: 30 80% 50%;
+
+    --radius: 0.5rem;
+    --elevate-1: rgba(0, 0, 0, 0.04);
+    --elevate-2: rgba(0, 0, 0, 0.08);
+
+    --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --shadow-xs:  0 1px 3px 0 rgba(0,0,0,0.08);
+    --shadow-sm:  0 2px 4px 0 rgba(0,0,0,0.08);
+    --shadow:     0 4px 6px -1px rgba(0,0,0,0.08);
+    --shadow-md:  0 6px 10px -2px rgba(0,0,0,0.1);
+    --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.1);
+    --shadow-xl:  0 20px 25px -5px rgba(0,0,0,0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.15);
+  }
+
+  /* ---- Dark Mode ---- */
+  .dark {
+    --background:          200 25% 10%;
+    --foreground:          180 20% 95%;
+    --card:                200 22% 12%;
+    --card-foreground:     180 20% 95%;
+    --card-border:         200 20% 16%;
+    --sidebar:             200 25% 8%;
+    --sidebar-foreground:  180 20% 90%;
+    --sidebar-border:      200 20% 15%;
+    --popover:             200 22% 12%;
+    --popover-foreground:  180 20% 95%;
+    --popover-border:      200 20% 18%;
+
+    --primary:             175 70% 45%;
+    --primary-foreground:  200 25% 8%;
+    --accent:              45 85% 55%;
+    --accent-foreground:   200 25% 8%;
+
+    --secondary:           200 18% 18%;
+    --secondary-foreground:180 20% 90%;
+    --muted:               200 15% 15%;
+    --muted-foreground:    200 15% 55%;
+    --border:              200 20% 18%;
+    --input:               200 20% 20%;
+    --ring:                175 70% 45%;
+    --destructive:         0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --sidebar-primary:     175 70% 45%;
+    --sidebar-primary-foreground: 200 25% 8%;
+    --sidebar-accent:      200 20% 15%;
+    --sidebar-accent-foreground: 180 20% 95%;
+    --sidebar-ring:        175 70% 45%;
+
+    --chart-1: 175 70% 45%;
+    --chart-2: 45 85% 55%;
+    --chart-3: 140 60% 45%;
+    --chart-4: 280 60% 55%;
+    --chart-5: 30 80% 55%;
+
+    --elevate-1: rgba(255, 255, 255, 0.04);
+    --elevate-2: rgba(255, 255, 255, 0.09);
+
+    --shadow:     0 4px 6px -1px rgba(0,0,0,0.4);
+    --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.5);
+    --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.6);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-[-0.03em] leading-[1.1];
+  }
+
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+
+  /* Minimal scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.35); }
+}
+
+/* ============================================================
+   Component Classes
+   ============================================================ */
+@layer components {
+
+  /* --- Animated gradient text (AURA brand) --- */
+  .text-gradient,
+  .aura-text-gradient {
+    background: linear-gradient(
+      90deg,
+      hsl(175 70% 50%),
+      hsl(45 85% 55%),
+      hsl(280 60% 55%),
+      hsl(175 70% 50%)
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  /* --- Cards --- */
+  .glass-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--card-border));
+    border-radius: var(--radius);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px -6px hsl(var(--primary) / 0.18);
+    border-color: hsl(var(--primary) / 0.35);
+  }
+
+  /* --- Panels (nav, modals) --- */
+  .glass-panel {
+    background-color: hsl(var(--card));
+    border-bottom: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow);
+  }
+
+  /* --- Nav links --- */
+  .nav-link {
+    @apply text-[15.2px] font-medium transition-colors duration-200 relative py-2;
+    color: hsl(var(--muted-foreground));
+  }
+  .nav-link:hover {
+    color: hsl(var(--foreground));
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .btn-started {
+    @apply px-5 py-2 rounded-lg text-[15.2px] font-medium transition-all duration-200 active:scale-95;
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+  }
+  .btn-started:hover {
+    background: hsl(var(--muted));
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  /* --- Primary Button --- */
+  .btn-primary {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.375rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-primary > span {
+    position: relative;
+    z-index: 1;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -5px hsl(var(--primary) / 0.4);
+    filter: brightness(1.08);
+  }
+
+  /* --- Secondary / Ghost Button --- */
+  .btn-secondary {
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.375rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-secondary:hover {
+    background: hsl(var(--muted));
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* --- Badges --- */
+  .badge-container {
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .badge-success {
+    color: hsl(140 60% 40%);
+    background: hsl(140 60% 40% / 0.15);
+    border: 1px solid hsl(140 60% 40% / 0.25);
+  }
+  .dark .badge-success {
+    color: hsl(140 60% 55%);
+    background: hsl(140 60% 45% / 0.15);
+    border-color: hsl(140 60% 45% / 0.3);
+  }
+  .badge-warning {
+    color: hsl(45 85% 42%);
+    background: hsl(45 85% 50% / 0.15);
+    border: 1px solid hsl(45 85% 50% / 0.25);
+  }
+  .dark .badge-warning {
+    color: hsl(45 85% 60%);
+    background: hsl(45 85% 55% / 0.15);
+    border-color: hsl(45 85% 55% / 0.3);
+  }
+  .badge-info {
+    color: hsl(175 70% 34%);
+    background: hsl(175 70% 38% / 0.12);
+    border: 1px solid hsl(175 70% 38% / 0.2);
+  }
+  .dark .badge-info {
+    color: hsl(175 70% 60%);
+    background: hsl(175 70% 45% / 0.15);
+    border-color: hsl(175 70% 45% / 0.3);
+  }
+
+  /* --- Inputs --- */
+  .glass-input {
+    background: hsl(var(--input));
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.375rem;
+    color: hsl(var(--foreground));
+    padding: 0.75rem 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .glass-input:focus {
+    outline: none;
+    border-color: hsl(var(--primary) / 0.5);
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  }
+  .glass-input::placeholder {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* --- Elevation utilities --- */
+  .hover-elevate {
+    transition: background 0.15s ease;
+  }
+  .hover-elevate:hover {
+    background: var(--elevate-1);
+  }
+  .active-elevate:active {
+    background: var(--elevate-2);
+  }
+}
+
+/* ============================================================
+   AURA Signature Visual Effects
+   ============================================================ */
+@layer utilities {
+
+  /* --- Floating orb backgrounds --- */
+  .aura-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float-orb 20s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .aura-orb-primary { background: radial-gradient(circle, hsl(175 70% 45% / 0.4), transparent 70%); }
+  .aura-orb-accent  { background: radial-gradient(circle, hsl(45 85% 55% / 0.3), transparent 70%); }
+  .aura-orb-violet  { background: radial-gradient(circle, hsl(280 60% 55% / 0.3), transparent 70%); }
+  .aura-orb-emerald { background: radial-gradient(circle, hsl(140 60% 45% / 0.35), transparent 70%); }
+
+  @keyframes float-orb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25%      { transform: translate(30px, -40px) scale(1.1); }
+    50%      { transform: translate(-20px, 20px) scale(0.95); }
+    75%      { transform: translate(40px, 30px) scale(1.05); }
+  }
+
+  /* --- Pulsing glow --- */
+  .aura-pulse {
+    animation: aura-glow-pulse 3s ease-in-out infinite;
+  }
+  @keyframes aura-glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(175 70% 45% / 0.3); }
+    50%      { box-shadow: 0 0 40px hsl(175 70% 45% / 0.5), 0 0 60px hsl(175 70% 45% / 0.2); }
+  }
+
+  /* --- Rotating energy ring --- */
+  .aura-ring { position: relative; }
+  .aura-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from 0deg,
+      hsl(175 70% 45% / 0.6),
+      hsl(45 85% 55% / 0.4),
+      hsl(280 60% 55% / 0.5),
+      hsl(175 70% 45% / 0.6)
+    );
+    animation: ring-rotate 8s linear infinite;
+    z-index: -1;
+    filter: blur(3px);
+  }
+  @keyframes ring-rotate {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* --- Neural network grid background --- */
+  .neural-bg {
+    background-image:
+      linear-gradient(135deg, hsl(175 70% 45% / 0.05) 1px, transparent 1px),
+      linear-gradient(225deg, hsl(175 70% 45% / 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* --- Shimmer effect --- */
+  .aura-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .aura-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      hsl(195 80% 70% / 0.15) 40%,
+      hsl(195 80% 80% / 0.25) 50%,
+      hsl(195 80% 70% / 0.15) 60%,
+      transparent 80%
+    );
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* --- Tier glow classes --- */
+  .tier-glow-bronze   { box-shadow: 0 0 30px hsl(30 80% 50% / 0.3), inset 0 0 20px hsl(30 80% 50% / 0.1); }
+  .tier-glow-silver   { box-shadow: 0 0 30px hsl(220 20% 70% / 0.3), inset 0 0 20px hsl(220 20% 70% / 0.1); }
+  .tier-glow-gold     { box-shadow: 0 0 30px hsl(45 90% 55% / 0.3), inset 0 0 20px hsl(45 90% 55% / 0.1); }
+  .tier-glow-platinum { box-shadow: 0 0 30px hsl(200 30% 75% / 0.3), inset 0 0 20px hsl(200 30% 75% / 0.1); }
+  .tier-glow-master   {
+    box-shadow:
+      0 0 40px hsl(280 70% 60% / 0.4),
+      0 0 60px hsl(45 90% 55% / 0.2),
+      inset 0 0 20px hsl(280 70% 60% / 0.15);
+  }
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root  { --border: 200 20% 70%; --muted-foreground: 200 15% 30%; }
+  .dark  { --border: 200 20% 40%; --muted-foreground: 200 10% 70%; }
+}
