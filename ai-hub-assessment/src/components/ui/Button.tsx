@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'filled', size = 'md',
 
   return (
     <button className={`${btnClass} ${sizeClasses[size]} ${className}`} {...props}>
-      <span>{children}</span>
+      <span className="inline-flex items-center gap-2">{children}</span>
     </button>
   );
 };

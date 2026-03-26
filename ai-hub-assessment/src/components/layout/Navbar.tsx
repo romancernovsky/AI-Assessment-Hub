@@ -37,8 +37,8 @@ export const Navbar = () => {
             <Image
               src="/novartis-logo.svg"
               alt="Novartis"
-              width={160}
-              height={24}
+              width={120}
+              height={18}
               className="dark:invert"
               priority
             />
@@ -99,8 +99,8 @@ export const Navbar = () => {
               <Image
                 src="/novartis-logo.svg"
                 alt="Novartis"
-                width={134}
-                height={20}
+                width={107}
+                height={16}
                 className="dark:invert"
               />
             </Link>
