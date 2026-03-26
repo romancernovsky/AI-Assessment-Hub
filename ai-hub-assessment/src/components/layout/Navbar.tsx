@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
@@ -31,10 +32,16 @@ export const Navbar = () => {
         scrolled ? 'bg-white dark:bg-[#161616] shadow-[0_1px_0_rgba(0,0,0,0.08)]' : 'bg-white dark:bg-[#161616]'
       }`}>
         <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center justify-between">
-          {/* Novartis-style logo: Warm Black text, clean typography */}
-          <Link href="/" className="text-[24px] font-medium tracking-[-0.02em] flex items-center gap-2">
-            <span className="text-[#ff4e00] font-medium">AIHub</span>
-            <span className="text-foreground">Assessment</span>
+          {/* Official Novartis logo: Brand Symbol + wordmark SVG, Warm Black, left-aligned */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/novartis-logo.svg"
+              alt="Novartis"
+              width={160}
+              height={24}
+              className="dark:invert"
+              priority
+            />
           </Link>
 
           {/* Desktop Links */}
@@ -88,9 +95,14 @@ export const Navbar = () => {
       <div className={`fixed inset-0 z-[60] bg-background transition-transform duration-300 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-6 flex flex-col h-full">
           <div className="flex items-center justify-between h-8 mb-12">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-[24px] font-medium tracking-[-0.02em] flex items-center gap-2">
-              <span className="text-[#ff4e00] font-medium">AIHub</span>
-              <span className="text-foreground">Assessment</span>
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">
+              <Image
+                src="/novartis-logo.svg"
+                alt="Novartis"
+                width={134}
+                height={20}
+                className="dark:invert"
+              />
             </Link>
             <div className="flex items-center gap-2">
               <ThemeToggle />

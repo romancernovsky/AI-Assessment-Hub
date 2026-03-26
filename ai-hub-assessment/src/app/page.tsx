@@ -3,17 +3,17 @@ import { Button } from "@/components/ui/Button";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-start justify-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
-      <div className="max-w-3xl space-y-8">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
+      <div className="max-w-3xl space-y-8 text-center">
         <h1 className="text-5xl md:text-7xl font-medium" style={{ lineHeight: '1.0' }}>
           Measure Your <span className="text-[#ff4e00]">AI Competency</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl leading-relaxed">
+        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           A realistic assessment platform measuring judgment, applied skills, and hands-on ability with GenAI tools.
         </p>
 
-        <div className="flex items-center gap-8 pt-8">
+        <div className="flex items-center justify-center gap-8 pt-8">
           <Link href="/register">
             <Button size="lg" className="w-48">
               Get Started
