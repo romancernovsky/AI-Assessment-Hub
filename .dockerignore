@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+.vscode
+db-backups
+node_modules
+ai-hub-assessment/node_modules
+ai-hub-assessment/.next
+ai-hub-assessment/.env
+ai-hub-assessment/.env*.local
+*.dump
+*.md
