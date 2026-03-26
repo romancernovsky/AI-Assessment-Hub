@@ -44,13 +44,18 @@ export async function POST(req: Request) {
     }
 
     // Extensive Validation logic
-    let errors: string[] = [];
+    const errors: string[] = [];
     const questionIds = new Set();
+    const validFormats = new Set(['single', 'multi']);
+    const validCorrect = new Set(['A', 'B', 'C', 'D']);
+    const dimKeys = new Set(dimensions.map((d: any) => d.key));
     
     activeQuestions.forEach((q, idx) => {
+      const row = `Row ${idx + 2}`;
       // Missing vital fields
-      if (!q.id) errors.push(`Row ${idx + 2}: Missing Question ID`);
-      if (!q.text) errors.push(`Row ${idx + 2} (${q.id}): Missing question body text`);
+      if (!q.id) errors.push(`${row}: Missing Question ID`);
+      if (!q.title) errors.push(`${row} (${q.id}): Missing title`);
+      if (!q.scenario) errors.push(`${row} (${q.id}): Missing scenario`);
       
       // Duplicate IDs
       if (questionIds.has(q.id)) {
@@ -58,18 +63,38 @@ export async function POST(req: Request) {
       }
       if (q.id) questionIds.add(q.id);
 
-      // Level 1 logic checks
-      if (q.level === 1) {
-        if (!q.options) errors.push(`${q.id}: Missing options JSON array string`);
-        if (!q.correctOptionId) errors.push(`${q.id}: Missing correctOptionId`);
-        if (!q.competency) errors.push(`${q.id}: Missing competency mapping`);
-        if (!q.dimension) errors.push(`${q.id}: Missing dimension mapping`);
+      // Dimension and competency
+      if (!q.dimension) errors.push(`${q.id}: Missing dimension`);
+      else if (!dimKeys.has(q.dimension)) errors.push(`${q.id}: Unknown dimension '${q.dimension}'`);
+      if (!q.competency) errors.push(`${q.id}: Missing competency mapping`);
+      if (!q.level) errors.push(`${q.id}: Missing level`);
+
+      // Options — at least 2 must be provided
+      const optionCount = [q.optionA, q.optionB, q.optionC, q.optionD].filter(Boolean).length;
+      if (optionCount < 2) errors.push(`${q.id}: Must have at least 2 options (optionA-D)`);
+
+      // Scores must be numbers
+      ['scoreA', 'scoreB', 'scoreC', 'scoreD'].forEach(s => {
+        if (q[s] !== undefined && q[s] !== '' && isNaN(Number(q[s]))) {
+          errors.push(`${q.id}: ${s} must be a number`);
+        }
+      });
+
+      // Correct answer — single letter for single-select, comma-separated for multi-select
+      const isMulti = q.selectCount && Number(q.selectCount) >= 2;
+      if (!q.correct) {
+        errors.push(`${q.id}: Missing correct answer`);
+      } else {
+        const letters = String(q.correct).split(',').map((s: string) => s.trim().toUpperCase());
+        const allValid = letters.every((l: string) => validCorrect.has(l));
+        if (!allValid) errors.push(`${q.id}: correct must contain only A, B, C, or D (comma-separated for multi)`);
+        if (isMulti && letters.length !== Number(q.selectCount)) {
+          errors.push(`${q.id}: selectCount is ${q.selectCount} but correct has ${letters.length} answers`);
+        }
       }
-      
-      // Level 2 logic checks
-      if (q.level === 2 && !q.rubric) {
-        errors.push(`${q.id}: Level 2 tasks must provide a rubric guideline string`);
-      }
+
+      // Format — auto-derive from selectCount if not set
+      if (q.format && !validFormats.has(q.format)) errors.push(`${q.id}: format must be 'single' or 'multi'`);
     });
 
     if (errors.length > 0) {

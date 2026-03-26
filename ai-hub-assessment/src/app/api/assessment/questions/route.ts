@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-export async function GET() {
+export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -11,6 +11,20 @@ export async function GET() {
   }
 
   try {
+    const { searchParams } = new URL(req.url);
+    const attemptId = searchParams.get('attemptId');
+
+    // If attemptId provided, return the specific selected questions for that attempt
+    let selectedIds: string[] | null = null;
+    if (attemptId) {
+      const attempt = await prisma.assessmentAttempt.findFirst({
+        where: { attemptId, userId: session.user.id },
+      });
+      if (attempt) {
+        selectedIds = attempt.selectedQuestionIds as string[];
+      }
+    }
+
     // Get the live bank version
     const bankVersion = await prisma.bankVersion.findFirst({
       where: { status: 'live' },
@@ -29,8 +43,14 @@ export async function GET() {
       return NextResponse.json({ message: 'No questions found in the bank version.' }, { status: 400 });
     }
 
-    // Return ALL active questions (L1 + L2 combined in one assessment)
-    const activeQuestions = allQuestions.filter((q: any) => q.status === 'active');
+    // Filter to selected questions for this attempt, or all active if no attempt
+    let activeQuestions: any[];
+    if (selectedIds && selectedIds.length > 0) {
+      const idSet = new Set(selectedIds);
+      activeQuestions = allQuestions.filter((q: any) => idSet.has(q.id));
+    } else {
+      activeQuestions = allQuestions.filter((q: any) => q.status === 'active');
+    }
 
     // Map questions for the client
     const mappedQuestions = activeQuestions.map((q: any) => {

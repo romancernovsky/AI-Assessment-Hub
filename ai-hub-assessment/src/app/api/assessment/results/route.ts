@@ -33,7 +33,12 @@ export async function GET() {
       return NextResponse.json({ message: 'Bank version not found' }, { status: 500 });
     }
 
-    const questions = (bankVersion.questions as any[]).filter((q: any) => q.status === 'active');
+    const allQuestions = (bankVersion.questions as any[]).filter((q: any) => q.status === 'active');
+    const selectedIds = attempt.selectedQuestionIds as string[];
+    // Return only the questions that were selected for this attempt
+    const questions = selectedIds && selectedIds.length > 0
+      ? allQuestions.filter((q: any) => selectedIds.includes(q.id))
+      : allQuestions;
     const dimensions = bankVersion.dimensionConfig as any[];
     const competencies = bankVersion.competencyConfig as any[];
     const answers = attempt.answers as Record<string, any>;

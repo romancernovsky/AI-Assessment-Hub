@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
 const dimensions = [
-  { icon: '🧠', name: 'AI Mindset', weight: 35, count: 9, color: '#ff4e00' },
-  { icon: '⚡', name: 'Applied Skills', weight: 30, count: 9, color: '#6a9bcc' },
-  { icon: '🔗', name: 'Domain Integration', weight: 25, count: 9, color: '#788c5d' },
+  { icon: '🧠', name: 'AI Mindset', weight: 35, count: 10, color: '#ff4e00' },
+  { icon: '⚡', name: 'Applied Skills', weight: 30, count: 8, color: '#6a9bcc' },
+  { icon: '🔗', name: 'Domain Integration', weight: 25, count: 7, color: '#788c5d' },
   { icon: '🔧', name: 'Technical Proficiency', weight: 10, count: 3, color: '#d97757' },
 ];
 
@@ -46,7 +46,7 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
         {/* Stats Row */}
         <div className="flex justify-center gap-6 mb-8 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="text-foreground font-medium">30</span> Questions
+            <span className="text-foreground font-medium">28</span> Questions
           </span>
           <span className="text-border">|</span>
           <span>~30 min</span>

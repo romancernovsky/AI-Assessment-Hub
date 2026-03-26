@@ -31,7 +31,12 @@ export async function POST() {
 
     if (!bankVersion) throw new Error('Bank Version unavailable');
 
-    const questions = (bankVersion.questions as any[]).filter((q: any) => q.status === 'active');
+    const allQuestions = (bankVersion.questions as any[]).filter((q: any) => q.status === 'active');
+    const selectedIds = currentAttempt.selectedQuestionIds as string[];
+    // Score only the questions that were selected for this attempt
+    const questions = selectedIds && selectedIds.length > 0
+      ? allQuestions.filter((q: any) => selectedIds.includes(q.id))
+      : allQuestions;
     const dimensions = bankVersion.dimensionConfig as any[];
     const answers = currentAttempt.answers as Record<string, any>;
 

@@ -53,6 +53,7 @@ model AssessmentAttempt {
   bankVersionId  Int
   bankVersion    BankVersion @relation(fields: [bankVersionId], references: [versionId])
   status         String    // "in_progress", "completed", "deleted"
+  selectedQuestionIds Json  @default("[]")
   toolsDaily     Json      @default("[]")
   toolsWeekly    Json      @default("[]")
   startTime      DateTime  @default(now())

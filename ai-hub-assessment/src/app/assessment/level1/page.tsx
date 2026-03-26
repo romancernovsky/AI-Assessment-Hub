@@ -68,6 +68,7 @@ export default function AssessmentQuiz() {
         // Ensure we have an active session
         const sessionRes = await fetch('/api/assessment/session');
         const sessionData = await sessionRes.json();
+        let attemptId = sessionData.sessionId;
 
         if (sessionData.status === 'not_started') {
           const startRes = await fetch('/api/assessment/session', { method: 'POST' });
@@ -77,13 +78,15 @@ export default function AssessmentQuiz() {
             setLoading(false);
             return;
           }
+          const startData = await startRes.json();
+          attemptId = startData.sessionId;
         } else if (sessionData.status === 'completed') {
           router.push('/results');
           return;
         }
 
-        // Fetch questions
-        const qRes = await fetch('/api/assessment/questions');
+        // Fetch questions selected for this attempt
+        const qRes = await fetch(`/api/assessment/questions${attemptId ? `?attemptId=${attemptId}` : ''}`);
         const qData = await qRes.json();
 
         if (qRes.ok && qData.questions?.length > 0) {
