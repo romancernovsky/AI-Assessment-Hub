@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -35,12 +34,12 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
-      <GlassPanel className="w-full max-w-md p-8">
-        <h1 className="text-3xl mb-6 text-center">Create Account</h1>
-        {error && <div className="mb-4 text-red-400 text-center text-sm">{error}</div>}
+      <div className="w-full max-w-md border border-border p-8 bg-card">
+        <h1 className="text-3xl font-medium mb-6">Create Account</h1>
+        {error && <div className="mb-4 text-red-600 dark:text-red-400 text-center text-sm">{error}</div>}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Display Name</label>
+            <label className="block text-sm text-muted-foreground mb-1">Display Name</label>
             <Input 
               type="text" 
               required 
@@ -50,7 +49,7 @@ export default function Register() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Email</label>
+            <label className="block text-sm text-muted-foreground mb-1">Email</label>
             <Input 
               type="email" 
               required 
@@ -60,7 +59,7 @@ export default function Register() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Password</label>
+            <label className="block text-sm text-muted-foreground mb-1">Password</label>
             <Input 
               type="password" 
               required 
@@ -73,10 +72,10 @@ export default function Register() {
             {loading ? 'Creating account...' : 'Register'}
           </Button>
         </form>
-        <div className="mt-6 text-center text-sm text-gray-400">
-          Already have an account? <Link href="/login" className="text-primary hover:text-white transition-colors">Login</Link>
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          Already have an account? <Link href="/login" className="text-[#ff4e00] hover:underline transition-colors">Login</Link>
         </div>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

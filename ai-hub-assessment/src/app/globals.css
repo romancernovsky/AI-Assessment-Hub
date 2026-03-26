@@ -3,108 +3,140 @@
 @tailwind utilities;
 
 /* ============================================================
-   AURA AI Design System — CSS Custom Properties & Components
+   Novartis Brand Design System — CSS Custom Properties
+   Based on Novartis Brand Guidelines
    ============================================================ */
 
 @layer base {
-  /* ---- Light Mode (default :root) ---- */
+  /* ---- Light Mode (default — Novartis primary) ---- */
   :root {
-    --background:          0 0% 100%;
-    --foreground:          200 25% 12%;
-    --card:                200 10% 97%;
-    --card-foreground:     200 25% 12%;
-    --card-border:         200 15% 90%;
-    --sidebar:             200 15% 96%;
-    --sidebar-foreground:  200 20% 20%;
-    --sidebar-border:      200 15% 88%;
+    /* Novartis Soft White #fcfcfc */
+    --background:          0 0% 99%;
+    /* Novartis Warm Black #161616 */
+    --foreground:          0 0% 9%;
+
+    --card:                0 0% 100%;
+    --card-foreground:     0 0% 9%;
+    --card-border:         0 0% 85%;
+
+    --sidebar:             0 0% 96%;
+    --sidebar-foreground:  0 0% 9%;
+    --sidebar-border:      0 0% 85%;
+
     --popover:             0 0% 100%;
-    --popover-foreground:  200 25% 12%;
-    --popover-border:      200 15% 88%;
+    --popover-foreground:  0 0% 9%;
+    --popover-border:      0 0% 85%;
 
-    --primary:             175 70% 38%;
-    --primary-foreground:  0 0% 100%;
-    --accent:              45 85% 50%;
-    --accent-foreground:   0 0% 100%;
+    /* Space Orange #ff4e00 → HSL 18 100% 50% */
+    --primary:             18 100% 50%;
+    --primary-foreground:  0 0% 99%;
 
-    --secondary:           200 12% 92%;
-    --secondary-foreground:200 20% 20%;
-    --muted:               200 10% 94%;
-    --muted-foreground:    200 10% 40%;
-    --border:              200 15% 88%;
-    --input:               200 15% 90%;
-    --ring:                175 70% 40%;
+    /* Grey 2 #f5f5f5 for alt backgrounds */
+    --accent:              0 0% 96%;
+    --accent-foreground:   0 0% 9%;
+
+    --secondary:           0 0% 96%;
+    --secondary-foreground:0 0% 9%;
+    --muted:               0 0% 96%;
+    --muted-foreground:    0 0% 45%;
+    /* Grey 1 #dadada */
+    --border:              0 0% 85%;
+    --input:               0 0% 97%;
+    --ring:                18 100% 50%;
     --destructive:         0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --sidebar-primary:     175 70% 40%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent:      200 15% 93%;
-    --sidebar-accent-foreground: 200 20% 15%;
-    --sidebar-ring:        175 70% 40%;
+    --sidebar-primary:     18 100% 50%;
+    --sidebar-primary-foreground: 0 0% 99%;
+    --sidebar-accent:      0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-ring:        18 100% 50%;
 
-    --chart-1: 175 70% 40%;
-    --chart-2: 45 85% 50%;
-    --chart-3: 140 60% 40%;
-    --chart-4: 280 60% 50%;
-    --chart-5: 30 80% 50%;
+    --chart-1: 18 100% 50%;
+    --chart-2: 140 45% 48%;
+    --chart-3: 220 60% 65%;
+    --chart-4: 320 50% 55%;
+    --chart-5: 45 80% 55%;
 
-    --radius: 0.5rem;
-    --elevate-1: rgba(0, 0, 0, 0.04);
-    --elevate-2: rgba(0, 0, 0, 0.08);
+    --radius: 0px;
+    --elevate-1: rgba(0, 0, 0, 0.03);
+    --elevate-2: rgba(0, 0, 0, 0.06);
 
-    --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.05);
-    --shadow-xs:  0 1px 3px 0 rgba(0,0,0,0.08);
-    --shadow-sm:  0 2px 4px 0 rgba(0,0,0,0.08);
-    --shadow:     0 4px 6px -1px rgba(0,0,0,0.08);
-    --shadow-md:  0 6px 10px -2px rgba(0,0,0,0.1);
-    --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.1);
-    --shadow-xl:  0 20px 25px -5px rgba(0,0,0,0.1);
-    --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.15);
+    --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.04);
+    --shadow-xs:  0 1px 3px 0 rgba(0,0,0,0.06);
+    --shadow-sm:  0 2px 4px 0 rgba(0,0,0,0.06);
+    --shadow:     0 4px 6px -1px rgba(0,0,0,0.06);
+    --shadow-md:  0 6px 10px -2px rgba(0,0,0,0.08);
+    --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.08);
+    --shadow-xl:  0 20px 25px -5px rgba(0,0,0,0.08);
+    --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.12);
+
+    /* Novartis spacing scale (8px base) */
+    --nvs-space-xxs: 2px;
+    --nvs-space-xs:  4px;
+    --nvs-space-s:   8px;
+    --nvs-space-m:   16px;
+    --nvs-space-l:   24px;
+    --nvs-space-xl:  32px;
+    --nvs-space-xxl: 48px;
+    --nvs-space-xxxl: 64px;
+
+    /* Novartis motion */
+    --nvs-duration-impact: 50ms;
+    --nvs-duration-normal: 300ms;
+    --nvs-duration-slow: 500ms;
+    --nvs-ease-decel: cubic-bezier(0, 0.5, 0.3, 1);
   }
 
-  /* ---- Dark Mode ---- */
+  /* ---- Dark Mode (Warm Black inverted sections) ---- */
   .dark {
-    --background:          200 25% 10%;
-    --foreground:          180 20% 95%;
-    --card:                200 22% 12%;
-    --card-foreground:     180 20% 95%;
-    --card-border:         200 20% 16%;
-    --sidebar:             200 25% 8%;
-    --sidebar-foreground:  180 20% 90%;
-    --sidebar-border:      200 20% 15%;
-    --popover:             200 22% 12%;
-    --popover-foreground:  180 20% 95%;
-    --popover-border:      200 20% 18%;
+    /* Warm Black #161616 */
+    --background:          0 0% 9%;
+    /* Soft White #fcfcfc */
+    --foreground:          0 0% 99%;
 
-    --primary:             175 70% 45%;
-    --primary-foreground:  200 25% 8%;
-    --accent:              45 85% 55%;
-    --accent-foreground:   200 25% 8%;
+    --card:                0 0% 12%;
+    --card-foreground:     0 0% 99%;
+    --card-border:         0 0% 18%;
 
-    --secondary:           200 18% 18%;
-    --secondary-foreground:180 20% 90%;
-    --muted:               200 15% 15%;
-    --muted-foreground:    200 15% 55%;
-    --border:              200 20% 18%;
-    --input:               200 20% 20%;
-    --ring:                175 70% 45%;
+    --sidebar:             0 0% 7%;
+    --sidebar-foreground:  0 0% 95%;
+    --sidebar-border:      0 0% 18%;
+
+    --popover:             0 0% 12%;
+    --popover-foreground:  0 0% 99%;
+    --popover-border:      0 0% 18%;
+
+    --primary:             18 100% 50%;
+    --primary-foreground:  0 0% 99%;
+
+    --accent:              0 0% 15%;
+    --accent-foreground:   0 0% 99%;
+
+    --secondary:           0 0% 16%;
+    --secondary-foreground:0 0% 95%;
+    --muted:               0 0% 14%;
+    --muted-foreground:    0 0% 60%;
+    --border:              0 0% 20%;
+    --input:               0 0% 16%;
+    --ring:                18 100% 50%;
     --destructive:         0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --sidebar-primary:     175 70% 45%;
-    --sidebar-primary-foreground: 200 25% 8%;
-    --sidebar-accent:      200 20% 15%;
-    --sidebar-accent-foreground: 180 20% 95%;
-    --sidebar-ring:        175 70% 45%;
+    --sidebar-primary:     18 100% 50%;
+    --sidebar-primary-foreground: 0 0% 99%;
+    --sidebar-accent:      0 0% 18%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-ring:        18 100% 50%;
 
-    --chart-1: 175 70% 45%;
-    --chart-2: 45 85% 55%;
-    --chart-3: 140 60% 45%;
-    --chart-4: 280 60% 55%;
-    --chart-5: 30 80% 55%;
+    --chart-1: 18 100% 55%;
+    --chart-2: 140 45% 55%;
+    --chart-3: 220 60% 70%;
+    --chart-4: 320 50% 60%;
+    --chart-5: 45 80% 60%;
 
     --elevate-1: rgba(255, 255, 255, 0.04);
-    --elevate-2: rgba(255, 255, 255, 0.09);
+    --elevate-2: rgba(255, 255, 255, 0.08);
 
     --shadow:     0 4px 6px -1px rgba(0,0,0,0.4);
     --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.5);
@@ -118,8 +150,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Novartis typography: Medium 500 for headings, line-height 1.0 */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-[-0.03em] leading-[1.1];
+    @apply font-medium tracking-normal;
+    line-height: 1.0;
+  }
+  h3, h4, h5, h6 {
+    line-height: 1.3;
   }
 
   *:focus-visible {
@@ -130,67 +167,52 @@
   /* Minimal scrollbar */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--muted-foreground) / 0.2); border-radius: 0; }
   ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.35); }
 }
 
 /* ============================================================
-   Component Classes
+   Component Classes — Novartis Brand
    ============================================================ */
 @layer components {
 
-  /* --- Animated gradient text (AURA brand) --- */
+  /* --- Novartis accent text (Space Orange, large text only ≥24px) --- */
   .text-gradient,
-  .aura-text-gradient {
-    background: linear-gradient(
-      90deg,
-      hsl(175 70% 50%),
-      hsl(45 85% 55%),
-      hsl(280 60% 55%),
-      hsl(175 70% 50%)
-    );
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradient-shift 6s ease infinite;
+  .nvs-accent-text {
+    color: #ff4e00;
+    font-weight: 500;
   }
 
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50%      { background-position: 100% 50%; }
-  }
-
-  /* --- Cards --- */
+  /* --- Cards (sharp edges per Novartis guidelines) --- */
   .glass-card {
     background-color: hsl(var(--card));
     border: 1px solid hsl(var(--card-border));
-    border-radius: var(--radius);
+    border-radius: 0;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--nvs-duration-normal) var(--nvs-ease-decel);
     box-shadow: var(--shadow-sm);
   }
 
   .glass-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px -6px hsl(var(--primary) / 0.18);
-    border-color: hsl(var(--primary) / 0.35);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: hsl(var(--primary) / 0.3);
   }
 
   /* --- Panels (nav, modals) --- */
   .glass-panel {
     background-color: hsl(var(--card));
     border-bottom: 1px solid hsl(var(--border));
-    box-shadow: var(--shadow);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.08);
   }
 
-  /* --- Nav links --- */
+  /* --- Nav links (Novartis: Roman 400, 16px, Warm Black, orange active underline) --- */
   .nav-link {
-    @apply text-[15.2px] font-medium transition-colors duration-200 relative py-2;
-    color: hsl(var(--muted-foreground));
+    @apply text-base font-normal transition-colors duration-200 relative py-2;
+    color: hsl(var(--foreground));
   }
   .nav-link:hover {
-    color: hsl(var(--foreground));
+    color: #ff4e00;
   }
   .nav-link::after {
     content: '';
@@ -199,115 +221,152 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
-    transition: width 0.3s ease;
+    background: #ff4e00;
+    transition: width var(--nvs-duration-normal) var(--nvs-ease-decel);
   }
   .nav-link:hover::after {
     width: 100%;
   }
 
+  /* --- Novartis Text Button (dark) — with arrow --- */
   .btn-started {
-    @apply px-5 py-2 rounded-lg text-[15.2px] font-medium transition-all duration-200 active:scale-95;
-    background: hsl(var(--secondary));
-    border: 1px solid hsl(var(--border));
+    @apply px-0 py-2 text-base font-normal transition-all duration-200;
+    background: transparent;
+    border: none;
     color: hsl(var(--foreground));
   }
+  .btn-started::after {
+    content: ' →';
+    display: inline-block;
+    transition: transform var(--nvs-duration-normal) var(--nvs-ease-decel);
+  }
   .btn-started:hover {
-    background: hsl(var(--muted));
-    border-color: hsl(var(--primary) / 0.3);
+    color: #ff4e00;
+  }
+  .btn-started:hover::after {
+    transform: translateX(4px);
   }
 
-  /* --- Primary Button --- */
+  /* --- Primary Button (Novartis text-button style with arrow) --- */
   .btn-primary {
-    background-color: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    font-weight: 600;
-    padding: 0.875rem 2rem;
-    border-radius: 0.375rem;
+    background-color: transparent;
+    color: hsl(var(--foreground));
+    font-weight: 500;
+    padding: 0.875rem 0;
+    border-radius: 0;
     position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+    transition: all var(--nvs-duration-normal) var(--nvs-ease-decel);
+    border-bottom: 2px solid hsl(var(--foreground));
   }
   .btn-primary > span {
     position: relative;
     z-index: 1;
   }
+  .btn-primary > span::after {
+    content: ' →';
+    display: inline-block;
+    transition: transform var(--nvs-duration-normal) var(--nvs-ease-decel);
+  }
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px -5px hsl(var(--primary) / 0.4);
-    filter: brightness(1.08);
+    color: #ff4e00;
+    border-bottom-color: #ff4e00;
+  }
+  .btn-primary:hover > span::after {
+    transform: translateX(4px);
+  }
+
+  /* --- Filled button variant (for forms/CTAs that need more presence) --- */
+  .btn-filled {
+    background-color: #161616;
+    color: #fcfcfc;
+    font-weight: 500;
+    padding: 0.875rem 2rem;
+    border-radius: 0;
+    border: none;
+    transition: all var(--nvs-duration-normal) var(--nvs-ease-decel);
+  }
+  .btn-filled:hover {
+    background-color: #ff4e00;
+  }
+  .dark .btn-filled {
+    background-color: #fcfcfc;
+    color: #161616;
+  }
+  .dark .btn-filled:hover {
+    background-color: #ff4e00;
+    color: #fcfcfc;
   }
 
   /* --- Secondary / Ghost Button --- */
   .btn-secondary {
-    background: hsl(var(--secondary));
+    background: transparent;
     border: 1px solid hsl(var(--border));
     color: hsl(var(--foreground));
-    font-weight: 600;
+    font-weight: 500;
     padding: 0.875rem 2rem;
-    border-radius: 0.375rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0;
+    transition: all var(--nvs-duration-normal) var(--nvs-ease-decel);
   }
   .btn-secondary:hover {
-    background: hsl(var(--muted));
-    border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-2px);
+    border-color: #ff4e00;
+    color: #ff4e00;
   }
 
-  /* --- Badges --- */
+  /* --- Badges (sharp Novartis style) --- */
   .badge-container {
-    border-radius: 20px;
+    border-radius: 0;
     padding: 4px 10px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
   }
   .badge-success {
-    color: hsl(140 60% 40%);
-    background: hsl(140 60% 40% / 0.15);
-    border: 1px solid hsl(140 60% 40% / 0.25);
+    color: hsl(140 50% 35%);
+    background: hsl(140 50% 35% / 0.1);
+    border: 1px solid hsl(140 50% 35% / 0.2);
   }
   .dark .badge-success {
-    color: hsl(140 60% 55%);
-    background: hsl(140 60% 45% / 0.15);
-    border-color: hsl(140 60% 45% / 0.3);
+    color: hsl(140 50% 60%);
+    background: hsl(140 50% 50% / 0.15);
+    border-color: hsl(140 50% 50% / 0.3);
   }
   .badge-warning {
-    color: hsl(45 85% 42%);
-    background: hsl(45 85% 50% / 0.15);
-    border: 1px solid hsl(45 85% 50% / 0.25);
+    color: hsl(18 100% 40%);
+    background: hsl(18 100% 50% / 0.1);
+    border: 1px solid hsl(18 100% 50% / 0.2);
   }
   .dark .badge-warning {
-    color: hsl(45 85% 60%);
-    background: hsl(45 85% 55% / 0.15);
-    border-color: hsl(45 85% 55% / 0.3);
+    color: hsl(18 100% 60%);
+    background: hsl(18 100% 55% / 0.15);
+    border-color: hsl(18 100% 55% / 0.3);
   }
   .badge-info {
-    color: hsl(175 70% 34%);
-    background: hsl(175 70% 38% / 0.12);
-    border: 1px solid hsl(175 70% 38% / 0.2);
+    color: hsl(220 60% 50%);
+    background: hsl(220 60% 55% / 0.1);
+    border: 1px solid hsl(220 60% 55% / 0.2);
   }
   .dark .badge-info {
-    color: hsl(175 70% 60%);
-    background: hsl(175 70% 45% / 0.15);
-    border-color: hsl(175 70% 45% / 0.3);
+    color: hsl(220 60% 70%);
+    background: hsl(220 60% 65% / 0.15);
+    border-color: hsl(220 60% 65% / 0.3);
   }
 
-  /* --- Inputs --- */
+  /* --- Inputs (sharp edges per Novartis) --- */
   .glass-input {
     background: hsl(var(--input));
     border: 1px solid hsl(var(--border));
-    border-radius: 0.375rem;
+    border-radius: 0;
     color: hsl(var(--foreground));
     padding: 0.75rem 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--nvs-duration-normal) var(--nvs-ease-decel);
   }
   .glass-input:focus {
     outline: none;
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+    border-color: #ff4e00;
+    box-shadow: 0 0 0 1px #ff4e00;
   }
   .glass-input::placeholder {
     color: hsl(var(--muted-foreground));
@@ -326,104 +385,69 @@
 }
 
 /* ============================================================
-   AURA Signature Visual Effects
+   Novartis Visual Utilities
    ============================================================ */
 @layer utilities {
 
-  /* --- Floating orb backgrounds --- */
-  .aura-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    animation: float-orb 20s ease-in-out infinite;
-    pointer-events: none;
-  }
-  .aura-orb-primary { background: radial-gradient(circle, hsl(175 70% 45% / 0.4), transparent 70%); }
-  .aura-orb-accent  { background: radial-gradient(circle, hsl(45 85% 55% / 0.3), transparent 70%); }
-  .aura-orb-violet  { background: radial-gradient(circle, hsl(280 60% 55% / 0.3), transparent 70%); }
-  .aura-orb-emerald { background: radial-gradient(circle, hsl(140 60% 45% / 0.35), transparent 70%); }
-
-  @keyframes float-orb {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25%      { transform: translate(30px, -40px) scale(1.1); }
-    50%      { transform: translate(-20px, 20px) scale(0.95); }
-    75%      { transform: translate(40px, 30px) scale(1.05); }
+  /* --- Novartis gradient stripe (decorative, max 30% of content area) --- */
+  .nvs-gradient-stripe {
+    background: linear-gradient(90deg, #ff4e00 0%, #a5bff5 50%, #eda8d1 100%);
+    height: 4px;
+    width: 100%;
   }
 
-  /* --- Pulsing glow --- */
-  .aura-pulse {
-    animation: aura-glow-pulse 3s ease-in-out infinite;
-  }
-  @keyframes aura-glow-pulse {
-    0%, 100% { box-shadow: 0 0 20px hsl(175 70% 45% / 0.3); }
-    50%      { box-shadow: 0 0 40px hsl(175 70% 45% / 0.5), 0 0 60px hsl(175 70% 45% / 0.2); }
-  }
-
-  /* --- Rotating energy ring --- */
-  .aura-ring { position: relative; }
-  .aura-ring::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: inherit;
-    background: conic-gradient(
-      from 0deg,
-      hsl(175 70% 45% / 0.6),
-      hsl(45 85% 55% / 0.4),
-      hsl(280 60% 55% / 0.5),
-      hsl(175 70% 45% / 0.6)
-    );
-    animation: ring-rotate 8s linear infinite;
-    z-index: -1;
-    filter: blur(3px);
-  }
-  @keyframes ring-rotate {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* --- Neural network grid background --- */
-  .neural-bg {
-    background-image:
-      linear-gradient(135deg, hsl(175 70% 45% / 0.05) 1px, transparent 1px),
-      linear-gradient(225deg, hsl(175 70% 45% / 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  /* --- Shimmer effect --- */
-  .aura-shimmer {
+  /* --- Cosmos gradient overlay (for hero/banner sections) --- */
+  .nvs-cosmos-gradient {
     position: relative;
-    overflow: hidden;
   }
-  .aura-shimmer::after {
+  .nvs-cosmos-gradient::before {
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 1;
     background: linear-gradient(
-      110deg,
-      transparent 20%,
-      hsl(195 80% 70% / 0.15) 40%,
-      hsl(195 80% 80% / 0.25) 50%,
-      hsl(195 80% 70% / 0.15) 60%,
-      transparent 80%
+      90deg,
+      rgba(22, 22, 22, 0.92) 0%,
+      rgba(22, 22, 22, 0.85) 25%,
+      rgba(22, 22, 22, 0.50) 50%,
+      rgba(22, 22, 22, 0.10) 70%,
+      transparent 85%
     );
-    animation: shimmer 3s ease-in-out infinite;
-  }
-  @keyframes shimmer {
-    0%   { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    pointer-events: none;
   }
 
-  /* --- Tier glow classes --- */
-  .tier-glow-bronze   { box-shadow: 0 0 30px hsl(30 80% 50% / 0.3), inset 0 0 20px hsl(30 80% 50% / 0.1); }
-  .tier-glow-silver   { box-shadow: 0 0 30px hsl(220 20% 70% / 0.3), inset 0 0 20px hsl(220 20% 70% / 0.1); }
-  .tier-glow-gold     { box-shadow: 0 0 30px hsl(45 90% 55% / 0.3), inset 0 0 20px hsl(45 90% 55% / 0.1); }
-  .tier-glow-platinum { box-shadow: 0 0 30px hsl(200 30% 75% / 0.3), inset 0 0 20px hsl(200 30% 75% / 0.1); }
-  .tier-glow-master   {
-    box-shadow:
-      0 0 40px hsl(280 70% 60% / 0.4),
-      0 0 60px hsl(45 90% 55% / 0.2),
-      inset 0 0 20px hsl(280 70% 60% / 0.15);
+  /* --- Section divider line --- */
+  .nvs-divider {
+    border: none;
+    border-top: 1px solid #dadada;
+    margin: 48px 0;
+  }
+  .dark .nvs-divider {
+    border-top-color: rgba(255,255,255,0.12);
+  }
+
+  /* --- Subtle section background (Grey 2) --- */
+  .nvs-section-alt {
+    background-color: #f5f5f5;
+  }
+  .dark .nvs-section-alt {
+    background-color: hsl(0 0% 12%);
+  }
+
+  /* --- Content entrance animation (left-to-right per Novartis motion) --- */
+  .nvs-enter {
+    animation: nvsSlideIn var(--nvs-duration-normal) var(--nvs-ease-decel) forwards;
+    opacity: 0;
+  }
+  @keyframes nvsSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 
@@ -439,6 +463,6 @@
 }
 
 @media (prefers-contrast: more) {
-  :root  { --border: 200 20% 70%; --muted-foreground: 200 15% 30%; }
-  .dark  { --border: 200 20% 40%; --muted-foreground: 200 10% 70%; }
+  :root  { --border: 0 0% 70%; --muted-foreground: 0 0% 30%; }
+  .dark  { --border: 0 0% 40%; --muted-foreground: 0 0% 70%; }
 }

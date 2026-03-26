@@ -10,9 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       borderRadius: {
-        lg: "0.5625rem",
-        md: "0.375rem",
-        sm: "0.1875rem",
+        lg: "0px",
+        md: "0px",
+        sm: "0px",
       },
       colors: {
         background: "hsl(var(--background) / <alpha-value>)",
@@ -62,24 +62,26 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        /* Novartis brand colors as direct utilities */
+        "nvs-orange": "#ff4e00",
+        "nvs-orange-hover": "#e64500",
+        "nvs-orange-pressed": "#cc3d00",
+        "nvs-black": "#161616",
+        "nvs-white": "#fcfcfc",
+        "nvs-grey1": "#dadada",
+        "nvs-grey2": "#f5f5f5",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
       },
       animation: {
-        "fade-in-up": "fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards",
-        float: "float 6s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        "fade-in-up": "fadeInUp 0.3s cubic-bezier(0, 0.5, 0.3, 1) forwards",
       },
       keyframes: {
         fadeInUp: {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
+          "0%": { opacity: "0", transform: "translateX(-20px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
         },
       },
     },

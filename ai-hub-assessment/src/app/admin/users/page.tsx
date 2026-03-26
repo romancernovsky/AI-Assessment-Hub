@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -140,7 +139,7 @@ export default function AdminUsers() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-4xl font-bold tracking-tight">User Management</h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-muted-foreground mt-1">
             {loading ? '…' : `${users.length} user${users.length !== 1 ? 's' : ''}`}
             {filter !== 'all' && ` · filtered by ${filter}`}
           </p>
@@ -149,7 +148,7 @@ export default function AdminUsers() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary/50 transition-colors cursor-pointer"
+            className="bg-card border border-border px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50 transition-colors cursor-pointer"
           >
             <option value="all">All Roles</option>
             <option value="admin">Admin</option>
@@ -167,16 +166,16 @@ export default function AdminUsers() {
       {/* Create User Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <GlassPanel className="w-full max-w-md p-6 space-y-4">
+          <div className="w-full max-w-md p-6 space-y-4 border border-border bg-card">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-white">Create New User</h2>
+              <h2 className="text-xl font-medium text-foreground">Create New User</h2>
               <button
                 onClick={() => {
                   setShowCreateModal(false);
                   setCreateForm({ email: '', displayName: '', password: '', role: 'contentAdmin' });
                   setCreateMessage(null);
                 }}
-                className="text-gray-400 hover:text-white"
+                className="text-muted-foreground hover:text-foreground"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -184,44 +183,44 @@ export default function AdminUsers() {
 
             <div className="space-y-3">
               <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Email</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Email</label>
                 <Input
                   type="email"
                   placeholder="user@example.com"
                   value={createForm.email}
                   onChange={(e) => setCreateForm({ ...createForm, email: e.target.value })}
-                  className="bg-white/10 border border-white/15 text-white placeholder-gray-500"
+                  className="bg-muted border border-border text-foreground placeholder-muted-foreground"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Display Name</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Display Name</label>
                 <Input
                   type="text"
                   placeholder="John Doe"
                   value={createForm.displayName}
                   onChange={(e) => setCreateForm({ ...createForm, displayName: e.target.value })}
-                  className="bg-white/10 border border-white/15 text-white placeholder-gray-500"
+                  className="bg-muted border border-border text-foreground placeholder-muted-foreground"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Password</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Password</label>
                 <Input
                   type="password"
                   placeholder="••••••••"
                   value={createForm.password}
                   onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
-                  className="bg-white/10 border border-white/15 text-white placeholder-gray-500"
+                  className="bg-muted border border-border text-foreground placeholder-muted-foreground"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-300 mb-1 block">Role</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Role</label>
                 <select
                   value={createForm.role}
                   onChange={(e) => setCreateForm({ ...createForm, role: e.target.value })}
-                  className="w-full bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary/50"
+                  className="w-full bg-muted border border-border px-3 py-2 text-sm text-foreground focus:outline-none focus:border-primary/50"
                 >
                   <option value="contentAdmin">Content Admin</option>
                   <option value="admin">Admin</option>
@@ -230,10 +229,10 @@ export default function AdminUsers() {
             </div>
 
             {createMessage && (
-              <div className={`p-3 rounded-lg text-sm ${
+              <div className={`p-3 text-sm ${
                 createMessage.type === 'success'
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
+                  : 'bg-red-500/20 text-red-700 dark:text-red-300 border border-red-500/30'
               }`}>
                 {createMessage.text}
               </div>
@@ -253,51 +252,51 @@ export default function AdminUsers() {
                   setCreateForm({ email: '', displayName: '', password: '', role: 'contentAdmin' });
                   setCreateMessage(null);
                 }}
-                className="flex-1 bg-white/10 hover:bg-white/15 text-gray-300"
+                className="flex-1 bg-muted hover:bg-border text-muted-foreground"
               >
                 Cancel
               </Button>
             </div>
-          </GlassPanel>
+          </div>
         </div>
       )}
 
-      <GlassPanel className="p-0 overflow-hidden">
+      <div className="p-0 overflow-hidden border border-border bg-card">
         {loading ? (
           <div className="p-8 space-y-3 animate-pulse">
             {[1,2,3,4].map(i => (
-              <div key={i} className="h-14 bg-white/5 rounded-xl" />
+              <div key={i} className="h-14 bg-muted" />
             ))}
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
-                <tr className="border-b border-white/10 bg-white/4">
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 min-w-[160px]">Name</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 min-w-[220px]">Email</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 min-w-[130px]">Role</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 min-w-[100px]">Status</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 min-w-[120px]">Latest Score</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400 text-right min-w-[240px]">Actions</th>
+                <tr className="border-b border-border bg-muted">
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground min-w-[160px]">Name</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground min-w-[220px]">Email</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground min-w-[130px]">Role</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground min-w-[100px]">Status</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground min-w-[120px]">Latest Score</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground text-right min-w-[240px]">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-border">
                 {users.map((user) => (
-                  <tr key={user.id} className="hover:bg-white/3 transition-colors duration-150 group">
+                  <tr key={user.id} className="hover:bg-muted transition-colors duration-150 group">
                     {/* Name */}
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-accent/30 border border-primary/25 flex items-center justify-center text-xs font-bold text-primary shrink-0">
+                        <div className="w-8 h-8 bg-[#ff4e00]/20 border border-[#ff4e00]/25 flex items-center justify-center text-xs font-medium text-primary shrink-0">
                           {user.name?.charAt(0)?.toUpperCase() || '?'}
                         </div>
-                        <span className="font-medium text-white whitespace-nowrap">{user.name}</span>
+                        <span className="font-medium text-foreground whitespace-nowrap">{user.name}</span>
                       </div>
                     </td>
 
                     {/* Email */}
                     <td className="px-6 py-5">
-                      <span className="text-gray-300 text-sm">{user.email}</span>
+                      <span className="text-muted-foreground text-sm">{user.email}</span>
                     </td>
 
                     {/* Role - with dropdown */}
@@ -308,7 +307,7 @@ export default function AdminUsers() {
                           onChange={(e) => changeUserRole(user.id, e.target.value)}
                           onBlur={() => setChangingRole(null)}
                           autoFocus
-                          className="bg-white/10 border border-white/15 rounded text-xs text-white focus:outline-none focus:border-primary/50 py-1 px-2"
+                          className="bg-muted border border-border rounded text-xs text-foreground focus:outline-none focus:border-primary/50 py-1 px-2"
                         >
                           <option value="contentAdmin">Content Admin</option>
                           <option value="admin">Admin</option>
@@ -344,10 +343,10 @@ export default function AdminUsers() {
                     <td className="px-6 py-5">
                       {user.latestScore !== 'N/A' ? (
                         <div className="flex items-center gap-2">
-                          <span className="text-white font-semibold">{user.latestScore}%</span>
-                          <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden w-16">
+                          <span className="text-foreground font-semibold">{user.latestScore}%</span>
+                          <div className="flex-1 h-1.5 bg-border overflow-hidden w-16">
                             <div
-                              className="h-full rounded-full"
+                              className="h-full"
                               style={{
                                 width: `${user.latestScore}%`,
                                 backgroundColor: user.latestScore >= 80 ? '#34d399' : '#f59e0b'
@@ -356,7 +355,7 @@ export default function AdminUsers() {
                           </div>
                         </div>
                       ) : (
-                        <span className="text-gray-500 text-sm italic">Not taken</span>
+                        <span className="text-muted-foreground text-sm italic">Not taken</span>
                       )}
                     </td>
 
@@ -365,7 +364,7 @@ export default function AdminUsers() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => toggleUserStatus(user.id, user.status)}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-150 text-gray-300 hover:text-white whitespace-nowrap"
+                          className="text-xs px-3 py-1.5 bg-muted border border-border hover:bg-border transition-all duration-150 text-muted-foreground hover:text-foreground whitespace-nowrap"
                         >
                           {user.status === 'Active' ? 'Deactivate' : 'Activate'}
                         </button>
@@ -396,12 +395,12 @@ export default function AdminUsers() {
                   <tr>
                     <td colSpan={6} className="px-6 py-16 text-center">
                       <div className="flex flex-col items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                          <svg className="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <div className="w-12 h-12 bg-muted border border-border flex items-center justify-center">
+                          <svg className="w-5 h-5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
                           </svg>
                         </div>
-                        <p className="text-gray-500 text-sm">No users found for this filter.</p>
+                        <p className="text-muted-foreground text-sm">No users found for this filter.</p>
                       </div>
                     </td>
                   </tr>
@@ -410,7 +409,7 @@ export default function AdminUsers() {
             </table>
           </div>
         )}
-      </GlassPanel>
+      </div>
     </div>
   );
 }

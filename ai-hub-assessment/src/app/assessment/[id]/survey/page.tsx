@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 
 const AI_TOOLS = [
@@ -70,22 +69,22 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
           <button
             key={tool}
             onClick={() => toggleTool(tool, type)}
-            className={`w-full text-left p-3 rounded-lg border transition-all duration-200 flex items-center gap-3 text-sm
+            className={`w-full text-left p-3 border transition-all duration-200 flex items-center gap-3 text-sm
               ${isSelected
-                ? 'bg-primary/20 border-primary text-white'
+                ? 'bg-primary/20 border-primary text-foreground'
                 : isDailySelected
-                  ? 'bg-white/[0.02] border-white/5 text-gray-500 italic'
-                  : 'bg-white/5 border-white/10 hover:bg-white/10 text-gray-300 hover:text-white'
+                  ? 'bg-muted border-border text-muted-foreground italic'
+                  : 'bg-muted border-border hover:bg-border text-muted-foreground hover:text-foreground'
               }`}
           >
             <span className={`inline-flex items-center justify-center w-4 h-4 rounded border text-xs shrink-0 ${
-              isSelected ? 'bg-primary border-primary text-white' : 'border-white/30'
+              isSelected ? 'bg-primary border-primary text-white' : 'border-muted-foreground/30'
             }`}>
               {isSelected && '✓'}
             </span>
             <span>{tool}</span>
             {isDailySelected && !isSelected && (
-              <span className="text-xs text-gray-500 ml-auto">(selected as daily)</span>
+              <span className="text-xs text-muted-foreground ml-auto">(selected as daily)</span>
             )}
           </button>
         );
@@ -95,21 +94,21 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
 
   return (
     <div className="max-w-2xl mx-auto pt-8 animate-fade-in-up">
-      <GlassPanel className="p-8">
-        <h1 className="text-2xl font-bold mb-2">Tool Usage Survey</h1>
-        <p className="text-gray-400 mb-8 text-sm">
+      <div className="p-8 border border-border bg-card">
+        <h1 className="text-2xl font-medium mb-2">Tool Usage Survey</h1>
+        <p className="text-muted-foreground mb-8 text-sm">
           Before we begin, tell us about your current AI tool usage. This helps us contextualize results. These questions are not scored.
         </p>
 
         {/* Daily Tools */}
         <div className="mb-8">
-          <h2 className="font-semibold mb-3 text-white">Which AI tools do you use on a <span className="text-primary">daily</span> basis?</h2>
-          <p className="text-xs text-gray-500 mb-3">Select all that apply. Selecting none is fine.</p>
+          <h2 className="font-semibold mb-3 text-foreground">Which AI tools do you use on a <span className="text-primary">daily</span> basis?</h2>
+          <p className="text-xs text-muted-foreground mb-3">Select all that apply. Selecting none is fine.</p>
           <ToolCheckboxList selected={dailyTools} type="daily" />
           {showOtherDaily && (
             <input
               type="text"
-              className="mt-2 w-full bg-black/40 border border-white/10 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              className="mt-2 w-full bg-card border border-border p-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
               placeholder="Specify other tool..."
               value={otherDaily}
               onChange={e => setOtherDaily(e.target.value)}
@@ -119,8 +118,8 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
 
         {/* Weekly Tools */}
         <div className="mb-8">
-          <h2 className="font-semibold mb-3 text-white">Which AI tools do you use on a <span className="text-blue-300">weekly</span> basis (but not daily)?</h2>
-          <p className="text-xs text-gray-500 mb-3">Select all that apply. Selecting none is fine.</p>
+          <h2 className="font-semibold mb-3 text-foreground">Which AI tools do you use on a <span className="text-blue-500 dark:text-blue-300">weekly</span> basis (but not daily)?</h2>
+          <p className="text-xs text-muted-foreground mb-3">Select all that apply. Selecting none is fine.</p>
           <ToolCheckboxList selected={weeklyTools} type="weekly" />
           {showOtherWeekly && (
             <input
@@ -141,7 +140,7 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
             {saving ? 'Saving...' : 'Continue to Assessment →'}
           </Button>
         </div>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

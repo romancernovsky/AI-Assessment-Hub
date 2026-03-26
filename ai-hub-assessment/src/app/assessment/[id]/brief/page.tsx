@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 
 interface SessionStatus {
@@ -47,71 +46,71 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
       <h1 className="text-3xl font-bold mb-6">What to Expect</h1>
 
       {isLocked && (
-        <GlassPanel className="p-6 mb-6 border-l-4 border-l-amber-500 bg-amber-500/5">
+        <div className="p-6 mb-6 border-l-4 border-l-amber-500 bg-amber-500/5 border border-border">
           <div className="flex gap-4">
             <div className="text-2xl">🔒</div>
             <div>
-              <h3 className="font-semibold text-amber-300 mb-1">Assessment Locked</h3>
-              <p className="text-amber-100 text-sm mb-2">
+              <h3 className="font-semibold text-amber-600 dark:text-amber-300 mb-1">Assessment Locked</h3>
+              <p className="text-amber-800 dark:text-amber-100 text-sm mb-2">
                 You can retake this assessment once every 30 days to allow time to apply and reflect on the feedback.
               </p>
-              <p className="text-amber-200 font-semibold text-sm">
+              <p className="text-amber-700 dark:text-amber-200 font-semibold text-sm">
                 Available again: <strong>{canRetakeDate}</strong>
               </p>
             </div>
           </div>
-        </GlassPanel>
+        </div>
       )}
 
-      <GlassPanel className="p-8 mb-6">
-        <ul className="space-y-4 text-gray-300">
+      <div className="p-8 mb-6 border border-border bg-card">
+        <ul className="space-y-4 text-muted-foreground">
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">📋</span>
-            <span>Every question is a <strong className="text-white">workplace scenario</strong> — no textbook definitions or trivia.</span>
+            <span>Every question is a <strong className="text-foreground">workplace scenario</strong> — no textbook definitions or trivia.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">📊</span>
-            <span>Questions use <strong className="text-white">partial credit scoring</strong> — choosing a "good" answer still earns points.</span>
+            <span>Questions use <strong className="text-foreground">partial credit scoring</strong> — choosing a "good" answer still earns points.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">🏷️</span>
-            <span>You'll see which <strong className="text-white">dimension</strong> each question belongs to as you go.</span>
+            <span>You'll see which <strong className="text-foreground">dimension</strong> each question belongs to as you go.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">💡</span>
-            <span>After answering, you can view <strong className="text-white">instant feedback</strong> with scoring rationale and practical tips. Your results page includes a full learning path.</span>
+            <span>After answering, you can view <strong className="text-foreground">instant feedback</strong> with scoring rationale and practical tips. Your results page includes a full learning path.</span>
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">🔧</span>
-            <span>Technical questions (3 of 30) involve M365 Copilot workflows and require <strong className="text-white">selecting 2 answers</strong>.</span>
+            <span>Technical questions (3 of 30) involve M365 Copilot workflows and require <strong className="text-foreground">selecting 2 answers</strong>.</span>
           </li>
         </ul>
-      </GlassPanel>
+      </div>
 
       <h2 className="text-2xl font-bold mb-4">Proficiency Bands</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <GlassPanel className="p-6 border-l-4 border-l-amber-500">
+        <div className="p-6 border-l-4 border-l-amber-500 border border-border bg-card">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">🔍</span>
-            <h3 className="text-lg font-bold text-amber-300">AI Explorer</h3>
+            <h3 className="text-lg font-medium text-amber-600 dark:text-amber-300">AI Explorer</h3>
           </div>
-          <p className="text-sm text-gray-300 mb-2">Below 80%</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-muted-foreground mb-2">Below 80%</p>
+          <p className="text-sm text-muted-foreground">
             You're on the path — keep building your AI judgment. You'll receive targeted recommendations for each dimension.
           </p>
-        </GlassPanel>
+        </div>
 
-        <GlassPanel className="p-6 border-l-4 border-l-emerald-500">
+        <div className="p-6 border-l-4 border-l-emerald-500 border border-border bg-card">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">🏆</span>
-            <h3 className="text-lg font-bold text-emerald-300">AI Enthusiast</h3>
+            <h3 className="text-lg font-medium text-emerald-600 dark:text-emerald-300">AI Enthusiast</h3>
           </div>
-          <p className="text-sm text-gray-300 mb-2">80% and above</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-muted-foreground mb-2">80% and above</p>
+          <p className="text-sm text-muted-foreground">
             Badge granted! You demonstrate strong AI competency. Share your expertise with peers and mentor others.
           </p>
-        </GlassPanel>
+        </div>
       </div>
 
       <div className="flex justify-between items-center">

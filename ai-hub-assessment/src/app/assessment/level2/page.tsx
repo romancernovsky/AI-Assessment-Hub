@@ -12,7 +12,7 @@ export default function Level2Redirect() {
   }, [router]);
 
   return (
-    <div className="text-center py-20 animate-pulse text-gray-300">
+    <div className="text-center py-20 animate-pulse text-muted-foreground">
       Redirecting to assessment...
     </div>
   );

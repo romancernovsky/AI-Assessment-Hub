@@ -1,14 +1,13 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 
 const dimensions = [
-  { icon: '🧠', name: 'AI Mindset', weight: 35, count: 9, color: '#22b8a0' },
+  { icon: '🧠', name: 'AI Mindset', weight: 35, count: 9, color: '#ff4e00' },
   { icon: '⚡', name: 'Applied Skills', weight: 30, count: 9, color: '#6a9bcc' },
-  { icon: '🔗', name: 'Domain Integration', weight: 25, count: 9, color: '#4a9e6e' },
-  { icon: '🔧', name: 'Technical Proficiency', weight: 10, count: 3, color: '#e8b931' },
+  { icon: '🔗', name: 'Domain Integration', weight: 25, count: 9, color: '#788c5d' },
+  { icon: '🔧', name: 'Technical Proficiency', weight: 10, count: 3, color: '#d97757' },
 ];
 
 export default function WelcomeScreen({ params }: { params: { id: string } }) {
@@ -16,11 +15,11 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
 
   return (
     <div className="max-w-3xl mx-auto pt-8 animate-fade-in-up">
-      <GlassPanel className="p-10 text-center">
-        <h1 className="text-4xl font-bold mb-4 aura-text-gradient">
+      <div className="p-10 text-center border border-border bg-card">
+        <h1 className="text-4xl font-medium mb-4 text-[#ff4e00]">
           AI Competency Assessment
         </h1>
-        <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-xl mx-auto">
+        <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-xl mx-auto">
           Discover your AI strengths across four dimensions. This assessment measures how you think about and apply AI — not which buttons you know.
         </p>
 
@@ -29,13 +28,13 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
           {dimensions.map(dim => (
             <div
               key={dim.name}
-              className="p-4 rounded-xl border border-white/10 bg-white/[0.03] text-left"
+              className="p-4 border border-border bg-card text-left"
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xl">{dim.icon}</span>
-                <span className="font-semibold text-white text-sm">{dim.name}</span>
+                <span className="font-semibold text-foreground text-sm">{dim.name}</span>
               </div>
-              <div className="flex items-center gap-3 text-xs text-gray-400">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span style={{ color: dim.color }} className="font-bold">{dim.weight}% weight</span>
                 <span>·</span>
                 <span>{dim.count} questions</span>
@@ -45,15 +44,15 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
         </div>
 
         {/* Stats Row */}
-        <div className="flex justify-center gap-6 mb-8 text-sm text-gray-400">
+        <div className="flex justify-center gap-6 mb-8 text-sm text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="text-white font-bold">30</span> Questions
+            <span className="text-foreground font-medium">30</span> Questions
           </span>
-          <span className="text-gray-600">|</span>
+          <span className="text-border">|</span>
           <span>~30 min</span>
-          <span className="text-gray-600">|</span>
+          <span className="text-border">|</span>
           <span>L1 + L2</span>
-          <span className="text-gray-600">|</span>
+          <span className="text-border">|</span>
           <span>Scenario-based</span>
         </div>
 
@@ -63,7 +62,7 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
         >
           Begin Assessment →
         </Button>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

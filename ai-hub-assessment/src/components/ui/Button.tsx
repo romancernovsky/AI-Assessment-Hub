@@ -1,14 +1,16 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'filled';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({ variant = 'primary', size = 'md', children, className = '', ...props }) => {
-  let btnClass = 'btn-primary';
-  if (variant === 'secondary' || variant === 'ghost') {
+export const Button: React.FC<ButtonProps> = ({ variant = 'filled', size = 'md', children, className = '', ...props }) => {
+  let btnClass = 'btn-filled';
+  if (variant === 'primary') {
+    btnClass = 'btn-primary';
+  } else if (variant === 'secondary' || variant === 'ghost') {
     btnClass = 'btn-secondary';
   }
 

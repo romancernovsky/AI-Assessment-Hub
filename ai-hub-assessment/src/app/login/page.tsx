@@ -3,7 +3,6 @@
 import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -39,14 +38,14 @@ function LoginContent() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
-      <GlassPanel className="w-full max-w-md p-8">
-        <h1 className="text-3xl mb-6 text-center">Login</h1>
-        {registered && <div className="mb-4 text-green-400 text-center text-sm">Registration successful! Please login.</div>}
-        {error && <div className="mb-4 text-red-400 text-center text-sm">{error}</div>}
+      <div className="w-full max-w-md border border-border p-8 bg-card">
+        <h1 className="text-3xl font-medium mb-6">Login</h1>
+        {registered && <div className="mb-4 text-green-700 dark:text-green-400 text-center text-sm">Registration successful! Please login.</div>}
+        {error && <div className="mb-4 text-red-600 dark:text-red-400 text-center text-sm">{error}</div>}
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Email</label>
+            <label className="block text-sm text-muted-foreground mb-1">Email</label>
             <Input 
               type="email" 
               required 
@@ -56,7 +55,7 @@ function LoginContent() {
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-1">Password</label>
+            <label className="block text-sm text-muted-foreground mb-1">Password</label>
             <Input 
               type="password" 
               required 
@@ -69,10 +68,10 @@ function LoginContent() {
             {loading ? 'Logging in...' : 'Sign In'}
           </Button>
         </form>
-        <div className="mt-6 text-center text-sm text-gray-400">
-          Don't have an account? <Link href="/register" className="text-primary hover:text-white transition-colors">Register</Link>
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          Don't have an account? <Link href="/register" className="text-[#ff4e00] hover:underline transition-colors">Register</Link>
         </div>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Download, FileSpreadsheet, FileJson } from 'lucide-react';
@@ -88,9 +87,9 @@ export default function AdminBankImport() {
     <div className="animate-fade-in-up">
       <h1 className="text-4xl mb-8">Question Bank Management</h1>
 
-      <GlassPanel className="p-8 max-w-2xl">
+      <div className="p-8 max-w-2xl border border-border bg-card">
         <h2 className="text-2xl mb-4">Import New Version</h2>
-        <p className="text-gray-400 mb-6">
+        <p className="text-muted-foreground mb-6">
           Upload the master Excel workbook containing Questions, Dimensions, and Competencies sheets. 
           This will validate the structure before creating a Draft version.
         </p>
@@ -99,13 +98,13 @@ export default function AdminBankImport() {
           <input 
             type="file" 
             accept=".xlsx" 
-            className="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary-glow"
+            className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary-glow"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
           />
           <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-400">Version Description (Optional)</label>
+            <label className="text-sm text-muted-foreground">Version Description (Optional)</label>
             <textarea 
-              className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-primary/50"
+              className="w-full bg-muted border border-border p-3 text-foreground focus:outline-none focus:border-primary/50"
               placeholder="e.g., Updated scenario logic for Q2 2024"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -117,7 +116,7 @@ export default function AdminBankImport() {
           </Button>
 
           {errors.length > 0 && (
-            <div className="mt-4 p-4 rounded-xl bg-red-900/30 border border-red-500/30 text-red-300">
+            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-300">
               <h3 className="font-bold mb-2">Validation Failed:</h3>
               <ul className="list-disc pl-5 text-sm space-y-1">
                 {errors.map((err, i) => <li key={i}>{err}</li>)}
@@ -126,12 +125,12 @@ export default function AdminBankImport() {
           )}
 
           {result && !published && (
-            <div className="mt-4 p-6 rounded-xl bg-blue-900/20 border border-blue-500/30 text-blue-100">
+            <div className="mt-4 p-6 bg-blue-500/10 border border-blue-500/30 text-blue-800 dark:text-blue-100">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="font-bold text-lg text-blue-300">Validation Successful</h3>
+                <h3 className="font-medium text-lg text-blue-600 dark:text-blue-300">Validation Successful</h3>
                 <Badge color="warning">Draft: {result.versionId}</Badge>
               </div>
-              <ul className="list-disc pl-5 text-sm mb-6 text-blue-200">
+              <ul className="list-disc pl-5 text-sm mb-6 text-blue-700 dark:text-blue-200">
                 <li>Active Questions: {result.questionCount}</li>
                 <li>Dimensions Configured: {result.dimensionCount}</li>
                 <li>Competencies Configured: {result.competencyCount}</li>
@@ -147,50 +146,50 @@ export default function AdminBankImport() {
           )}
 
           {published && (
-            <div className="mt-4 p-6 rounded-xl bg-green-900/30 border border-green-500/50 text-green-300 text-center">
+            <div className="mt-4 p-6 bg-green-500/10 border border-green-500/50 text-green-700 dark:text-green-300 text-center">
               <h3 className="text-xl font-bold mb-2">Version {result?.versionId} Published Successfully!</h3>
               <p className="text-sm">This bank version is now live for all new assessment sessions.</p>
             </div>
           )}
         </div>
-      </GlassPanel>
+      </div>
 
       <div className="mt-12">
         <h2 className="text-2xl mb-6">Version History</h2>
-        <GlassPanel className="overflow-hidden">
+        <div className="overflow-hidden border border-border bg-card">
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-white/10 bg-white/5">
-                  <th className="p-4 font-medium text-gray-300">Version ID</th>
-                  <th className="p-4 font-medium text-gray-300">Status</th>
-                  <th className="p-4 font-medium text-gray-300">Description</th>
-                  <th className="p-4 font-medium text-gray-300">Questions</th>
-                  <th className="p-4 font-medium text-gray-300">Published At</th>
-                  <th className="p-4 font-medium text-gray-300 text-right">Actions</th>
+                <tr className="border-b border-border bg-muted">
+                  <th className="p-4 font-medium text-muted-foreground">Version ID</th>
+                  <th className="p-4 font-medium text-muted-foreground">Status</th>
+                  <th className="p-4 font-medium text-muted-foreground">Description</th>
+                  <th className="p-4 font-medium text-muted-foreground">Questions</th>
+                  <th className="p-4 font-medium text-muted-foreground">Published At</th>
+                  <th className="p-4 font-medium text-muted-foreground text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {versions.map((v) => (
-                  <tr key={v.versionId} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="p-4 text-white">v{v.versionId}</td>
+                  <tr key={v.versionId} className="border-b border-border hover:bg-muted transition-colors">
+                    <td className="p-4 text-foreground">v{v.versionId}</td>
                     <td className="p-4">
                       {v.status === 'live' ? <Badge color="success">Live</Badge> : 
                        v.status === 'archived' ? <Badge color="warning">Archived</Badge> : 
                        <Badge>Draft</Badge>}
                     </td>
-                    <td className="p-4 text-gray-300 text-sm max-w-xs truncate" title={v.description}>
-                      {v.description || <span className="text-gray-600 italic">No description</span>}
+                    <td className="p-4 text-muted-foreground text-sm max-w-xs truncate" title={v.description}>
+                      {v.description || <span className="text-muted-foreground/50 italic">No description</span>}
                     </td>
-                    <td className="p-4 text-gray-400">{v.questionCount}</td>
-                    <td className="p-4 text-gray-400">{new Date(v.publishedAt).toLocaleString()}</td>
+                    <td className="p-4 text-muted-foreground">{v.questionCount}</td>
+                    <td className="p-4 text-muted-foreground">{new Date(v.publishedAt).toLocaleString()}</td>
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-2">
                         <a 
                           href={`/api/admin/bank/versions/${v.versionId}?format=excel`}
                           download
                           title="Download Excel"
-                          className="p-2 rounded-lg hover:bg-white/10 text-green-400 transition-colors"
+                          className="p-2 hover:bg-muted text-green-500 dark:text-green-400 transition-colors"
                         >
                           <FileSpreadsheet size={18} />
                         </a>
@@ -198,7 +197,7 @@ export default function AdminBankImport() {
                           href={`/api/admin/bank/versions/${v.versionId}?format=json`}
                           download
                           title="Download JSON"
-                          className="p-2 rounded-lg hover:bg-white/10 text-blue-400 transition-colors"
+                          className="p-2 hover:bg-muted text-blue-500 dark:text-blue-400 transition-colors"
                         >
                           <FileJson size={18} />
                         </a>
@@ -208,13 +207,13 @@ export default function AdminBankImport() {
                 ))}
                 {versions.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="p-4 text-center text-gray-500 italic">No versions found.</td>
+                    <td colSpan={6} className="p-4 text-center text-muted-foreground italic">No versions found.</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
-        </GlassPanel>
+        </div>
       </div>
     </div>
   );

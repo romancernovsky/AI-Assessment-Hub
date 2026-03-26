@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { GlassCard } from '@/components/ui/GlassCard';
 import { Button } from '@/components/ui/Button';
 import { Input, TextArea } from '@/components/ui/Input';
 import { Star, Send, CheckCircle2 } from 'lucide-react';
@@ -56,12 +55,12 @@ export default function FeedbackPage() {
     return (
       <div className="max-w-2xl mx-auto py-20 text-center animate-fade-in-up">
         <div className="flex justify-center mb-8">
-          <div className="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-            <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+          <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
           </div>
         </div>
-        <h1 className="text-4xl font-bold mb-4 text-white">Thank You!</h1>
-        <p className="text-xl text-white/60 mb-10 leading-relaxed">
+        <h1 className="text-4xl font-medium mb-4 text-foreground">Thank You!</h1>
+        <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
           Your feedback has been received. We appreciate your input as we continue to improve the assessment experience.
         </p>
         <Button onClick={() => window.location.href = '/'} className="px-8">
@@ -74,19 +73,19 @@ export default function FeedbackPage() {
   return (
     <div className="max-w-3xl mx-auto py-12 animate-fade-in-up">
       <div className="text-center mb-12 space-y-4">
-        <h1 className="text-5xl font-extrabold tracking-tight">
-          Share Your <span className="text-gradient">Feedback</span>
+        <h1 className="text-5xl font-medium tracking-tight">
+          Share Your <span className="text-[#ff4e00]">Feedback</span>
         </h1>
-        <p className="text-xl text-white/60">
+        <p className="text-xl text-muted-foreground">
           Help us shape the future of the AI Competency Assessment.
         </p>
       </div>
 
-      <GlassCard className="p-8 md:p-10 border-white/10">
+      <div className="p-8 md:p-10 border border-border bg-card">
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-white/70 ml-1">Name (Optional)</label>
+              <label className="text-sm font-semibold text-muted-foreground ml-1">Name (Optional)</label>
               <Input 
                 placeholder="How should we call you?"
                 value={formData.name}
@@ -94,7 +93,7 @@ export default function FeedbackPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-white/70 ml-1">Email (Optional)</label>
+              <label className="text-sm font-semibold text-muted-foreground ml-1">Email (Optional)</label>
               <Input 
                 type="email"
                 placeholder="your@email.com"
@@ -112,10 +111,10 @@ export default function FeedbackPage() {
                   key={star}
                   type="button"
                   onClick={() => setFormData({...formData, rating: star})}
-                  className={`p-3 rounded-xl transition-all duration-300 ${
+                  className={`p-3 transition-all duration-300 ${
                     formData.rating >= star 
-                    ? 'bg-yellow-500/20 text-yellow-400 scale-110 shadow-lg shadow-yellow-500/10' 
-                    : 'bg-white/5 text-white/20 hover:bg-white/10 hover:text-white/40'
+                    ? 'bg-yellow-500/20 text-yellow-500 scale-110 shadow-lg shadow-yellow-500/10' 
+                    : 'bg-muted text-muted-foreground/40 hover:bg-border hover:text-muted-foreground'
                   }`}
                 >
                   <Star className={`w-8 h-8 ${formData.rating >= star ? 'fill-current' : ''}`} />
@@ -130,7 +129,7 @@ export default function FeedbackPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-white/70 ml-1">Your Message</label>
+            <label className="text-sm font-semibold text-muted-foreground ml-1">Your Message</label>
             <TextArea 
               rows={5}
               placeholder="What's on your mind? We value specific insights about the assessment scenarios, results, or general UX."
@@ -142,7 +141,7 @@ export default function FeedbackPage() {
           </div>
 
           {errorMessage && (
-            <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-medium animate-shake">
+            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-sm font-medium animate-shake">
               {errorMessage}
             </div>
           )}
@@ -153,7 +152,7 @@ export default function FeedbackPage() {
             className="w-full py-4 text-lg font-bold flex items-center justify-center gap-3"
           >
             {status === 'submitting' ? (
-              <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-6 h-6 border-2 border-border border-t-foreground rounded-full animate-spin" />
             ) : (
               <>
                 <Send className="w-5 h-5" /> Submit Feedback
@@ -161,9 +160,9 @@ export default function FeedbackPage() {
             )}
           </Button>
         </form>
-      </GlassCard>
+      </div>
       
-      <p className="text-center text-white/30 text-xs mt-8">
+      <p className="text-center text-muted-foreground/50 text-xs mt-8">
         Your data is used solely to improve our platform. By submitting, you agree to our privacy policy.
       </p>
     </div>

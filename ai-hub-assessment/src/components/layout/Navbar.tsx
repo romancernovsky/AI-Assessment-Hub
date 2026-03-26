@@ -27,14 +27,14 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-50 h-20 transition-all duration-300 flex items-center ${scrolled ? 'glass-panel' : 'bg-transparent'}`}>
+      <nav className={`fixed top-1 w-full z-50 h-[72px] transition-all duration-300 flex items-center ${
+        scrolled ? 'bg-white dark:bg-[#161616] shadow-[0_1px_0_rgba(0,0,0,0.08)]' : 'bg-white dark:bg-[#161616]'
+      }`}>
         <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center justify-between">
-          <Link href="/" className="text-[28px] font-extrabold tracking-[-0.84px] flex items-center gap-3">
-            <div className="flex items-center gap-0">
-              <span className="aura-text-gradient">AIHub</span>
-              <span className="text-foreground">.</span>
-            </div>
-            <span className="text-foreground font-bold">Assessment</span>
+          {/* Novartis-style logo: Warm Black text, clean typography */}
+          <Link href="/" className="text-[24px] font-medium tracking-[-0.02em] flex items-center gap-2">
+            <span className="text-[#ff4e00] font-medium">AIHub</span>
+            <span className="text-foreground">Assessment</span>
           </Link>
 
           {/* Desktop Links */}
@@ -47,23 +47,23 @@ export const Navbar = () => {
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-6">
             <ThemeToggle />
             {status === 'authenticated' ? (
               <>
-                <Link href="/profile" className="text-[15.2px] text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/profile" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   {session.user?.name}
                 </Link>
                 <button
                   onClick={() => signOut({ callbackUrl: '/login' })}
-                  className="text-[15.2px] font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-base font-medium text-muted-foreground hover:text-[#ff4e00] transition-colors"
                 >
                   Sign Out
                 </button>
               </>
             ) : (
               <>
-                <Link href="/login" className="text-[15.2px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/login" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Sign in
                 </Link>
                 <Link href="/login" className="btn-started">
@@ -75,8 +75,9 @@ export const Navbar = () => {
 
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden p-2 text-muted-foreground hover:text-foreground"
+            className="lg:hidden p-2 text-foreground"
             onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
           </button>
@@ -84,33 +85,31 @@ export const Navbar = () => {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-[60] bg-background transition-transform duration-500 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-0 z-[60] bg-background transition-transform duration-300 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="p-6 flex flex-col h-full">
           <div className="flex items-center justify-between h-8 mb-12">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-[28px] font-extrabold tracking-[-0.84px] flex items-center gap-3">
-              <div className="flex items-center gap-0">
-                <span className="aura-text-gradient">AIHub</span>
-                <span className="text-foreground">.</span>
-              </div>
-              <span className="text-foreground font-bold">Assessment</span>
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="text-[24px] font-medium tracking-[-0.02em] flex items-center gap-2">
+              <span className="text-[#ff4e00] font-medium">AIHub</span>
+              <span className="text-foreground">Assessment</span>
             </Link>
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <button 
-                className="p-2 text-muted-foreground hover:text-foreground"
+                className="p-2 text-foreground"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
               </button>
             </div>
           </div>
 
-          <div className="flex flex-col gap-6 text-center">
+          <div className="flex flex-col gap-6">
             {NAV_LINKS.map((link) => (
               <Link 
                 key={link.label} 
                 href={link.href} 
-                className="text-2xl font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-2xl font-medium text-foreground hover:text-[#ff4e00] transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
@@ -123,14 +122,14 @@ export const Navbar = () => {
                   setMobileMenuOpen(false);
                   signOut({ callbackUrl: '/login' });
                 }}
-                className="text-2xl font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-2xl font-medium text-foreground hover:text-[#ff4e00] transition-colors text-left"
               >
                 Sign Out
               </button>
             ) : (
               <Link 
                 href="/login" 
-                className="text-2xl font-semibold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-2xl font-medium text-foreground hover:text-[#ff4e00] transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign in

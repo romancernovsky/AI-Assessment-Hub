@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { CheckCircle2, XCircle, ThumbsUp, ThumbsDown, MessageSquare, ChevronLeft, ChevronRight, Lightbulb, Brain } from 'lucide-react';
@@ -243,24 +242,24 @@ export default function AssessmentQuiz() {
   };
 
   if (loading) return (
-    <div className="text-center py-20 animate-pulse text-gray-300">
+    <div className="text-center py-20 animate-pulse text-muted-foreground">
       <div className="text-2xl mb-2">Loading Assessment...</div>
-      <div className="text-sm text-gray-500">Preparing your 30 scenario questions</div>
+      <div className="text-sm text-muted-foreground">Preparing your 30 scenario questions</div>
     </div>
   );
 
   if (error) return (
-    <div className="max-w-2xl mx-auto p-8 rounded-xl bg-red-900/40 border border-red-500/30 text-red-200">
+    <div className="max-w-2xl mx-auto p-8 bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-200">
       <h2 className="text-xl font-bold mb-3">Unable to Load Assessment</h2>
       <p>{error}</p>
-      <button onClick={() => router.push('/dashboard')} className="mt-6 text-sm underline text-gray-400 hover:text-white">
+      <button onClick={() => router.push('/dashboard')} className="mt-6 text-sm underline text-muted-foreground hover:text-foreground">
         Return to Dashboard
       </button>
     </div>
   );
 
   if (questions.length === 0) return (
-    <div className="text-center py-20 text-gray-400">
+    <div className="text-center py-20 text-muted-foreground">
       No questions available. Please contact an administrator.
     </div>
   );
@@ -296,8 +295,8 @@ export default function AssessmentQuiz() {
         <div className="flex items-center gap-3">
           <span className="text-2xl">{currentQ.dimensionIcon}</span>
           <div>
-            <span className="font-semibold text-white">{currentQ.dimensionName}</span>
-            <span className="text-gray-500 text-sm ml-2">Q{dimIndex} of {dimQuestions.length}</span>
+            <span className="font-semibold text-foreground">{currentQ.dimensionName}</span>
+            <span className="text-muted-foreground text-sm ml-2">Q{dimIndex} of {dimQuestions.length}</span>
           </div>
         </div>
         <Badge color="info" className="text-sm px-4 py-1.5">
@@ -306,9 +305,9 @@ export default function AssessmentQuiz() {
       </div>
 
       {/* Global Progress Bar */}
-      <div className="w-full bg-white/5 rounded-full h-1.5 mb-3">
+      <div className="w-full bg-border h-1.5 mb-3">
         <div
-          className="bg-gradient-to-r from-primary to-accent h-1.5 rounded-full transition-all duration-700"
+          className="bg-[#ff4e00] h-1.5 transition-all duration-700"
           style={{ width: `${globalProgress}%` }}
         />
       </div>
@@ -321,13 +320,13 @@ export default function AssessmentQuiz() {
           const isActive = dim.key === currentQ.dimension;
           return (
             <div key={dim.key} className={`text-center ${isActive ? 'opacity-100' : 'opacity-50'}`}>
-              <div className="text-xs text-gray-400 mb-1 truncate">{dim.icon} {dim.short}</div>
-              <div className="h-1 rounded-full bg-white/10">
+              <div className="text-xs text-muted-foreground mb-1 truncate">{dim.icon} {dim.short}</div>
+              <div className="h-1 bg-border">
                 <div
-                  className="h-1 rounded-full transition-all duration-500"
+                  className="h-1 transition-all duration-500"
                   style={{
                     width: `${pct}%`,
-                    backgroundColor: dim.color || '#22b8a0'
+                    backgroundColor: dim.color || '#ff4e00'
                   }}
                 />
               </div>
@@ -336,13 +335,13 @@ export default function AssessmentQuiz() {
         })}
       </div>
 
-      <GlassPanel className="p-8">
+      <div className="p-8 border border-border bg-card">
         {/* Question Header */}
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="px-2 py-0.5 rounded text-xs font-bold bg-primary/20 text-primary border border-primary/30">
             {currentQ.level}
           </span>
-          <span className="px-2 py-0.5 rounded text-xs bg-white/5 text-gray-400 border border-white/10">
+          <span className="px-2 py-0.5 rounded text-xs bg-muted text-muted-foreground border border-border">
             {currentQ.competencyName || currentQ.competency}
           </span>
           {isMulti && (
@@ -353,11 +352,11 @@ export default function AssessmentQuiz() {
         </div>
 
         {/* Title */}
-        <h2 className="text-xl font-bold text-white mb-3">{currentQ.title}</h2>
+        <h2 className="text-xl font-medium text-foreground mb-3">{currentQ.title}</h2>
 
         {/* Scenario */}
         <div className="mb-8">
-          <p className="text-gray-300 leading-relaxed">{currentQ.scenario}</p>
+          <p className="text-muted-foreground leading-relaxed">{currentQ.scenario}</p>
         </div>
 
         {/* Options */}
@@ -368,20 +367,20 @@ export default function AssessmentQuiz() {
               ? (selected as string[] || []).includes(letter)
               : selected === letter;
 
-            let cls = 'text-left p-4 rounded-xl border transition-all duration-200 w-full ';
+            let cls = 'text-left p-4 border transition-all duration-200 w-full ';
 
             if (!isFeedbackShowing) {
               cls += isSelected
-                ? 'bg-primary/20 border-primary text-white'
-                : 'bg-white/5 border-white/10 hover:bg-white/10 text-gray-300 hover:text-white';
+                ? 'bg-primary/20 border-primary text-foreground'
+                : 'bg-muted border-border hover:bg-border text-muted-foreground hover:text-foreground';
             } else {
               // Feedback mode: show scores
               if (option.score === 1) {
-                cls += 'bg-emerald-500/15 border-emerald-500/50 text-emerald-200';
+                cls += 'bg-emerald-500/15 border-emerald-500/50 text-emerald-700 dark:text-emerald-200';
               } else if (isSelected && option.score < 1) {
-                cls += 'bg-rose-500/15 border-rose-500/50 text-rose-200';
+                cls += 'bg-rose-500/15 border-rose-500/50 text-rose-700 dark:text-rose-200';
               } else {
-                cls += 'bg-white/[0.03] border-white/5 text-gray-500';
+                cls += 'bg-muted border-border text-muted-foreground';
               }
             }
 
@@ -396,7 +395,7 @@ export default function AssessmentQuiz() {
                   <span className="text-xs font-bold opacity-50 uppercase mt-0.5 shrink-0 w-5">
                     {isMulti ? (
                       <span className={`inline-flex items-center justify-center w-4 h-4 rounded border ${
-                        isSelected ? 'bg-primary border-primary' : 'border-white/30'
+                      isSelected ? 'bg-primary border-primary' : 'border-muted-foreground/30'
                       }`}>
                         {isSelected && '✓'}
                       </span>
@@ -425,36 +424,36 @@ export default function AssessmentQuiz() {
         {isFeedbackShowing && (
           <div className="mt-6 space-y-4 animate-fade-in-up">
             {/* Scoring Rationale */}
-            <div className="p-5 rounded-xl bg-primary/10 border border-primary/20">
-              <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-2 flex items-center gap-2">
+            <div className="p-5 bg-primary/10 border border-primary/20">
+              <h3 className="text-sm font-medium text-primary uppercase tracking-wider mb-2 flex items-center gap-2">
                 <Brain className="w-4 h-4" /> Scoring Rationale
               </h3>
-              <p className="text-gray-300 text-sm leading-relaxed">{currentQ.rationale}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{currentQ.rationale}</p>
             </div>
 
             {/* Competency Guidance */}
             {currentQ.guidance && (
-            <div className="p-5 rounded-xl bg-accent/10 border border-accent/20">
-              <h3 className="text-sm font-bold text-accent uppercase tracking-wider mb-2 flex items-center gap-2">
+            <div className="p-5 bg-accent/10 border border-accent/20">
+              <h3 className="text-sm font-medium text-accent uppercase tracking-wider mb-2 flex items-center gap-2">
                   <Lightbulb className="w-4 h-4" /> Principle
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed">{currentQ.guidance}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{currentQ.guidance}</p>
               </div>
             )}
 
             {/* Tool Hint */}
             {currentQ.toolHint && (
-              <div className="p-5 rounded-xl bg-teal-900/20 border border-teal-500/20">
-                <h3 className="text-sm font-bold text-teal-300 uppercase tracking-wider mb-2">
+              <div className="p-5 bg-teal-500/10 dark:bg-teal-900/20 border border-teal-500/20">
+                <h3 className="text-sm font-medium text-teal-600 dark:text-teal-300 uppercase tracking-wider mb-2">
                   🛠️ Try it now
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed">{currentQ.toolHint}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{currentQ.toolHint}</p>
               </div>
             )}
 
             {/* Reaction Bar */}
-            <div className="pt-4 border-t border-white/10">
-              <div className="flex items-center justify-between text-sm text-gray-400">
+            <div className="pt-4 border-t border-border">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>Rate this question:</span>
                 <div className="flex gap-3 items-center">
                   <button
@@ -486,7 +485,7 @@ export default function AssessmentQuiz() {
               {showCommentBox[currentQ.id] && (
                 <div className="mt-3">
                   <textarea
-                    className="w-full h-20 bg-black/40 border border-white/10 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary/50 resize-none"
+                    className="w-full h-20 bg-card border border-border p-3 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 resize-none"
                     placeholder="Share your thoughts on this question — was it clear? Relevant to your work? Any suggestions?"
                     value={reactions[currentQ.id]?.comment || ''}
                     onChange={(e) => setReactions(prev => ({
@@ -543,7 +542,7 @@ export default function AssessmentQuiz() {
             )}
           </div>
         </div>
-      </GlassPanel>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Badge } from '@/components/ui/Badge';
 import { MessageSquare, Star, Mail, User, Shield, Clock } from 'lucide-react';
 import Link from 'next/link';
@@ -33,22 +32,22 @@ export default function AdminFeedback() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-4xl font-bold tracking-tight">Platform Feedback</h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-muted-foreground mt-1">
             {loading ? '…' : `${feedbacks.length} response${feedbacks.length !== 1 ? 's' : ''}`} collected from users.
           </p>
         </div>
         <Link href="/admin/analytics">
-          <button className="bg-white/5 border border-white/10 rounded-xl px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10 transition-colors">
+          <button className="bg-muted border border-border px-5 py-2.5 text-sm font-semibold text-foreground hover:bg-border transition-colors">
             Back to Analytics
           </button>
         </Link>
       </div>
 
-      <GlassPanel className="p-0 overflow-hidden shadow-2xl border-white/5">
-        <div className="p-6 border-b border-white/10 bg-white/2 flex justify-between items-center">
+      <div className="p-0 overflow-hidden shadow-2xl border border-border bg-card">
+        <div className="p-6 border-b border-border bg-muted flex justify-between items-center">
           <div>
-            <h2 className="text-xl font-bold text-white tracking-tight">Feedback Inbox</h2>
-            <p className="text-sm text-gray-400 mt-1">Detailed list of user ratings and qualitative feedback.</p>
+            <h2 className="text-xl font-medium text-foreground tracking-tight">Feedback Inbox</h2>
+            <p className="text-sm text-muted-foreground mt-1">Detailed list of user ratings and qualitative feedback.</p>
           </div>
           <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
             Inbox
@@ -56,31 +55,31 @@ export default function AdminFeedback() {
         </div>
         
         {loading ? (
-          <div className="p-12 text-center animate-pulse text-gray-500">Loading feedback...</div>
+          <div className="text-center py-20 animate-pulse text-muted-foreground">Loading feedback...</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[1000px]">
               <thead>
-                <tr className="border-b border-white/10 bg-white/4">
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">User Details</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Account</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Rating</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Feedback</th>
-                  <th className="px-6 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">Submitted</th>
+                <tr className="border-b border-border bg-muted">
+                  <th className="px-6 py-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">User Details</th>
+                  <th className="px-6 py-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">Account</th>
+                  <th className="px-6 py-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">Rating</th>
+                  <th className="px-6 py-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">Feedback</th>
+                  <th className="px-6 py-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">Submitted</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-border">
                 {feedbacks.map((f) => (
-                  <tr key={f.id} className="hover:bg-white/[0.03] transition-colors duration-200 group">
+                  <tr key={f.id} className="hover:bg-muted transition-colors duration-200 group">
                     {/* User */}
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/20 flex items-center justify-center text-xs font-black text-primary shrink-0 group-hover:scale-105 transition-transform">
+                        <div className="w-10 h-10 bg-[#ff4e00]/10 border border-[#ff4e00]/20 flex items-center justify-center text-xs font-medium text-primary shrink-0 group-hover:scale-105 transition-transform">
                           <User className="w-5 h-5" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="text-sm font-semibold text-white group-hover:text-primary transition-colors">{f.userName}</span>
-                          <span className="text-[10px] text-gray-500 font-medium flex items-center gap-1">
+                          <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{f.userName}</span>
+                          <span className="text-[10px] text-muted-foreground font-medium flex items-center gap-1">
                             <Mail className="w-2.5 h-2.5" /> {f.userEmail}
                           </span>
                         </div>
@@ -93,7 +92,7 @@ export default function AdminFeedback() {
                         <Badge color={f.userRole === 'admin' ? 'primary' : 'secondary'} className="text-[10px] py-0 px-2 w-fit">
                           {f.userRole.toUpperCase()}
                         </Badge>
-                        <span className="text-[10px] font-mono text-gray-600 flex items-center gap-1">
+                        <span className="text-[10px] font-mono text-muted-foreground flex items-center gap-1">
                           <Shield className="w-2.5 h-2.5" /> {f.userRole === 'Guest' ? 'Public' : 'Auth User'}
                         </span>
                       </div>
@@ -105,7 +104,7 @@ export default function AdminFeedback() {
                         {Array.from({ length: 5 }).map((_, i) => (
                           <Star 
                             key={i} 
-                            className={`w-3.5 h-3.5 ${i < (f.rating || 0) ? 'fill-current' : 'text-white/10'}`} 
+                            className={`w-3.5 h-3.5 ${i < (f.rating || 0) ? 'fill-current' : 'text-muted-foreground/20'}`} 
                           />
                         ))}
                       </div>
@@ -113,7 +112,7 @@ export default function AdminFeedback() {
 
                     {/* Feedback Content */}
                     <td className="px-6 py-5">
-                      <div className="flex items-start gap-2.5 text-gray-300 text-sm group-hover:text-white transition-colors max-w-xl">
+                      <div className="flex items-start gap-2.5 text-muted-foreground text-sm group-hover:text-foreground transition-colors max-w-xl">
                         <MessageSquare className="w-4 h-4 mt-0.5 shrink-0 text-primary/60" />
                         <p className="leading-relaxed font-medium line-wrap">{f.content}</p>
                       </div>
@@ -122,11 +121,11 @@ export default function AdminFeedback() {
                     {/* Date */}
                     <td className="px-6 py-5">
                       <div className="flex flex-col">
-                        <span className="text-xs font-bold text-gray-400 tabular-nums flex items-center gap-1">
+                        <span className="text-xs font-medium text-muted-foreground tabular-nums flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {new Date(f.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
-                        <span className="text-[10px] font-medium text-gray-600 uppercase tracking-widest mt-0.5 ml-4">
+                        <span className="text-[10px] font-medium text-muted-foreground/50 uppercase tracking-widest mt-0.5 ml-4">
                           {new Date(f.createdAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -138,12 +137,12 @@ export default function AdminFeedback() {
                   <tr>
                     <td colSpan={5} className="px-6 py-20 text-center">
                       <div className="flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-700">
-                        <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center shadow-inner">
-                          <MessageSquare className="w-8 h-8 text-gray-600" />
+                        <div className="w-16 h-16 bg-muted border border-border flex items-center justify-center shadow-inner">
+                          <MessageSquare className="w-8 h-8 text-muted-foreground" />
                         </div>
                         <div className="space-y-1">
-                          <p className="text-gray-400 font-bold tracking-tight">No feedback yet</p>
-                          <p className="text-gray-500 text-xs">When users share their thoughts, they will appear here.</p>
+                          <p className="text-muted-foreground font-medium tracking-tight">No feedback yet</p>
+                          <p className="text-muted-foreground/50 text-xs">When users share their thoughts, they will appear here.</p>
                         </div>
                       </div>
                     </td>
@@ -153,7 +152,7 @@ export default function AdminFeedback() {
             </table>
           </div>
         )}
-      </GlassPanel>
+      </div>
     </div>
   );
 }

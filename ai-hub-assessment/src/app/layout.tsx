@@ -1,20 +1,16 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import AuthProvider from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
+/* Novartis brand font: Volta Modern Display (self-hosted .woff)
+   Fallback chain: Arial, Helvetica, sans-serif
+   Using Inter as web-safe stand-in until Volta font files are added */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  weight: "700",
   display: "swap",
 });
 
@@ -35,10 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AuthProvider>
+            <div className="nvs-gradient-stripe" />
             <Navbar />
             <main className="pt-24 pb-12 max-w-[1400px] mx-auto px-6 min-h-screen">
               {children}

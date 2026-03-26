@@ -12,7 +12,7 @@ export default async function AnalyticsPage() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-7xl">
-      <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60 mb-8">
+      <h1 className="text-3xl font-medium text-foreground mb-8">
         Analytics & Exports
       </h1>
       

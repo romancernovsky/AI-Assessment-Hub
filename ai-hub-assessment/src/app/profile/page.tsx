@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { GlassPanel } from '@/components/ui/GlassPanel';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
@@ -97,11 +96,11 @@ export default function ProfilePage() {
   };
 
   if (status === 'loading' || loading) {
-    return <div className="animate-pulse py-20 text-center text-gray-400">Loading profile...</div>;
+    return <div className="animate-pulse py-20 text-center text-muted-foreground">Loading profile...</div>;
   }
 
   if (!profile) {
-    return <div className="text-center py-20 text-gray-400">Unable to load profile.</div>;
+    return <div className="text-center py-20 text-muted-foreground">Unable to load profile.</div>;
   }
 
   const roleInfo = roleLabels[profile.role] || { label: profile.role, color: 'info' as const };
@@ -125,23 +124,23 @@ export default function ProfilePage() {
 
       {/* Status Message */}
       {message && (
-        <div className={`mb-6 p-4 rounded-xl border text-sm ${
+        <div className={`mb-6 p-4 border text-sm ${
           message.type === 'success'
-            ? 'bg-emerald-900/30 border-emerald-500/30 text-emerald-300'
-            : 'bg-rose-900/30 border-rose-500/30 text-rose-300'
+            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
+            : 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-300'
         }`}>
           {message.text}
         </div>
       )}
 
-      <GlassPanel className="p-8">
+      <div className="p-8 border border-border bg-card">
         {/* Avatar & Name Header */}
-        <div className="flex items-center gap-5 mb-8 pb-6 border-b border-white/10">
-          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-2xl font-bold text-white shrink-0">
+        <div className="flex items-center gap-5 mb-8 pb-6 border-b border-border">
+          <div className="w-16 h-16 bg-[#ff4e00] flex items-center justify-center text-2xl font-medium text-white shrink-0">
             {profile.displayName.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-white">{profile.displayName}</h2>
+            <h2 className="text-2xl font-medium text-foreground">{profile.displayName}</h2>
             <div className="flex items-center gap-3 mt-1">
               <Badge variant={roleInfo.color}>{roleInfo.label}</Badge>
               {profile.isActive ? (
@@ -162,7 +161,7 @@ export default function ProfilePage() {
           /* Edit Mode */
           <div className="space-y-5">
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2">Display Name</label>
+              <label className="block text-sm font-semibold text-muted-foreground mb-2">Display Name</label>
               <input
                 type="text"
                 value={editName}
@@ -173,7 +172,7 @@ export default function ProfilePage() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-300 mb-2">Email Address</label>
+              <label className="block text-sm font-semibold text-muted-foreground mb-2">Email Address</label>
               <input
                 type="email"
                 value={editEmail}
@@ -184,11 +183,11 @@ export default function ProfilePage() {
             </div>
 
             <div className="pt-2">
-              <label className="block text-sm font-semibold text-gray-300 mb-2">Role</label>
+              <label className="block text-sm font-semibold text-muted-foreground mb-2">Role</label>
               <div className="glass-input w-full opacity-60 cursor-not-allowed">
                 {roleInfo.label}
               </div>
-              <p className="text-xs text-gray-500 mt-1">Role can only be changed by an administrator.</p>
+              <p className="text-xs text-muted-foreground mt-1">Role can only be changed by an administrator.</p>
             </div>
 
             <div className="flex gap-3 pt-4">
@@ -205,35 +204,35 @@ export default function ProfilePage() {
           <div className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</label>
-                <p className="text-white mt-1">{profile.email}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email</label>
+                <p className="text-foreground mt-1">{profile.email}</p>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</label>
-                <p className="text-white mt-1">{roleInfo.label}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Role</label>
+                <p className="text-foreground mt-1">{roleInfo.label}</p>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Registered</label>
-                <p className="text-white mt-1">{registeredDate}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Registered</label>
+                <p className="text-foreground mt-1">{registeredDate}</p>
               </div>
               <div>
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Last Login</label>
-                <p className="text-white mt-1">{lastLoginDate}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Last Login</label>
+                <p className="text-foreground mt-1">{lastLoginDate}</p>
               </div>
               {profile.externalId && (
                 <div>
-                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">External ID</label>
-                  <p className="text-white mt-1 font-mono text-sm">{profile.externalId}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">External ID</label>
+                <p className="text-foreground mt-1 font-mono text-sm">{profile.externalId}</p>
                 </div>
               )}
               <div>
-                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">User ID</label>
-                <p className="text-gray-400 mt-1 font-mono text-sm">{profile.userId}</p>
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">User ID</label>
+                <p className="text-muted-foreground mt-1 font-mono text-sm">{profile.userId}</p>
               </div>
             </div>
           </div>
         )}
-      </GlassPanel>
+      </div>
     </div>
   );
 }
