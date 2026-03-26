@@ -101,26 +101,19 @@ export async function POST(req: Request) {
        return NextResponse.json({ message: 'Validation Failed', errors }, { status: 400 });
     }
 
-    // Create the DRAFT version
-    const newVersion = await prisma.bankVersion.create({
-      data: {
-        status: 'draft',
-        publishedBy: session.user.id,
-        description: description || null,
-        questionCount: activeQuestions.length,
-        dimensionConfig: dimensions,
-        competencyConfig: competencies,
-        questions: questions
-      }
-    });
-
+    // Return validated data without saving — user must explicitly publish
     return NextResponse.json({
-      message: 'Draft created successfully. Please review.',
-      versionId: newVersion.versionId,
+      message: 'Validation passed. Review and publish when ready.',
       questionCount: activeQuestions.length,
       dimensionCount: dimensions.length,
-      competencyCount: competencies.length
-    }, { status: 201 });
+      competencyCount: competencies.length,
+      payload: {
+        questions,
+        dimensions,
+        competencies,
+        activeQuestionCount: activeQuestions.length,
+      }
+    }, { status: 200 });
 
   } catch (error) {
     console.error(error);
@@ -136,10 +129,14 @@ export async function PATCH(req: Request) {
   }
 
   try {
-    const { versionId, action } = await req.json();
+    const { action, description, payload } = await req.json();
 
     if (action !== 'publish') {
        return NextResponse.json({ message: 'Invalid action' }, { status: 400 });
+    }
+
+    if (!payload?.questions || !payload?.dimensions || !payload?.competencies) {
+      return NextResponse.json({ message: 'Missing validated payload' }, { status: 400 });
     }
 
     // Archive the previous live version
@@ -148,10 +145,18 @@ export async function PATCH(req: Request) {
       data: { status: 'archived' }
     });
 
-    // Publish the draft
-    const published = await prisma.bankVersion.update({
-      where: { versionId },
-      data: { status: 'live', publishedAt: new Date(), publishedBy: session.user.id }
+    // Create and publish in one step — no draft saved
+    const published = await prisma.bankVersion.create({
+      data: {
+        status: 'live',
+        publishedBy: session.user.id,
+        publishedAt: new Date(),
+        description: description || null,
+        questionCount: payload.activeQuestionCount,
+        dimensionConfig: payload.dimensions,
+        competencyConfig: payload.competencies,
+        questions: payload.questions,
+      }
     });
 
     return NextResponse.json({ message: 'Version published and live.', versionId: published.versionId }, { status: 200 });

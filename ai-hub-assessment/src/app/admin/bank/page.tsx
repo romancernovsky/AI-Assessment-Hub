@@ -61,13 +61,13 @@ export default function AdminBankImport() {
   };
 
   const handlePublish = async () => {
-    if (!result?.versionId) return;
+    if (!result?.payload) return;
     setIsPublishing(true);
     try {
       const res = await fetch('/api/admin/bank/import', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ versionId: result.versionId, action: 'publish' })
+        body: JSON.stringify({ action: 'publish', description, payload: result.payload })
       });
       if (res.ok) {
         setPublished(true);
@@ -128,7 +128,7 @@ export default function AdminBankImport() {
             <div className="mt-4 p-6 bg-blue-500/10 border border-blue-500/30 text-blue-800 dark:text-blue-100">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="font-medium text-lg text-blue-600 dark:text-blue-300">Validation Successful</h3>
-                <Badge color="warning">Draft: {result.versionId}</Badge>
+                <Badge color="info">Ready to Publish</Badge>
               </div>
               <ul className="list-disc pl-5 text-sm mb-6 text-blue-700 dark:text-blue-200">
                 <li>Active Questions: {result.questionCount}</li>

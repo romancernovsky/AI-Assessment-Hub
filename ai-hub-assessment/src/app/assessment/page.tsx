@@ -79,13 +79,16 @@ export default function Assessment() {
           const retakeDateFormatted = lockExpiresAt?.toLocaleDateString('en-US', {
             weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
           });
+          const isLocked = sessionInfo.isLocked;
+
           return (
             <div className="flex flex-col gap-6">
               <h2 className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">Assessment Completed!</h2>
               <p className="text-muted-foreground">
                 You have completed the assessment. View your results to see your dimension profile and learning path.
               </p>
-              {sessionInfo.isLocked && retakeDateFormatted && (
+
+              {isLocked && retakeDateFormatted && (
                 <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/30">
                   <span className="text-xl">🔒</span>
                   <div>
@@ -96,8 +99,38 @@ export default function Assessment() {
                   </div>
                 </div>
               )}
+
+              {!isLocked && (
+                <div className="flex items-start gap-3 p-4 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30">
+                  <span className="text-xl">🔓</span>
+                  <div>
+                    <p className="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Assessment Available</p>
+                    <p className="text-emerald-700 dark:text-emerald-100 text-sm mt-0.5">
+                      The 30-day cooldown has passed. You can retake the assessment.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <div className="flex gap-4">
-                <Button onClick={() => router.push('/results')} className="w-fit">
+                {!isLocked && (
+                  <Button onClick={async () => {
+                    try {
+                      const res = await fetch('/api/assessment/session', { method: 'POST' });
+                      const data = await res.json();
+                      if (res.ok && data.sessionId) {
+                        router.push(`/assessment/${data.sessionId}/welcome`);
+                      } else {
+                        setError(data.message || 'Could not start a new session');
+                      }
+                    } catch {
+                      setError('Unexpected error starting assessment');
+                    }
+                  }} className="w-fit">
+                    Start New Assessment
+                  </Button>
+                )}
+                <Button onClick={() => router.push('/results')} variant={isLocked ? 'filled' : 'ghost'} className="w-fit">
                   View Results
                 </Button>
                 <Button variant="ghost" onClick={() => router.push('/dashboard')} className="w-fit">
