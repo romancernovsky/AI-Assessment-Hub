@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { exportResultsPdf } from '@/lib/exportResultsPdf';
 
 interface ResultsData {
   attemptId: string;
@@ -111,6 +112,21 @@ export default function Results() {
     .sort((a: any, b: any) => b.score - a.score);
   const strongest = dimScoreEntries[0];
   const weakest = dimScoreEntries[dimScoreEntries.length - 1];
+
+  const handleExportPdf = () => {
+    exportResultsPdf({
+      overallScore,
+      badge,
+      completionTime,
+      bankVersionId: (data as any).bankVersionId,
+      bankVersionDescription: (data as any).bankVersionDescription,
+      dimScoreEntries,
+      strongest,
+      weakest,
+      learningPath,
+      dimensions,
+    });
+  };
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in-up pb-16">
@@ -307,6 +323,7 @@ export default function Results() {
 
       {/* Actions */}
       <div className="flex justify-end gap-4 mt-8">
+        <Button variant="filled" onClick={handleExportPdf}>Export PDF</Button>
         <Button variant="ghost" onClick={() => router.push('/dashboard')}>Back to Dashboard</Button>
       </div>
     </div>
