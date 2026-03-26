@@ -138,13 +138,13 @@ export default function Results() {
         </div>
         <div className={`inline-flex items-center gap-2 px-5 py-2 text-lg font-medium ${
           isEnthusiast
-            ? 'bg-emerald-50 dark:bg-emerald-500/20 border border-emerald-300 dark:border-emerald-500/40 text-emerald-700 dark:text-emerald-300'
-            : 'bg-amber-50 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/40 text-amber-700 dark:text-amber-300'
+            ? 'bg-[#ff4e00]/10 border border-[#ff4e00]/25 text-[#ff4e00]'
+            : 'bg-muted border border-border text-muted-foreground'
         }`}>
           <span className="text-xl">{isEnthusiast ? '🏆' : '🔍'}</span>
           {badge}
         </div>
-        <p className={`mt-3 text-sm ${isEnthusiast ? 'text-emerald-600 dark:text-emerald-400' : 'text-muted-foreground'}`}>
+        <p className={`mt-3 text-sm ${isEnthusiast ? 'text-[#ff4e00]' : 'text-muted-foreground'}`}>
           {isEnthusiast
             ? `Badge granted! · Completed in ${completionTime || '?'} min`
             : `Reach 80% to earn AI Enthusiast badge · Completed in ${completionTime || '?'} min`
@@ -172,7 +172,7 @@ export default function Results() {
                     <span className="tabular-nums">{score}%</span>
                   </div>
                   <div className="h-2 bg-border">
-                    <div className="h-full transition-all duration-700" style={{ width: `${score}%`, backgroundColor: score >= 80 ? '#34d399' : (dim.color || '#ff4e00') }} />
+                    <div className="h-full transition-all duration-700" style={{ width: `${score}%`, backgroundColor: score >= 80 ? '#ff4e00' : (dim.color || '#dadada') }} />
                   </div>
                 </div>
               </div>
@@ -184,13 +184,13 @@ export default function Results() {
       {/* Strengths & Growth */}
       {strongest && weakest && strongest.key !== weakest.key && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          <div className="border border-border p-6 border-l-4 border-l-emerald-500">
-            <h3 className="text-lg font-medium text-emerald-700 dark:text-emerald-300 mb-2">{strongest.icon} Strongest: {strongest.name}</h3>
+          <div className="border border-border p-6 border-l-2 border-l-[#ff4e00]">
+            <h3 className="text-lg font-medium text-foreground mb-2">{strongest.icon} Strongest: {strongest.name}</h3>
             <p className="text-3xl font-medium mb-1">{strongest.score}%</p>
             <p className="text-xs text-muted-foreground">Your top-performing dimension</p>
           </div>
-          <div className="border border-border p-6 border-l-4 border-l-amber-500">
-            <h3 className="text-lg font-medium text-amber-700 dark:text-amber-300 mb-2">{weakest.icon} Growth Area: {weakest.name}</h3>
+          <div className="border border-border p-6 border-l-2 border-l-border">
+            <h3 className="text-lg font-medium text-foreground mb-2">{weakest.icon} Growth Area: {weakest.name}</h3>
             <p className="text-3xl font-medium mb-1">{weakest.score}%</p>
             <p className="text-xs text-muted-foreground">Focus your development here</p>
           </div>
@@ -221,7 +221,7 @@ export default function Results() {
                   className="h-2.5 transition-all duration-700"
                   style={{
                     width: `${score}%`,
-                    backgroundColor: passed ? '#34d399' : dim.color || '#f59e0b'
+                    backgroundColor: passed ? '#ff4e00' : dim.color || '#dadada'
                   }}
                 />
                 <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/30" style={{ left: '80%' }} />
@@ -233,18 +233,18 @@ export default function Results() {
               </p>
 
               {passed ? (
-                <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-300 dark:border-emerald-500/20">
-                  <p className="text-xs text-emerald-700 dark:text-emerald-300 font-medium mb-1">Where you are:</p>
+                <div className="p-3 border-l-2 border-l-[#ff4e00] border border-border bg-muted/50">
+                  <p className="text-xs text-foreground font-medium mb-1">Where you are:</p>
                   <p className="text-xs text-muted-foreground">{dim.target}</p>
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-500/20">
-                    <p className="text-xs text-amber-700 dark:text-amber-300 font-medium mb-1">Where you should aim:</p>
+                  <div className="p-3 border-l-2 border-l-border border border-border bg-muted/50">
+                    <p className="text-xs text-foreground font-medium mb-1">Where you should aim:</p>
                     <p className="text-xs text-muted-foreground">{dim.target}</p>
                   </div>
-                  <div className="p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-300 dark:border-orange-500/20">
-                    <p className="text-xs text-orange-700 dark:text-orange-300 font-medium mb-1">Your development focus:</p>
+                  <div className="p-3 border-l-2 border-l-[#ff4e00]/50 border border-border bg-muted/50">
+                    <p className="text-xs text-foreground font-medium mb-1">Your development focus:</p>
                     <p className="text-xs text-muted-foreground">{dim.developing}</p>
                   </div>
                 </div>
@@ -274,7 +274,7 @@ export default function Results() {
                   </span>
                   <span className="text-sm font-medium flex-1">{q.title}</span>
                   <span className={`px-2 py-0.5 text-xs font-medium ${
-                    q.userScore >= 0.5 ? 'bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-300' : 'bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300'
+                    q.userScore >= 0.5 ? 'bg-muted text-foreground border border-border' : 'bg-[#ff4e00]/10 text-[#ff4e00] border border-[#ff4e00]/20'
                   }`}>
                     {Math.round(q.userScore * 100)}%
                   </span>
@@ -282,14 +282,14 @@ export default function Results() {
 
                 {/* User answer vs best answer */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-                  <div className="p-3 bg-rose-50 dark:bg-rose-900/10 border border-rose-300 dark:border-rose-500/20">
-                    <p className="text-xs text-rose-700 dark:text-rose-300 font-medium mb-1">Your Answer</p>
+                  <div className="p-3 border-l-2 border-l-border border border-border bg-muted/50">
+                    <p className="text-xs text-foreground font-medium mb-1">Your Answer</p>
                     {q.userAnswer.map((a: string, i: number) => (
                       <p key={i} className="text-xs text-muted-foreground line-clamp-2">{a}</p>
                     ))}
                   </div>
-                  <div className="p-3 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-300 dark:border-emerald-500/20">
-                    <p className="text-xs text-emerald-700 dark:text-emerald-300 font-medium mb-1">Best Answer</p>
+                  <div className="p-3 border-l-2 border-l-[#ff4e00] border border-border bg-muted/50">
+                    <p className="text-xs text-[#ff4e00] font-medium mb-1">Best Answer</p>
                     {q.bestAnswer.map((a: string, i: number) => (
                       <p key={i} className="text-xs text-muted-foreground line-clamp-2">{a}</p>
                     ))}

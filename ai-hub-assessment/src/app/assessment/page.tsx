@@ -36,7 +36,7 @@ export default function Assessment() {
 
   if (error) {
     return (
-      <div className="max-w-2xl mx-auto p-8 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-500/30 text-red-800 dark:text-red-200">
+      <div className="max-w-2xl mx-auto p-8 bg-muted/50 border-l-2 border-l-destructive border border-border text-foreground">
         <h2 className="text-xl font-medium mb-2">Error</h2>
         <p>{error}</p>
       </div>
@@ -64,7 +64,7 @@ export default function Assessment() {
 
         {sessionInfo?.status === 'in_progress' && (
           <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-medium text-amber-700 dark:text-amber-400">Assessment In Progress</h2>
+            <h2 className="text-2xl font-medium text-foreground">Assessment In Progress</h2>
             <p className="text-muted-foreground">
               You have an unfinished assessment. Pick up where you left off.
             </p>
@@ -83,17 +83,17 @@ export default function Assessment() {
 
           return (
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl font-medium text-emerald-700 dark:text-emerald-400">Assessment Completed!</h2>
+              <h2 className="text-2xl font-medium text-foreground">Assessment Completed!</h2>
               <p className="text-muted-foreground">
                 You have completed the assessment. View your results to see your dimension profile and learning path.
               </p>
 
               {isLocked && retakeDateFormatted && (
-                <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/30">
+                <div className="flex items-start gap-3 p-4 border-l-2 border-l-[#ff4e00] border border-border bg-muted/50">
                   <span className="text-xl">🔒</span>
                   <div>
-                    <p className="text-amber-800 dark:text-amber-300 font-medium text-sm">Retake Locked for 30 Days</p>
-                    <p className="text-amber-700 dark:text-amber-100 text-sm mt-0.5">
+                    <p className="text-foreground font-medium text-sm">Retake Locked for 30 Days</p>
+                    <p className="text-muted-foreground text-sm mt-0.5">
                       Next available: <strong>{retakeDateFormatted}</strong>
                     </p>
                   </div>
@@ -101,11 +101,11 @@ export default function Assessment() {
               )}
 
               {!isLocked && (
-                <div className="flex items-start gap-3 p-4 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30">
+                <div className="flex items-start gap-3 p-4 border-l-2 border-l-foreground border border-border bg-muted/50">
                   <span className="text-xl">🔓</span>
                   <div>
-                    <p className="text-emerald-800 dark:text-emerald-300 font-medium text-sm">Assessment Available</p>
-                    <p className="text-emerald-700 dark:text-emerald-100 text-sm mt-0.5">
+                    <p className="text-foreground font-medium text-sm">Assessment Available</p>
+                    <p className="text-muted-foreground text-sm mt-0.5">
                       The 30-day cooldown has passed. You can retake the assessment.
                     </p>
                   </div>

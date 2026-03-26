@@ -46,15 +46,15 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
       <h1 className="text-3xl font-bold mb-6">What to Expect</h1>
 
       {isLocked && (
-        <div className="p-6 mb-6 border-l-4 border-l-amber-500 bg-amber-500/5 border border-border">
+        <div className="p-6 mb-6 border-l-2 border-l-[#ff4e00] bg-muted/50 border border-border">
           <div className="flex gap-4">
             <div className="text-2xl">🔒</div>
             <div>
-              <h3 className="font-semibold text-amber-600 dark:text-amber-300 mb-1">Assessment Locked</h3>
-              <p className="text-amber-800 dark:text-amber-100 text-sm mb-2">
+              <h3 className="font-semibold text-foreground mb-1">Assessment Locked</h3>
+              <p className="text-muted-foreground text-sm mb-2">
                 You can retake this assessment once every 30 days to allow time to apply and reflect on the feedback.
               </p>
-              <p className="text-amber-700 dark:text-amber-200 font-semibold text-sm">
+              <p className="text-foreground font-semibold text-sm">
                 Available again: <strong>{canRetakeDate}</strong>
               </p>
             </div>
@@ -90,10 +90,10 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
       <h2 className="text-2xl font-bold mb-4">Proficiency Bands</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div className="p-6 border-l-4 border-l-amber-500 border border-border bg-card">
+        <div className="p-6 border-l-2 border-l-border border border-border bg-card">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">🔍</span>
-            <h3 className="text-lg font-medium text-amber-600 dark:text-amber-300">AI Explorer</h3>
+            <h3 className="text-lg font-medium text-foreground">AI Explorer</h3>
           </div>
           <p className="text-sm text-muted-foreground mb-2">Below 80%</p>
           <p className="text-sm text-muted-foreground">
@@ -101,10 +101,10 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
           </p>
         </div>
 
-        <div className="p-6 border-l-4 border-l-emerald-500 border border-border bg-card">
+        <div className="p-6 border-l-2 border-l-[#ff4e00] border border-border bg-card">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">🏆</span>
-            <h3 className="text-lg font-medium text-emerald-600 dark:text-emerald-300">AI Enthusiast</h3>
+            <h3 className="text-lg font-medium text-[#ff4e00]">AI Enthusiast</h3>
           </div>
           <p className="text-sm text-muted-foreground mb-2">80% and above</p>
           <p className="text-sm text-muted-foreground">

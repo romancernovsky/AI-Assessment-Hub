@@ -36,7 +36,7 @@ export default function Register() {
     <div className="flex justify-center items-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
       <div className="w-full max-w-md border border-border p-8 bg-card">
         <h1 className="text-3xl font-medium mb-6">Create Account</h1>
-        {error && <div className="mb-4 text-red-600 dark:text-red-400 text-center text-sm">{error}</div>}
+        {error && <div className="mb-4 text-destructive text-center text-sm">{error}</div>}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="block text-sm text-muted-foreground mb-1">Display Name</label>

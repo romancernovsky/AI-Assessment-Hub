@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 
 export default function AboutPage() {
@@ -39,8 +40,8 @@ export default function AboutPage() {
         </div>
         <div className="border border-border p-8 space-y-6 bg-nvs-grey2 dark:bg-[#1e1e1e]">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-[#ff4e00]/10 text-[#ff4e00]">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M2 12h20"/><path d="m4.93 4.93 14.14 14.14M4.93 19.07 19.07 4.93"/></svg>
+            <div className="p-3 bg-[#ff4e00]/10">
+              <Image src="/icons/Lightbulb.svg" alt="" width={24} height={24} className="dark:invert" />
             </div>
             <h3 className="text-xl font-medium">90% Mindset Shift</h3>
           </div>
@@ -62,30 +63,32 @@ export default function AboutPage() {
             { 
               name: 'AI Mindset', 
               weight: '35%', 
-              icon: '🧠', 
+              icon: '/icons/Brain.svg', 
               desc: 'Critical thinking, verification reflexes, and growth mindset when AI fails.' 
             },
             { 
               name: 'Applied Skills', 
               weight: '30%', 
-              icon: '🛠️', 
+              icon: '/icons/Gears.svg', 
               desc: 'Effective prompting, providing context, and matching tools to specialized tasks.' 
             },
             { 
               name: 'Domain Integration', 
               weight: '25%', 
-              icon: '🏢', 
+              icon: '/icons/Integration.svg', 
               desc: 'Connecting AI to your real business workflows and measuring actual impact.' 
             },
             { 
               name: 'Technical Proficiency', 
               weight: '10%', 
-              icon: '💻', 
+              icon: '/icons/Security.svg', 
               desc: 'Understanding of AI limits, security, and orchestrating multi-agent systems.' 
             }
           ].map((dim) => (
             <div key={dim.name} className="border border-border p-6 space-y-4 hover:border-[#ff4e00]/40 transition-all group">
-              <div className="text-4xl">{dim.icon}</div>
+              <div className="mb-2">
+                <Image src={dim.icon} alt="" width={40} height={40} className="dark:invert" />
+              </div>
               <div className="flex justify-between items-end">
                 <h3 className="font-medium text-lg group-hover:text-[#ff4e00] transition-colors">{dim.name}</h3>
                 <span className="text-xs font-mono text-[#ff4e00]/60">{dim.weight}</span>
@@ -106,14 +109,18 @@ export default function AboutPage() {
             </p>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
-                <div className="text-2xl pt-1">🔍</div>
+                <div className="pt-1">
+                  <Image src="/icons/Search.svg" alt="" width={24} height={24} className="dark:invert" />
+                </div>
                 <div>
                   <h4 className="font-medium text-foreground">AI Explorer (0-79%)</h4>
                   <p className="text-sm text-muted-foreground">You're on the path — keep building your AI judgment. You'll receive targeted recommendations for each dimension.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="text-2xl pt-1">🏆</div>
+                <div className="pt-1">
+                  <Image src="/icons/Trophy-award.svg" alt="" width={24} height={24} className="dark:invert" />
+                </div>
                 <div>
                   <h4 className="font-medium text-[#ff4e00] text-2xl">AI Enthusiast (80%+)</h4>
                   <p className="text-sm text-muted-foreground">Demonstrated strong AI competency. Recognized experts who can share knowledge and mentor others.</p>

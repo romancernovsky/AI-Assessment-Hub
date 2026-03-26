@@ -55,8 +55,8 @@ export default function FeedbackPage() {
     return (
       <div className="max-w-2xl mx-auto py-20 text-center animate-fade-in-up">
         <div className="flex justify-center mb-8">
-          <div className="w-20 h-20 bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-            <CheckCircle2 className="w-10 h-10 text-emerald-600 dark:text-emerald-400" />
+          <div className="w-20 h-20 bg-[#ff4e00]/10 border border-[#ff4e00]/20 flex items-center justify-center">
+            <CheckCircle2 className="w-10 h-10 text-[#ff4e00]" />
           </div>
         </div>
         <h1 className="text-4xl font-medium mb-4 text-foreground">Thank You!</h1>
@@ -113,7 +113,7 @@ export default function FeedbackPage() {
                   onClick={() => setFormData({...formData, rating: star})}
                   className={`p-3 transition-all duration-300 ${
                     formData.rating >= star 
-                    ? 'bg-yellow-500/20 text-yellow-500 scale-110 shadow-lg shadow-yellow-500/10' 
+                    ? 'bg-[#ff4e00]/20 text-[#ff4e00] scale-110 shadow-lg shadow-[#ff4e00]/10' 
                     : 'bg-muted text-muted-foreground/40 hover:bg-border hover:text-muted-foreground'
                   }`}
                 >
@@ -122,7 +122,7 @@ export default function FeedbackPage() {
               ))}
             </div>
             {formData.rating > 0 && (
-              <p className="text-sm font-medium text-yellow-500/80 animate-in fade-in zoom-in duration-300">
+              <p className="text-sm font-medium text-[#ff4e00]/80 animate-in fade-in zoom-in duration-300">
                 {['Need Improvement', 'Fair', 'Good', 'Very Good', 'Excellent'][formData.rating - 1]}
               </p>
             )}
@@ -141,7 +141,7 @@ export default function FeedbackPage() {
           </div>
 
           {errorMessage && (
-            <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-400 text-sm font-medium animate-shake">
+            <div className="p-4 bg-muted/50 border-l-2 border-l-destructive border border-border text-foreground text-sm font-medium animate-shake">
               {errorMessage}
             </div>
           )}

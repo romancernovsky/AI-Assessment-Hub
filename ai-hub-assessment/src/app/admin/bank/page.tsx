@@ -116,7 +116,7 @@ export default function AdminBankImport() {
           </Button>
 
           {errors.length > 0 && (
-            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-300">
+            <div className="mt-4 p-4 bg-muted/50 border-l-2 border-l-destructive border border-border text-foreground">
               <h3 className="font-bold mb-2">Validation Failed:</h3>
               <ul className="list-disc pl-5 text-sm space-y-1">
                 {errors.map((err, i) => <li key={i}>{err}</li>)}
@@ -125,20 +125,20 @@ export default function AdminBankImport() {
           )}
 
           {result && !published && (
-            <div className="mt-4 p-6 bg-blue-500/10 border border-blue-500/30 text-blue-800 dark:text-blue-100">
+            <div className="mt-4 p-6 bg-muted/50 border border-border border-l-2 border-l-[#ff4e00] text-foreground">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="font-medium text-lg text-blue-600 dark:text-blue-300">Validation Successful</h3>
+                <h3 className="font-medium text-lg text-[#ff4e00]">Validation Successful</h3>
                 <Badge color="info">Ready to Publish</Badge>
               </div>
-              <ul className="list-disc pl-5 text-sm mb-6 text-blue-700 dark:text-blue-200">
+              <ul className="list-disc pl-5 text-sm mb-6 text-muted-foreground">
                 <li>Active Questions: {result.questionCount}</li>
                 <li>Dimensions Configured: {result.dimensionCount}</li>
                 <li>Competencies Configured: {result.competencyCount}</li>
               </ul>
               
-              <div className="pt-4 border-t border-blue-500/20">
+              <div className="pt-4 border-t border-border">
                 <p className="text-sm mb-4">Review the counts above. Publishing will set this version live and archive the previous one.</p>
-                <Button onClick={handlePublish} disabled={isPublishing} className="w-full bg-green-600 hover:bg-green-500">
+                <Button onClick={handlePublish} disabled={isPublishing} className="w-full">
                   {isPublishing ? 'Publishing...' : 'Approve & Publish'}
                 </Button>
               </div>
@@ -146,7 +146,7 @@ export default function AdminBankImport() {
           )}
 
           {published && (
-            <div className="mt-4 p-6 bg-green-500/10 border border-green-500/50 text-green-700 dark:text-green-300 text-center">
+            <div className="mt-4 p-6 bg-muted/50 border border-border border-l-2 border-l-[#ff4e00] text-foreground text-center">
               <h3 className="text-xl font-bold mb-2">Version {result?.versionId} Published Successfully!</h3>
               <p className="text-sm">This bank version is now live for all new assessment sessions.</p>
             </div>

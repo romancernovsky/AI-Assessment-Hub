@@ -49,7 +49,7 @@ export default function AdminFeedback() {
             <h2 className="text-xl font-medium text-foreground tracking-tight">Feedback Inbox</h2>
             <p className="text-sm text-muted-foreground mt-1">Detailed list of user ratings and qualitative feedback.</p>
           </div>
-          <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+          <div className="px-3 py-1 bg-[#ff4e00]/10 border border-[#ff4e00]/20 text-[10px] font-bold text-[#ff4e00] uppercase tracking-widest">
             Inbox
           </div>
         </div>

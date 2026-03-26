@@ -3,6 +3,25 @@
 @tailwind utilities;
 
 /* ============================================================
+   Novartis Brand Font — Volta Modern Display (self-hosted .woff)
+   ============================================================ */
+@font-face {
+  font-family: 'Volta Modern Display';
+  src: url('./fonts/VoltaModernDisplay-Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Volta Modern Display';
+  src: url('./fonts/VoltaModernDisplay-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
    Novartis Brand Design System — CSS Custom Properties
    Based on Novartis Brand Guidelines
    ============================================================ */

@@ -1,18 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import AuthProvider from "@/providers/AuthProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 /* Novartis brand font: Volta Modern Display (self-hosted .woff)
-   Fallback chain: Arial, Helvetica, sans-serif
-   Using Inter as web-safe stand-in until Volta font files are added */
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
+   Loaded via @font-face in globals.css
+   Fallback chain: Arial, Helvetica, sans-serif */
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -31,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={jetbrainsMono.variable} suppressHydrationWarning>
       <body className="font-sans antialiased">
         <ThemeProvider>
           <AuthProvider>

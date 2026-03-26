@@ -118,13 +118,13 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
 
         {/* Weekly Tools */}
         <div className="mb-8">
-          <h2 className="font-semibold mb-3 text-foreground">Which AI tools do you use on a <span className="text-blue-500 dark:text-blue-300">weekly</span> basis (but not daily)?</h2>
+          <h2 className="font-semibold mb-3 text-foreground">Which AI tools do you use on a <span className="text-[#ff4e00]">weekly</span> basis (but not daily)?</h2>
           <p className="text-xs text-muted-foreground mb-3">Select all that apply. Selecting none is fine.</p>
           <ToolCheckboxList selected={weeklyTools} type="weekly" />
           {showOtherWeekly && (
             <input
               type="text"
-              className="mt-2 w-full bg-black/40 border border-white/10 rounded-lg p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              className="mt-2 w-full bg-black/40 border border-white/10 p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary/50"
               placeholder="Specify other tool..."
               value={otherWeekly}
               onChange={e => setOtherWeekly(e.target.value)}

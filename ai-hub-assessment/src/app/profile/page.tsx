@@ -126,8 +126,8 @@ export default function ProfilePage() {
       {message && (
         <div className={`mb-6 p-4 border text-sm ${
           message.type === 'success'
-            ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300'
-            : 'bg-rose-500/10 border-rose-500/30 text-rose-700 dark:text-rose-300'
+            ? 'bg-muted/50 border-border border-l-2 border-l-[#ff4e00] text-foreground'
+            : 'bg-muted/50 border-border border-l-2 border-l-destructive text-foreground'
         }`}>
           {message.text}
         </div>
@@ -144,9 +144,9 @@ export default function ProfilePage() {
             <div className="flex items-center gap-3 mt-1">
               <Badge variant={roleInfo.color}>{roleInfo.label}</Badge>
               {profile.isActive ? (
-                <span className="text-xs text-emerald-400">● Active</span>
+                <span className="text-xs text-[#ff4e00]">● Active</span>
               ) : (
-                <span className="text-xs text-rose-400">● Inactive</span>
+                <span className="text-xs text-muted-foreground">● Inactive</span>
               )}
             </div>
           </div>

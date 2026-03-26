@@ -231,8 +231,8 @@ export default function AdminUsers() {
             {createMessage && (
               <div className={`p-3 text-sm ${
                 createMessage.type === 'success'
-                  ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-700 dark:text-red-300 border border-red-500/30'
+                  ? 'bg-muted/50 border-l-2 border-l-[#ff4e00] border border-border text-foreground'
+                  : 'bg-muted/50 border-l-2 border-l-destructive border border-border text-foreground'
               }`}>
                 {createMessage.text}
               </div>
@@ -330,10 +330,10 @@ export default function AdminUsers() {
                     {/* Status */}
                     <td className="px-6 py-5">
                       <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${
-                        user.status === 'Active' ? 'text-emerald-400' : 'text-red-400'
+                        user.status === 'Active' ? 'text-foreground' : 'text-muted-foreground'
                       }`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${
-                          user.status === 'Active' ? 'bg-emerald-400' : 'bg-red-400'
+                          user.status === 'Active' ? 'bg-[#ff4e00]' : 'bg-muted-foreground'
                         }`} />
                         {user.status}
                       </span>
@@ -349,7 +349,7 @@ export default function AdminUsers() {
                               className="h-full"
                               style={{
                                 width: `${user.latestScore}%`,
-                                backgroundColor: user.latestScore >= 80 ? '#34d399' : '#f59e0b'
+                                backgroundColor: user.latestScore >= 80 ? '#ff4e00' : '#dadada'
                               }}
                             />
                           </div>
@@ -371,19 +371,19 @@ export default function AdminUsers() {
                         {user.latestAttemptId && (
                           <button
                             onClick={() => clearResult(user.name, user.latestAttemptId)}
-                            className="text-xs px-3 py-1.5 rounded-lg bg-amber-500/8 text-amber-400 border border-amber-500/20 hover:bg-amber-500/15 hover:border-amber-500/35 transition-all duration-150 whitespace-nowrap"
+                            className="text-xs px-3 py-1.5 bg-muted text-muted-foreground border border-border hover:bg-border hover:text-foreground transition-all duration-150 whitespace-nowrap"
                           >
                             Clear Result
                           </button>
                         )}
                         <button
                           onClick={() => deleteUser(user.id, user.name)}
-                          className="text-xs px-3 py-1.5 rounded-lg bg-red-500/8 text-red-400 border border-red-500/20 hover:bg-red-500/15 hover:border-red-500/35 transition-all duration-150"
+                          className="text-xs px-3 py-1.5 bg-destructive/10 text-destructive border border-destructive/20 hover:bg-destructive/20 hover:border-destructive/35 transition-all duration-150"
                         >
                           Delete
                         </button>
                         <Link href={`/admin/users/${user.id}`}>
-                          <button className="text-xs px-3 py-1.5 rounded-lg bg-primary/15 text-primary border border-primary/30 hover:bg-primary/25 hover:border-primary/50 transition-all duration-150">
+                          <button className="text-xs px-3 py-1.5 bg-primary/15 text-primary border border-primary/30 hover:bg-primary/25 hover:border-primary/50 transition-all duration-150">
                             View
                           </button>
                         </Link>

@@ -348,7 +348,7 @@ export default function AssessmentQuiz() {
             {currentQ.competencyName || currentQ.competency}
           </span>
           {isMulti && (
-            <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <span className="px-2 py-0.5 rounded text-xs font-bold bg-[#ff4e00]/15 text-[#ff4e00] border border-[#ff4e00]/25">
               Select exactly {currentQ.selectCount} answers
             </span>
           )}

@@ -72,7 +72,7 @@ const config: Config = {
         "nvs-grey2": "#f5f5f5",
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
+        sans: ["'Volta Modern Display'", "Arial", "Helvetica", "sans-serif"],
         mono: ["var(--font-mono)"],
       },
       animation: {

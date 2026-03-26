@@ -79,7 +79,7 @@ export default function ReviewClient({ attempt, questions, answers, reactions }:
                        <CheckCircle2 className="w-4 h-4" /> Correct
                      </Badge>
                    ) : (
-                     <Badge color="warning" className="flex items-center gap-1.5 px-3 py-1 bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-300 dark:border-rose-500/30">
+                     <Badge color="warning" className="flex items-center gap-1.5 px-3 py-1 bg-muted text-foreground border-border">
                        <XCircle className="w-4 h-4" /> Incorrect
                      </Badge>
                    )}
@@ -92,7 +92,7 @@ export default function ReviewClient({ attempt, questions, answers, reactions }:
                 {/* User's Answer */}
                 <div className="space-y-3">
                   <h4 className="text-sm font-medium text-muted-foreground tracking-wider">Your Answer</h4>
-                  <div className={`p-4 border ${isCorrect ? "border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/5 text-emerald-700 dark:text-emerald-200" : "border-rose-300 dark:border-rose-500/30 bg-rose-50 dark:bg-rose-500/5 text-rose-700 dark:text-rose-200"}`}>
+                  <div className={`p-4 border ${isCorrect ? "border-border bg-muted/50 border-l-2 border-l-[#ff4e00] text-foreground" : "border-border bg-muted/50 border-l-2 border-l-border text-foreground"}`}>
                     {userOption ? userOption.text : <span className="italic text-muted-foreground">No answer provided</span>}
                   </div>
                 </div>
@@ -134,7 +134,7 @@ function alignCorrectAnswer(correctOption: any) {
   return (
     <div className="space-y-3">
       <h4 className="text-sm font-medium text-muted-foreground tracking-wider">Correct Answer</h4>
-      <div className="p-4 border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/5 text-emerald-700 dark:text-emerald-200">
+      <div className="p-4 border border-border bg-muted/50 border-l-2 border-l-[#ff4e00] text-foreground">
         {correctOption.text}
       </div>
     </div>

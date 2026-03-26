@@ -83,17 +83,17 @@ export default function AnalyticsClient() {
         {/* Competency Strengths/Opportunities */}
         <div className="grid grid-cols-1 gap-8 lg:col-span-2">
           <div className="p-6 border border-border bg-card">
-            <h2 className="text-xl font-medium text-emerald-600 dark:text-emerald-400 mb-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span> Top 5 Strengths
+            <h2 className="text-xl font-medium text-foreground mb-6 flex items-center gap-2">
+              <span className="w-2 h-2 bg-[#ff4e00]"></span> Top 5 Strengths
             </h2>
             <div className="space-y-3">
               {data?.topCompetencies?.map((comp: any) => (
-                <div key={comp.code} className="flex justify-between items-center px-4 py-3.5 bg-emerald-500/5 border border-emerald-500/15 hover:bg-emerald-500/8 transition-colors">
+                <div key={comp.code} className="flex justify-between items-center px-4 py-3.5 bg-muted/50 border border-border hover:bg-muted transition-colors">
                   <div className="min-w-0 pr-4">
-                    <div className="text-xs font-medium text-emerald-600 dark:text-emerald-500/70 uppercase tracking-wider mb-0.5">{comp.code}</div>
+                    <div className="text-xs font-medium text-[#ff4e00] uppercase tracking-wider mb-0.5">{comp.code}</div>
                     <div className="text-sm font-medium text-foreground truncate">{comp.name}</div>
                   </div>
-                  <div className="text-xl font-medium text-emerald-600 dark:text-emerald-400 shrink-0">{comp.average}%</div>
+                  <div className="text-xl font-medium text-[#ff4e00] shrink-0">{comp.average}%</div>
                 </div>
               ))}
               {(!data?.topCompetencies || data.topCompetencies.length === 0) && (
@@ -103,17 +103,17 @@ export default function AnalyticsClient() {
           </div>
 
           <div className="p-6 border border-border bg-card">
-            <h2 className="text-xl font-medium text-rose-600 dark:text-rose-400 mb-6 flex items-center gap-2">
-               <span className="w-2 h-2 rounded-full bg-rose-400"></span> Top 5 Opportunities
+            <h2 className="text-xl font-medium text-foreground mb-6 flex items-center gap-2">
+               <span className="w-2 h-2 bg-muted-foreground"></span> Top 5 Opportunities
             </h2>
             <div className="space-y-3">
               {data?.bottomCompetencies?.map((comp: any) => (
-                <div key={comp.code} className="flex justify-between items-center px-4 py-3.5 bg-rose-500/5 border border-rose-500/15 hover:bg-rose-500/8 transition-colors">
+                <div key={comp.code} className="flex justify-between items-center px-4 py-3.5 bg-muted/50 border border-border hover:bg-muted transition-colors">
                   <div className="min-w-0 pr-4">
-                    <div className="text-xs font-medium text-rose-600 dark:text-rose-500/70 uppercase tracking-wider mb-0.5">{comp.code}</div>
+                    <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-0.5">{comp.code}</div>
                     <div className="text-sm font-medium text-foreground truncate">{comp.name}</div>
                   </div>
-                  <div className="text-xl font-medium text-rose-600 dark:text-rose-400 shrink-0">{comp.average}%</div>
+                  <div className="text-xl font-medium text-foreground shrink-0">{comp.average}%</div>
                 </div>
               ))}
                {(!data?.bottomCompetencies || data.bottomCompetencies.length === 0) && (
@@ -133,7 +133,7 @@ export default function AnalyticsClient() {
               <h2 className="text-xl font-medium text-foreground tracking-tight">Question Feedback Tracker</h2>
               <p className="text-sm text-muted-foreground mt-1">Real-time user feedback, reactions, and comments on assessment questions for continuous improvement.</p>
             </div>
-            <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-widest">
+            <div className="px-3 py-1 bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-widest">
               Live Feed
             </div>
           </div>
@@ -183,11 +183,11 @@ export default function AnalyticsClient() {
                     {/* Reaction */}
                     <td className="px-6 py-5">
                       {r.vote === 'up' ? (
-                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold text-[11px] w-fit border border-emerald-500/20 shadow-lg shadow-emerald-500/5">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-[#ff4e00]/10 text-[#ff4e00] font-bold text-[11px] w-fit border border-[#ff4e00]/20">
                           <ThumbsUp className="w-3.5 h-3.5" /> LIKE
                         </div>
                       ) : r.vote === 'down' ? (
-                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-rose-500/10 text-rose-400 font-bold text-[11px] w-fit border border-rose-500/20 shadow-lg shadow-rose-500/5">
+                        <div className="flex items-center gap-2 px-3 py-1.5 bg-muted text-muted-foreground font-bold text-[11px] w-fit border border-border">
                           <ThumbsDown className="w-3.5 h-3.5" /> DISLIKE
                         </div>
                       ) : (

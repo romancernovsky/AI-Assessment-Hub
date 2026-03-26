@@ -40,8 +40,8 @@ function LoginContent() {
     <div className="flex justify-center items-center min-h-[calc(100vh-12rem)] animate-fade-in-up">
       <div className="w-full max-w-md border border-border p-8 bg-card">
         <h1 className="text-3xl font-medium mb-6">Login</h1>
-        {registered && <div className="mb-4 text-green-700 dark:text-green-400 text-center text-sm">Registration successful! Please login.</div>}
-        {error && <div className="mb-4 text-red-600 dark:text-red-400 text-center text-sm">{error}</div>}
+        {registered && <div className="mb-4 text-[#ff4e00] text-center text-sm">Registration successful! Please login.</div>}
+        {error && <div className="mb-4 text-destructive text-center text-sm">{error}</div>}
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>

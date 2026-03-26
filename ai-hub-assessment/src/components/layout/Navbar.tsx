@@ -86,13 +86,13 @@ export const Navbar = () => {
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            <Image src="/icons/Burger-menu.svg" alt="" width={24} height={24} className="dark:invert" />
           </button>
         </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 z-[60] bg-background transition-transform duration-300 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div className={`fixed inset-0 z-[60] bg-background transition-transform duration-300 lg:hidden ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6 flex flex-col h-full">
           <div className="flex items-center justify-between h-8 mb-12">
             <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center">

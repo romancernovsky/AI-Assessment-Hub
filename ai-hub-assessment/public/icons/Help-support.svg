@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Icon" xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" version="1.2" viewBox="0 0 48 48">
+  <!-- Generator: Adobe Illustrator 29.8.4, SVG Export Plug-In . SVG Version: 2.1.1 Build 6)  -->
+  <line x1="23" y1="29" x2="23" y2="31" fill="none" stroke="#161616" stroke-miterlimit="10" stroke-width="2"/>
+  <path d="M23,27v-3c2.2091,0,4-1.7909,4-4s-1.7909-4-4-4-4,1.7909-4,4" fill="none" stroke="#161616" stroke-miterlimit="10" stroke-width="2"/>
+  <path d="M36,11H8v2h28c1.1025,0,2,.8975,2,2v16c0,1.1025-.8975,2-2,2h-17.4805l-2.5195,3.1494v-3.1494h-4c-1.1025,0-2-.8975-2-2V15h-2v16c0,2.2061,1.7939,4,4,4h2v4h2.2805l3.2-4h16.5195c2.2061,0,4-1.7939,4-4V15c0-2.2061-1.7939-4-4-4Z" fill="#161616"/>
+</svg>
