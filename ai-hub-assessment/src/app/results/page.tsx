@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { exportResultsPdf } from '@/lib/exportResultsPdf';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface ResultsData {
   attemptId: string;
@@ -160,6 +161,47 @@ export default function Results() {
       {/* Dimension Overview */}
       <div className="border border-border p-8 mb-8">
         <h2 className="text-2xl font-medium mb-6">Dimension Profile</h2>
+
+        {/* Radar Chart */}
+        {radarData.length >= 3 && (
+          <div className="flex justify-center mb-8">
+            <div className="w-full max-w-md" style={{ height: 320 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
+                  <PolarGrid stroke="var(--color-border, #e5e5e5)" />
+                  <PolarAngleAxis
+                    dataKey="dimension"
+                    tick={{ fill: 'var(--color-foreground, #141413)', fontSize: 12, fontWeight: 500 }}
+                  />
+                  <PolarRadiusAxis
+                    angle={90}
+                    domain={[0, 100]}
+                    tick={{ fill: 'var(--color-muted-foreground, #888)', fontSize: 10 }}
+                    tickCount={5}
+                  />
+                  <Radar
+                    name="Score"
+                    dataKey="score"
+                    stroke="#ff4e00"
+                    fill="#ff4e00"
+                    fillOpacity={0.18}
+                    strokeWidth={2}
+                  />
+                  <Tooltip
+                    formatter={(value: number) => [`${value}%`, 'Score']}
+                    contentStyle={{
+                      backgroundColor: 'var(--color-card, #fff)',
+                      border: '1px solid var(--color-border, #e5e5e5)',
+                      borderRadius: 0,
+                      fontSize: 12,
+                    }}
+                  />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {dimensions.map((dim: any) => {
             const score = dimScores[dim.key] || 0;
