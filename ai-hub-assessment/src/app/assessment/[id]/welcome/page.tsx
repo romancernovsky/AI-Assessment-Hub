@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
@@ -10,7 +11,8 @@ const dimensions = [
   { icon: '🔧', name: 'Technical Proficiency', weight: 10, count: 3, color: '#d97757' },
 ];
 
-export default function WelcomeScreen({ params }: { params: { id: string } }) {
+export default function WelcomeScreen({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const router = useRouter();
 
   return (
@@ -57,7 +59,7 @@ export default function WelcomeScreen({ params }: { params: { id: string } }) {
         </div>
 
         <Button 
-          onClick={() => router.push(`/assessment/${params.id}/brief`)} 
+          onClick={() => router.push(`/assessment/${id}/brief`)} 
           className="px-8 py-3 text-lg"
         >
           Begin Assessment →

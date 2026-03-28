@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -50,7 +50,7 @@ export default function ProfilePage() {
         setEditEmail(data.email);
       }
     } catch (e) {
-      console.error('Failed to fetch profile:', e);
+      // Failed to load — loading state handles UI
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,12 @@ export default function ProfilePage() {
       if (res.ok) {
         setProfile(data.user);
         setEditing(false);
-        setMessage({ type: 'success', text: 'Profile updated successfully. Changes will fully apply on next login.' });
+        if (data.requireReauth) {
+          setMessage({ type: 'success', text: 'Email updated. Signing you out so changes take effect...' });
+          setTimeout(() => signOut({ callbackUrl: '/login' }), 2000);
+        } else {
+          setMessage({ type: 'success', text: 'Profile updated successfully.' });
+        }
       } else {
         setMessage({ type: 'error', text: data.message || 'Failed to update profile' });
       }

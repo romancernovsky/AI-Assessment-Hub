@@ -2,19 +2,20 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import * as xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 
 export async function GET(
   req: Request,
-  { params }: { params: { versionId: string } }
+  { params }: { params: Promise<{ versionId: string }> }
 ) {
+  const { versionId: versionIdStr } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session || (session.user.role !== 'admin' && session.user.role !== 'contentAdmin')) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
   }
 
-  const versionId = parseInt(params.versionId);
+  const versionId = parseInt(versionIdStr);
   if (isNaN(versionId)) {
     return NextResponse.json({ message: 'Invalid version ID' }, { status: 400 });
   }
@@ -51,18 +52,22 @@ export async function GET(
     }
 
     // Default to Excel
-    const wb = xlsx.utils.book_new();
-    
-    // Create sheets from JSON data
-    const questionsSheet = xlsx.utils.json_to_sheet(version.questions as any[]);
-    const dimensionsSheet = xlsx.utils.json_to_sheet(version.dimensionConfig as any[]);
-    const competenciesSheet = xlsx.utils.json_to_sheet(version.competencyConfig as any[]);
+    const wb = new ExcelJS.Workbook();
 
-    xlsx.utils.book_append_sheet(wb, questionsSheet, 'Questions');
-    xlsx.utils.book_append_sheet(wb, dimensionsSheet, 'Dimensions');
-    xlsx.utils.book_append_sheet(wb, competenciesSheet, 'Competencies');
+    // Helper: add JSON array as a sheet
+    function addSheet(name: string, data: any[]) {
+      const ws = wb.addWorksheet(name);
+      if (data.length === 0) return;
+      const headers = Object.keys(data[0]);
+      ws.addRow(headers);
+      data.forEach(item => ws.addRow(headers.map(h => item[h] ?? '')));
+    }
 
-    const buffer = xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    addSheet('Questions', version.questions as any[]);
+    addSheet('Dimensions', version.dimensionConfig as any[]);
+    addSheet('Competencies', version.competencyConfig as any[]);
+
+    const buffer = await wb.xlsx.writeBuffer();
 
     return new NextResponse(buffer, {
       status: 200,

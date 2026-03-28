@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
@@ -10,7 +11,8 @@ interface SessionStatus {
   isLocked?: boolean;
 }
 
-export default function BriefScreen({ params }: { params: { id: string } }) {
+export default function BriefScreen({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const router = useRouter();
   const [sessionStatus, setSessionStatus] = useState<SessionStatus | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,7 +26,7 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
           setSessionStatus(data);
         }
       } catch (e) {
-        console.error('Failed to check session:', e);
+        // Session check failed — continue with default state
       } finally {
         setLoading(false);
       }
@@ -114,11 +116,11 @@ export default function BriefScreen({ params }: { params: { id: string } }) {
       </div>
 
       <div className="flex justify-between items-center">
-        <Button variant="ghost" onClick={() => router.push(`/assessment/${params.id}/welcome`)}>
+        <Button variant="ghost" onClick={() => router.push(`/assessment/${id}/welcome`)}>
           ← Back
         </Button>
         <Button 
-          onClick={() => router.push(`/assessment/${params.id}/survey`)} 
+          onClick={() => router.push(`/assessment/${id}/survey`)} 
           className="px-8"
           disabled={isLocked || loading}
         >

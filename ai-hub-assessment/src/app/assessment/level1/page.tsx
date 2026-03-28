@@ -157,7 +157,7 @@ export default function AssessmentQuiz() {
       });
       setSavedAnswers(prev => ({ ...prev, [currentQ.id]: true }));
     } catch (err) {
-      console.error('Failed to save answer:', err);
+      // Answer save failed silently — user can retry
     } finally {
       setSubmitting(false);
     }
@@ -224,7 +224,7 @@ export default function AssessmentQuiz() {
         body: JSON.stringify({ questionId: currentQ.id, vote: newVote })
       });
     } catch (err) {
-      console.error('Failed to save reaction:', err);
+      // Reaction save failed silently
     }
   };
 
@@ -240,7 +240,7 @@ export default function AssessmentQuiz() {
         body: JSON.stringify({ questionId: currentQ.id, comment: current.comment })
       });
     } catch (err) {
-      console.error('Failed to save comment:', err);
+      // Comment save failed silently
     }
   };
 

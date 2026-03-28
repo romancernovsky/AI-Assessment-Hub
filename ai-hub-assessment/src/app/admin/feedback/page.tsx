@@ -20,7 +20,7 @@ export default function AdminFeedback() {
       const data = await res.json();
       if (res.ok) setFeedbacks(data);
     } catch (error) {
-      console.error(error);
+      // Fetch failed — loading state handles UI
     } finally {
       setLoading(false);
     }

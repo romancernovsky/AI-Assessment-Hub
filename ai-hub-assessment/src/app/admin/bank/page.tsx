@@ -23,7 +23,7 @@ export default function AdminBankImport() {
     try {
       const res = await fetch('/api/admin/bank/versions');
       if (res.ok) setVersions(await res.json());
-    } catch (e) { console.error('Failed to fetch versions', e); }
+    } catch (e) { /* fetch failed */ }
   };
 
   const handleUpload = async () => {

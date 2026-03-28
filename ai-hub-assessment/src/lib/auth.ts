@@ -96,7 +96,7 @@ export const authOptions: NextAuthOptions = {
               email,
               password: "",
               displayName: user.name || email.split("@")[0],
-              role: "contentAdmin",
+              role: "user",
               authProvider: "azure-ad",
               externalId: account.providerAccountId,
               lastLoginAt: new Date(),

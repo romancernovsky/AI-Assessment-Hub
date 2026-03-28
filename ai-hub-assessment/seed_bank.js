@@ -1,5 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
-const XLSX = require('xlsx');
+const ExcelJS = require('exceljs');
 const path = require('path');
 
 const p = new PrismaClient();
@@ -8,12 +8,37 @@ async function seed() {
   try {
     const workbookPath = path.resolve(__dirname, '..', 'AI_Hub_Assessment_v2_Question_Bank.xlsx');
     console.log('Reading workbook from:', workbookPath);
-    const wb = XLSX.readFile(workbookPath);
+    const wb = new ExcelJS.Workbook();
+    await wb.xlsx.readFile(workbookPath);
+
+    // Helper: convert ExcelJS worksheet to array of objects
+    function sheetToJson(ws) {
+      const rows = [];
+      const headers = [];
+      ws.getRow(1).eachCell((cell, colNumber) => {
+        headers[colNumber] = String(cell.value ?? '').trim();
+      });
+      for (let i = 2; i <= ws.rowCount; i++) {
+        const row = ws.getRow(i);
+        const obj = {};
+        let hasValue = false;
+        headers.forEach((header, colNumber) => {
+          if (!header) return;
+          const val = row.getCell(colNumber).value;
+          if (val !== null && val !== undefined) {
+            obj[header] = typeof val === 'object' && val !== null && 'result' in val ? val.result : val;
+            hasValue = true;
+          }
+        });
+        if (hasValue) rows.push(obj);
+      }
+      return rows;
+    }
 
     // --- Parse Dimensions sheet ---
-    const dimSheet = wb.Sheets['Dimensions'];
+    const dimSheet = wb.getWorksheet('Dimensions');
     if (!dimSheet) throw new Error('Missing "Dimensions" sheet');
-    const dimRows = XLSX.utils.sheet_to_json(dimSheet);
+    const dimRows = sheetToJson(dimSheet);
     console.log(`Parsed ${dimRows.length} dimensions`);
 
     const dimensions = dimRows.map(r => ({
@@ -36,9 +61,9 @@ async function seed() {
     }
 
     // --- Parse Competencies sheet ---
-    const compSheet = wb.Sheets['Competencies'];
+    const compSheet = wb.getWorksheet('Competencies');
     if (!compSheet) throw new Error('Missing "Competencies" sheet');
-    const compRows = XLSX.utils.sheet_to_json(compSheet);
+    const compRows = sheetToJson(compSheet);
     console.log(`Parsed ${compRows.length} competencies`);
 
     const competencies = compRows.map(r => ({
@@ -51,9 +76,9 @@ async function seed() {
     }));
 
     // --- Parse Questions sheet ---
-    const qSheet = wb.Sheets['Questions'];
+    const qSheet = wb.getWorksheet('Questions');
     if (!qSheet) throw new Error('Missing "Questions" sheet');
-    const qRows = XLSX.utils.sheet_to_json(qSheet);
+    const qRows = sheetToJson(qSheet);
     console.log(`Parsed ${qRows.length} questions`);
 
     const questions = qRows.map(r => ({

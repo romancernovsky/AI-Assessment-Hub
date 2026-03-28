@@ -23,7 +23,7 @@ export default function Dashboard() {
         if (resultsRes.ok) setResults(await resultsRes.json());
         if (sessionRes.ok) setSessionStatus(await sessionRes.json());
       } catch (e) {
-        console.error('Error fetching dashboard data:', e);
+        // Error handled — dashboard shows empty state
       } finally {
         setLoading(false);
       }

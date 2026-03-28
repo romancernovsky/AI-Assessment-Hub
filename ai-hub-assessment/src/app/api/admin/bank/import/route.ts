@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import * as xlsx from 'xlsx';
+import ExcelJS from 'exceljs';
 
 
 
@@ -22,21 +22,47 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'No file uploaded' }, { status: 400 });
     }
 
-    const buffer = await file.arrayBuffer();
-    const workbook = xlsx.read(buffer, { type: 'buffer' });
+    const arrayBuf = await file.arrayBuffer();
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(arrayBuf as any);
 
     // Ensure all three sheets exist
     const requiredSheets = ['Questions', 'Dimensions', 'Competencies'];
+    const sheetNames = workbook.worksheets.map(ws => ws.name);
     for (const sheet of requiredSheets) {
-      if (!workbook.SheetNames.includes(sheet)) {
+      if (!sheetNames.includes(sheet)) {
         return NextResponse.json({ message: `Missing sheet: ${sheet}` }, { status: 400 });
       }
     }
 
+    // Helper: convert ExcelJS worksheet to array of objects (like xlsx.utils.sheet_to_json)
+    function sheetToJson(worksheet: ExcelJS.Worksheet): any[] {
+      const rows: any[] = [];
+      const headers: string[] = [];
+      worksheet.getRow(1).eachCell((cell, colNumber) => {
+        headers[colNumber] = String(cell.value ?? '').trim();
+      });
+      for (let i = 2; i <= worksheet.rowCount; i++) {
+        const row = worksheet.getRow(i);
+        const obj: any = {};
+        let hasValue = false;
+        headers.forEach((header, colNumber) => {
+          if (!header) return;
+          const val = row.getCell(colNumber).value;
+          if (val !== null && val !== undefined) {
+            obj[header] = typeof val === 'object' && 'result' in (val as any) ? (val as any).result : val;
+            hasValue = true;
+          }
+        });
+        if (hasValue) rows.push(obj);
+      }
+      return rows;
+    }
+
     // Parse the data
-    const questions: any[] = xlsx.utils.sheet_to_json(workbook.Sheets['Questions']);
-    const dimensions: any[] = xlsx.utils.sheet_to_json(workbook.Sheets['Dimensions']);
-    const competencies: any[] = xlsx.utils.sheet_to_json(workbook.Sheets['Competencies']);
+    const questions: any[] = sheetToJson(workbook.getWorksheet('Questions')!);
+    const dimensions: any[] = sheetToJson(workbook.getWorksheet('Dimensions')!);
+    const competencies: any[] = sheetToJson(workbook.getWorksheet('Competencies')!);
 
     const activeQuestions = questions.filter(q => q.status === 'active');
     if (activeQuestions.length === 0) {

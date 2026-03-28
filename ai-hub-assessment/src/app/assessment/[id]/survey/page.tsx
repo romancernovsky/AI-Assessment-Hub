@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
@@ -15,7 +16,8 @@ const AI_TOOLS = [
   'ChatGPT',
 ];
 
-export default function SurveyScreen({ params }: { params: { id: string } }) {
+export default function SurveyScreen({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params);
   const router = useRouter();
   const [dailyTools, setDailyTools] = useState<string[]>([]);
   const [weeklyTools, setWeeklyTools] = useState<string[]>([]);
@@ -53,7 +55,6 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
 
       router.push('/assessment/level1');
     } catch (err) {
-      console.error('Failed to save survey:', err);
       router.push('/assessment/level1');
     } finally {
       setSaving(false);
@@ -133,7 +134,7 @@ export default function SurveyScreen({ params }: { params: { id: string } }) {
         </div>
 
         <div className="flex justify-between">
-          <Button variant="ghost" onClick={() => router.push(`/assessment/${params.id}/brief`)}>
+          <Button variant="ghost" onClick={() => router.push(`/assessment/${id}/brief`)}>
             ← Back
           </Button>
           <Button onClick={handleContinue} disabled={saving}>

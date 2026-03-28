@@ -80,7 +80,14 @@ export async function PUT(req: Request) {
       }
     });
 
-    return NextResponse.json({ message: 'Profile updated', user: updated }, { status: 200 });
+    // If email changed, tell client to re-authenticate so JWT reflects new email
+    const emailChanged = email.trim() !== session.user.email;
+
+    return NextResponse.json({
+      message: 'Profile updated',
+      user: updated,
+      requireReauth: emailChanged,
+    }, { status: 200 });
   } catch (error) {
     console.error('Profile update error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

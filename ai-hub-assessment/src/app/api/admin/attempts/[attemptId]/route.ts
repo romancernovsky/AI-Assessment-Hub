@@ -3,7 +3,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
-export async function DELETE(req: Request, { params }: { params: { attemptId: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ attemptId: string }> }) {
+  const { attemptId } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session || (session.user.role !== 'admin' && session.user.role !== 'contentAdmin')) {
@@ -13,12 +14,12 @@ export async function DELETE(req: Request, { params }: { params: { attemptId: st
   try {
     // Delete cascading reactions first
     await prisma.questionReaction.deleteMany({
-      where: { attemptId: params.attemptId }
+      where: { attemptId }
     });
 
     // Delete the attempt
     await prisma.assessmentAttempt.delete({
-      where: { attemptId: params.attemptId }
+      where: { attemptId }
     });
 
     return NextResponse.json({ message: 'Attempt deleted successfully' }, { status: 200 });

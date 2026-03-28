@@ -33,7 +33,7 @@ export default function AdminUsers() {
       const data = await res.json();
       if (res.ok) setUsers(data.users);
     } catch (error) {
-      console.error(error);
+      // Fetch failed — UI shows empty state
     } finally {
       setLoading(false);
     }
@@ -83,7 +83,7 @@ export default function AdminUsers() {
         fetchUsers(filter);
       }
     } catch (error) {
-      console.error(error);
+      // Role change failed
     }
   };
 
@@ -96,7 +96,7 @@ export default function AdminUsers() {
       });
       fetchUsers(filter);
     } catch(e) {
-      console.error(e);
+      // Status toggle failed
     }
   };
 
@@ -112,7 +112,6 @@ export default function AdminUsers() {
         alert(data.message || 'Failed to delete result');
       }
     } catch (e) {
-      console.error(e);
       alert('An error occurred while deleting the result');
     }
   };
@@ -128,7 +127,6 @@ export default function AdminUsers() {
         alert(data.message || 'Failed to delete user');
       }
     } catch (e) {
-      console.error(e);
       alert('An error occurred while deleting the user');
     }
   };

@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import ReviewClient from "./ReviewClient";
 
-export default async function ReviewPage({ params }: { params: { id: string } }) {
+export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   
   if (!session) {
@@ -12,7 +13,7 @@ export default async function ReviewPage({ params }: { params: { id: string } })
   }
 
   const attempt = await prisma.assessmentAttempt.findUnique({
-    where: { attemptId: params.id },
+    where: { attemptId: id },
     include: {
       bankVersion: true,
       reactions: true,

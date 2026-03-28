@@ -22,8 +22,7 @@ export default function AnalyticsClient() {
         setData(d);
         setLoading(false);
       })
-      .catch(e => {
-        console.error(e);
+      .catch(() => {
         setLoading(false);
       });
   }, []);

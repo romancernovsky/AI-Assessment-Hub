@@ -144,7 +144,7 @@ export default function Home() {
       {/* ── Footer-like section ── */}
       <section className="bg-[#161616] border-t border-white/8">
         <div className="max-w-[1400px] mx-auto px-6 py-8 flex items-center gap-3">
-          <Image src="/brand-symbol-white.svg" alt="Novartis" width={16} height={16} className="opacity-50" />
+          <Image src="/brand-symbol-white.svg" alt="Novartis" width={16} height={16} className="opacity-50" style={{ height: 'auto' }} />
           <p className="text-[#fcfcfc]/50 text-sm">
             &copy; {new Date().getFullYear()} Novartis AG &mdash; AIHub Assessment
           </p>

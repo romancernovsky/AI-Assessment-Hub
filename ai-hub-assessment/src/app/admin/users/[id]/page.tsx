@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import UserDetailClient from "./UserDetailClient";
 
-export default async function UserDetailPage({ params }: { params: { id: string } }) {
+export default async function UserDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
   
   if (!session || (session.user.role !== 'admin' && session.user.role !== 'contentAdmin')) {
@@ -12,7 +13,7 @@ export default async function UserDetailPage({ params }: { params: { id: string 
   }
 
   const user = await prisma.user.findUnique({
-    where: { userId: params.id },
+    where: { userId: id },
     include: {
       attempts: {
         orderBy: { startTime: 'desc' },

@@ -71,6 +71,28 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ message: 'User ID required' }, { status: 400 });
     }
 
+    // Prevent self-modification of role
+    if (userId === session.user.id && role) {
+      return NextResponse.json({ message: 'Cannot change your own role' }, { status: 403 });
+    }
+
+    // Validate role value
+    const validRoles = ['admin', 'contentAdmin', 'user'];
+    if (role && !validRoles.includes(role)) {
+      return NextResponse.json({ message: 'Invalid role' }, { status: 400 });
+    }
+
+    // Only admin can assign admin role or modify admin users
+    if (session.user.role !== 'admin') {
+      if (role === 'admin') {
+        return NextResponse.json({ message: 'Only admins can assign admin role' }, { status: 403 });
+      }
+      const targetUser = await prisma.user.findUnique({ where: { userId }, select: { role: true } });
+      if (targetUser?.role === 'admin') {
+        return NextResponse.json({ message: 'Only admins can modify admin users' }, { status: 403 });
+      }
+    }
+
     const updateData: any = {};
     if (role) updateData.role = role;
     if (isActive !== undefined) updateData.isActive = isActive;
@@ -92,8 +114,8 @@ export async function PATCH(req: Request) {
 export async function DELETE(req: Request) {
   const session = await getServerSession(authOptions);
 
-  if (!session || (session.user.role !== 'admin' && session.user.role !== 'contentAdmin')) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
+  if (!session || session.user.role !== 'admin') {
+    return NextResponse.json({ message: 'Unauthorized — only admins can delete users' }, { status: 403 });
   }
 
   try {

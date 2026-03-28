@@ -13,40 +13,27 @@ export async function GET() {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    let feedbacks: any[] = [];
-    
-    if ((prisma as any).feedback) {
-      feedbacks = await prisma.feedback.findMany({
-        include: {
-          user: {
-            select: {
-              displayName: true,
-              email: true,
-              role: true,
-            },
+    const feedbacks = await prisma.feedback.findMany({
+      include: {
+        user: {
+          select: {
+            displayName: true,
+            email: true,
+            role: true,
           },
         },
-        orderBy: {
-          createdAt: 'desc',
-        },
-      });
-    } else {
-      // Workaround for Prisma client caching issue in dev
-      // We need to manually join with User table for details
-      feedbacks = await (prisma as any).$queryRawUnsafe(`
-        SELECT f.*, u."displayName" as "userDisplayName", u."email" as "userEmail", u."role" as "userRole"
-        FROM "Feedback" f
-        LEFT JOIN "User" u ON f."userId" = u."userId"
-        ORDER BY f."createdAt" DESC
-      `);
-    }
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
     // Format for the UI
     const formattedFeedbacks = feedbacks.map((f: any) => ({
       id: f.feedbackId,
-      userName: f.user?.displayName || f.userDisplayName || f.name || 'Anonymous',
-      userEmail: f.user?.email || f.userEmail || f.email || 'N/A',
-      userRole: f.user?.role || f.userRole || 'visitor',
+      userName: f.user?.displayName || f.name || 'Anonymous',
+      userEmail: f.user?.email || f.email || 'N/A',
+      userRole: f.user?.role || 'visitor',
       rating: f.rating,
       content: f.content,
       createdAt: f.createdAt,
@@ -60,6 +47,6 @@ export async function GET() {
     }
 
     console.error('Admin feedback fetch error:', error);
-    return NextResponse.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
