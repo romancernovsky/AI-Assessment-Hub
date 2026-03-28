@@ -11,9 +11,10 @@ datasource db {
 model User {
   userId        String    @id @default(cuid())
   email         String    @unique
-  password      String
+  password      String    @default("")
   displayName   String
   role          String    @default("contentAdmin") // admin, contentAdmin
+  authProvider  String    @default("credentials") // credentials, azure-ad
   externalId    String?
   isActive      Boolean   @default(true)
   registeredAt  DateTime  @default(now())
