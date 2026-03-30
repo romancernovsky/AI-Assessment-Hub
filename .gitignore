@@ -25,6 +25,9 @@ next-env.d.ts
 # agent
 .agent/
 
+# sensitive planning docs
+SSO_IMPLEMENTATION_PLAN.md
+
 # generated prisma
 src/generated/prisma/
 
