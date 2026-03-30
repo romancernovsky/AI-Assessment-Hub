@@ -12,7 +12,7 @@ export async function GET() {
 
   try {
     const existingAttempt = await prisma.assessmentAttempt.findFirst({
-      where: { userId: session.user.id },
+      where: { userId: session.user.id, status: { in: ['in_progress', 'completed'] } },
       orderBy: { startTime: 'desc' }
     });
 
@@ -136,6 +136,7 @@ export async function POST() {
         bankVersionId: bankVersion.versionId,
         status: 'in_progress',
         selectedQuestionIds,
+        lastResumedAt: new Date(),
       }
     });
 

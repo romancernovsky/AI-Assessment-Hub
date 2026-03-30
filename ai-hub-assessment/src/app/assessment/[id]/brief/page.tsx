@@ -84,7 +84,15 @@ export default function BriefScreen({ params }: { params: Promise<{ id: string }
           </li>
           <li className="flex items-start gap-3">
             <span className="text-primary mt-0.5">🔧</span>
-            <span>Technical questions (3 of 30) involve M365 Copilot workflows and require <strong className="text-foreground">selecting 2 answers</strong>.</span>
+            <span>Technical questions (3 of 28) involve M365 Copilot workflows and require <strong className="text-foreground">selecting 2 answers</strong>.</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-primary mt-0.5">⏱️</span>
+            <span>You have a <strong className="text-foreground">30-minute time limit</strong>. Please allocate 30 uninterrupted minutes — the timer runs continuously once you begin. If time runs out, your answers are submitted automatically.</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-primary mt-0.5">⚠️</span>
+            <span>If you <strong className="text-foreground">navigate away or close the browser</strong> during the assessment, your attempt will be discarded and you will need to start over.</span>
           </li>
         </ul>
       </div>

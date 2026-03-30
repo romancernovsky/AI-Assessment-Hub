@@ -51,9 +51,9 @@ export default function WelcomeScreen({ params }: { params: Promise<{ id: string
             <span className="text-foreground font-medium">28</span> Questions
           </span>
           <span className="text-border">|</span>
-          <span>~30 min</span>
-          <span className="text-border">|</span>
-          <span>L1 + L2</span>
+          <span className="flex items-center gap-1.5">
+            <span className="text-foreground font-medium">30 min</span> Time Limit
+          </span>
           <span className="text-border">|</span>
           <span>Scenario-based</span>
         </div>

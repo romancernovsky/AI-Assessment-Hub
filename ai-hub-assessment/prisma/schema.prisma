@@ -59,6 +59,9 @@ model AssessmentAttempt {
   toolsWeekly    Json      @default("[]")
   startTime      DateTime  @default(now())
   endTime        DateTime?
+  timeUsedSeconds Int      @default(0)
+  isPaused       Boolean   @default(false)
+  lastResumedAt  DateTime?
   answers        Json      @default("{}")
   dimScores      Json?
   overallScore   Float?

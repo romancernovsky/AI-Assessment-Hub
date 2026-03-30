@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import AssessmentTimer from '@/components/AssessmentTimer';
 import { CheckCircle2, XCircle, ThumbsUp, ThumbsDown, MessageSquare, ChevronLeft, ChevronRight, Lightbulb, Brain } from 'lucide-react';
 
 interface QuestionOption {
@@ -62,6 +63,14 @@ export default function AssessmentQuiz() {
   const [reactions, setReactions] = useState<Record<string, { vote: string | null; comment: string }>>({});
   const [showCommentBox, setShowCommentBox] = useState<Record<string, boolean>>({});
 
+  // Timer expired state
+  const [timeExpired, setTimeExpired] = useState(false);
+  const [showLeaveWarning, setShowLeaveWarning] = useState(false);
+  const [pendingNavUrl, setPendingNavUrl] = useState<string | null>(null);
+  const autoSubmitRef = useRef(false);
+  // Track whether exit was intentional (Finish / Time expired)
+  const intentionalExitRef = useRef(false);
+
   useEffect(() => {
     async function init() {
       try {
@@ -85,6 +94,13 @@ export default function AssessmentQuiz() {
           return;
         }
 
+        // Resume the timer clock on the server
+        await fetch('/api/assessment/timer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'enter' }),
+        });
+
         // Fetch questions selected for this attempt
         const qRes = await fetch(`/api/assessment/questions${attemptId ? `?attemptId=${attemptId}` : ''}`);
         const qData = await qRes.json();
@@ -103,6 +119,65 @@ export default function AssessmentQuiz() {
     }
     init();
   }, [router]);
+
+  // Abandon assessment on unintentional navigation away
+  useEffect(() => {
+    const abandonAssessment = () => {
+      if (intentionalExitRef.current) return;
+      const payload = JSON.stringify({ action: 'abandon' });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/assessment/timer', new Blob([payload], { type: 'application/json' }));
+      }
+    };
+
+    // Browser refresh / tab close
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (intentionalExitRef.current) return;
+      e.preventDefault();
+      abandonAssessment();
+    };
+
+    // Browser back / forward button — push guard entry
+    const guardState = { assessmentGuard: true };
+    window.history.pushState(guardState, '');
+
+    const handlePopState = (e: PopStateEvent) => {
+      if (intentionalExitRef.current) return;
+      // Re-push guard state to prevent leaving, show warning
+      window.history.pushState(guardState, '');
+      setPendingNavUrl('__back__');
+      setShowLeaveWarning(true);
+    };
+
+    // Intercept clicks on in-app links (Next.js <Link>, <a> tags)
+    const handleLinkClick = (e: MouseEvent) => {
+      if (intentionalExitRef.current) return;
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('javascript')) return;
+      // Only intercept same-origin navigation
+      if (target.hostname && target.hostname !== window.location.hostname) return;
+      // Don't intercept the current page
+      if (href === window.location.pathname) return;
+      e.preventDefault();
+      e.stopPropagation();
+      setPendingNavUrl(href);
+      setShowLeaveWarning(true);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('popstate', handlePopState);
+    document.addEventListener('click', handleLinkClick, true);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('click', handleLinkClick, true);
+      // Component unmount without intentional exit = navigation away in SPA
+      abandonAssessment();
+    };
+  }, []);
 
   const currentQ = questions[currentIndex];
 
@@ -198,14 +273,64 @@ export default function AssessmentQuiz() {
       await saveAnswer();
     }
 
+    intentionalExitRef.current = true;
     setFinishing(true);
     try {
       await fetch('/api/assessment/complete', { method: 'POST' });
       router.push('/results');
     } catch (err) {
+      intentionalExitRef.current = false;
       setError('Failed to complete assessment.');
       setFinishing(false);
     }
+  };
+
+  const handleTimeExpired = useCallback(async () => {
+    if (autoSubmitRef.current) return;
+    autoSubmitRef.current = true;
+    intentionalExitRef.current = true;
+    setTimeExpired(true);
+    setFinishing(true);
+    try {
+      // Save current answer if possible
+      const q = questions[currentIndex];
+      if (q) {
+        const sel = q.format === 'multi' ? selectedMulti[q.id] : selectedSingle[q.id];
+        if (sel && !savedAnswers[q.id]) {
+          await fetch('/api/assessment/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ questionId: q.id, selected: sel })
+          });
+        }
+      }
+      await fetch('/api/assessment/complete', { method: 'POST' });
+      router.push('/results');
+    } catch {
+      setError('Failed to auto-submit assessment.');
+      setFinishing(false);
+    }
+  }, [questions, currentIndex, selectedMulti, selectedSingle, savedAnswers, router]);
+
+  const confirmLeave = () => {
+    intentionalExitRef.current = true;
+    setShowLeaveWarning(false);
+    // Abandon the assessment
+    fetch('/api/assessment/timer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'abandon' }),
+    }).catch(() => {});
+    if (pendingNavUrl === '__back__') {
+      window.history.go(-2); // go back past the guard entry
+    } else if (pendingNavUrl) {
+      router.push(pendingNavUrl);
+    }
+  };
+
+  const cancelLeave = () => {
+    setShowLeaveWarning(false);
+    setPendingNavUrl(null);
   };
 
   const handleReaction = async (vote: string) => {
@@ -293,6 +418,42 @@ export default function AssessmentQuiz() {
 
   return (
     <div className="max-w-3xl mx-auto animate-fade-in-up pb-16">
+      {/* Time Expired Overlay */}
+      {timeExpired && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
+          <div className="bg-card border border-border p-8 max-w-md text-center">
+            <h2 className="text-xl font-bold text-foreground mb-3">Time&apos;s Up!</h2>
+            <p className="text-muted-foreground mb-4">
+              Your 30-minute assessment time has expired. Your answers are being submitted automatically.
+            </p>
+            <div className="text-sm text-muted-foreground animate-pulse">Submitting...</div>
+          </div>
+        </div>
+      )}
+
+      {/* Leave Warning Dialog */}
+      {showLeaveWarning && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center">
+          <div className="bg-card border border-border p-8 max-w-md">
+            <h2 className="text-xl font-bold text-foreground mb-3">Leave Assessment?</h2>
+            <p className="text-muted-foreground mb-2">
+              If you leave now, your assessment will restart from the beginning.
+            </p>
+            <p className="text-sm text-muted-foreground mb-6">
+              All your answers and remaining time will be lost. This cannot be undone.
+            </p>
+            <div className="flex justify-end gap-3">
+              <Button variant="ghost" onClick={cancelLeave}>
+                Stay on Assessment
+              </Button>
+              <Button onClick={confirmLeave} className="bg-red-600 hover:bg-red-700 text-white">
+                Leave &amp; Discard
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-3">
@@ -302,9 +463,12 @@ export default function AssessmentQuiz() {
             <span className="text-muted-foreground text-sm ml-2">Q{dimIndex} of {dimQuestions.length}</span>
           </div>
         </div>
-        <Badge color="info" className="text-sm px-4 py-1.5">
-          {currentIndex + 1} / {questions.length}
-        </Badge>
+        <div className="flex items-center gap-3">
+          <AssessmentTimer onTimeExpired={handleTimeExpired} />
+          <Badge color="info" className="text-sm px-4 py-1.5">
+            {currentIndex + 1} / {questions.length}
+          </Badge>
+        </div>
       </div>
 
       {/* Global Progress Bar */}

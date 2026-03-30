@@ -17,7 +17,18 @@ export default function Assessment() {
         const data = await res.json();
         
         if (res.ok) {
-          setSessionInfo(data);
+          // Any in_progress attempt found on this page is orphaned
+          // (user navigated away from the quiz). Clean it up.
+          if (data.status === 'in_progress') {
+            await fetch('/api/assessment/timer', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'abandon' }),
+            });
+            setSessionInfo({ status: 'not_started' });
+          } else {
+            setSessionInfo(data);
+          }
         } else {
           setError(data.message || 'Error loading session');
         }
@@ -54,22 +65,10 @@ export default function Assessment() {
             <p className="text-muted-foreground">
               This assessment measures your practical AI judgment across four dimensions — 
               AI Mindset, Applied Skills, Domain Integration, and Technical Proficiency. 
-              It consists of 30 scenario-based questions with partial credit scoring and takes approximately 30 minutes.
+              It consists of 28 scenario-based questions with partial credit scoring and a 30-minute time limit.
             </p>
             <Button onClick={() => router.push(`/assessment/${sessionInfo.sessionId || 'new'}/welcome`)} className="w-fit">
               Start Assessment
-            </Button>
-          </div>
-        )}
-
-        {sessionInfo?.status === 'in_progress' && (
-          <div className="flex flex-col gap-6">
-            <h2 className="text-2xl font-medium text-foreground">Assessment In Progress</h2>
-            <p className="text-muted-foreground">
-              You have an unfinished assessment. Pick up where you left off.
-            </p>
-            <Button onClick={() => router.push('/assessment/level1')} className="w-fit">
-              Resume Assessment
             </Button>
           </div>
         )}
