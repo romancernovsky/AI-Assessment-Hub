@@ -18,6 +18,7 @@ interface LearningItem {
   userAnswer: string[];
   bestAnswer: string[];
   rationale: string;
+  compName: string;
   compGuidance: string;
   compToolHint: string;
 }
@@ -78,19 +79,20 @@ export function exportResultsPdf(data: ExportData) {
   doc.setFontSize(42);
   doc.setFont('helvetica', 'bold');
   doc.text(`${data.overallScore}%`, margin, y + 14);
+  const scoreTextWidth = doc.getTextWidth(`${data.overallScore}%`);
 
   doc.setFontSize(14);
   doc.setFont('helvetica', 'normal');
-  const badgeX = margin + doc.getTextWidth(`${data.overallScore}%`) + 8;
+  const badgeX = margin + scoreTextWidth + 8;
   const badgeColor = data.badge === 'AI Enthusiast' ? COLORS.emerald : COLORS.amber;
   doc.setTextColor(...badgeColor);
-  doc.text(data.badge, badgeX, y + 6);
+  doc.text(data.badge, badgeX, y + 8);
 
   doc.setFontSize(9);
   doc.setTextColor(120, 120, 120);
-  doc.text(`Completed in ${data.completionTime || '?'} minutes`, badgeX, y + 13);
+  doc.text(`Completed in ${data.completionTime || '?'} minutes`, badgeX, y + 14);
 
-  y += 26;
+  y += 24;
 
   // ── Dimension Profile ───────────────────────────────────
   doc.setDrawColor(...COLORS.gray);
@@ -192,6 +194,7 @@ export function exportResultsPdf(data: ExportData) {
 
     const tableBody = data.learningPath.map((q) => [
       q.dimName,
+      q.compName || '',
       q.title,
       q.level,
       `${Math.round(q.userScore * 100)}%`,
@@ -201,7 +204,7 @@ export function exportResultsPdf(data: ExportData) {
     autoTable(doc, {
       startY: y,
       margin: { left: margin, right: margin },
-      head: [['Dimension', 'Question', 'Level', 'Score', 'Why It Matters']],
+      head: [['Dimension', 'Competency', 'Question', 'Level', 'Score', 'Why It Matters']],
       body: tableBody,
       styles: {
         fontSize: 7.5,
@@ -217,11 +220,12 @@ export function exportResultsPdf(data: ExportData) {
         fontSize: 8,
       },
       columnStyles: {
-        0: { cellWidth: 28 },
-        1: { cellWidth: 50 },
-        2: { cellWidth: 16 },
+        0: { cellWidth: 24 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 36 },
         3: { cellWidth: 14 },
-        4: { cellWidth: contentWidth - 28 - 50 - 16 - 14 },
+        4: { cellWidth: 12 },
+        5: { cellWidth: contentWidth - 24 - 30 - 36 - 14 - 12 },
       },
       alternateRowStyles: {
         fillColor: [250, 250, 250],
@@ -256,7 +260,8 @@ export function exportResultsPdf(data: ExportData) {
       doc.setFontSize(7);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(...COLORS.orange);
-      doc.text(`${q.dimName}  ·  ${q.level}  ·  ${Math.round(q.userScore * 100)}%`, margin, y);
+      const tagParts = [q.dimName, q.compName, q.level, `${Math.round(q.userScore * 100)}%`].filter(Boolean);
+      doc.text(tagParts.join('  ·  '), margin, y);
       y += 4;
 
       // Title

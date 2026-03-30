@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import ReviewClient from "./ReviewClient";
 
-export default async function ReviewPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReviewPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ mode?: string }> }) {
   const { id } = await params;
+  const { mode } = await searchParams;
   const session = await getServerSession(authOptions);
   
   if (!session) {
@@ -30,6 +31,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
 
   const questions = attempt.bankVersion.questions as any;
   const answers = attempt.answers as any;
+  const feedbackMode = mode === 'feedback';
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
@@ -37,7 +39,8 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
         attempt={attempt as any} 
         questions={questions} 
         answers={answers} 
-        reactions={attempt.reactions as any} 
+        reactions={attempt.reactions as any}
+        feedbackMode={feedbackMode}
       />
     </div>
   );

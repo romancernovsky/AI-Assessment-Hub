@@ -17,14 +17,23 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Missing questionId' }, { status: 400 });
     }
 
-    // Find the current in-progress attempt
-    const currentAttempt = await prisma.assessmentAttempt.findFirst({
-      where: { userId: session.user.id, status: 'in_progress' },
-      orderBy: { startTime: 'desc' }
-    });
+    const { attemptId: requestedAttemptId } = await req.clone().json().catch(() => ({}));
+
+    // Find the attempt — support both in-progress and completed attempts for feedback
+    let currentAttempt;
+    if (requestedAttemptId) {
+      currentAttempt = await prisma.assessmentAttempt.findFirst({
+        where: { userId: session.user.id, attemptId: requestedAttemptId, status: { in: ['in_progress', 'completed'] } },
+      });
+    } else {
+      currentAttempt = await prisma.assessmentAttempt.findFirst({
+        where: { userId: session.user.id, status: 'in_progress' },
+        orderBy: { startTime: 'desc' }
+      });
+    }
 
     if (!currentAttempt) {
-      return NextResponse.json({ message: 'No active session' }, { status: 400 });
+      return NextResponse.json({ message: 'No matching session' }, { status: 400 });
     }
 
     // Upsert reaction — update if exists for same attempt+question, create otherwise

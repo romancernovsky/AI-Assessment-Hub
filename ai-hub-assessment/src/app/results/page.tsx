@@ -104,6 +104,7 @@ export default function Results() {
         userScore: answer.score,
         userAnswer: userAnswerTexts,
         bestAnswer: bestAnswerTexts,
+        compName: comp?.name || '',
         compGuidance: comp?.guidance || '',
         compToolHint: comp?.toolHint || '',
       };
@@ -137,7 +138,14 @@ export default function Results() {
     <div className="max-w-4xl mx-auto animate-fade-in-up pb-16">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-medium mb-4">Assessment Complete</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-medium">Assessment Complete</h1>
+          <div className="flex items-center gap-3">
+            <Button variant="filled" onClick={() => router.push(`/review/${data.attemptId}?mode=feedback`)}>Feedback</Button>
+            <Button variant="filled" onClick={handleExportPdf}>Export PDF</Button>
+            <Button variant="ghost" onClick={() => router.push('/dashboard')}>Back to Dashboard</Button>
+          </div>
+        </div>
         <div className="text-6xl font-medium text-[#ff4e00] mb-4">
           {overallScore}%
         </div>
@@ -283,6 +291,11 @@ export default function Results() {
                   <span className="px-2 py-0.5 text-xs bg-[#ff4e00]/10 text-[#ff4e00] border border-[#ff4e00]/20">
                     {q.level}
                   </span>
+                  {q.compName && (
+                    <span className="px-2 py-0.5 text-xs bg-muted text-foreground border border-border font-medium">
+                      {q.compName}
+                    </span>
+                  )}
                   <span className="text-sm font-medium flex-1">{q.title}</span>
                   <span className={`px-2 py-0.5 text-xs font-medium ${
                     q.userScore >= 0.5 ? 'bg-muted text-foreground border border-border' : 'bg-[#ff4e00]/10 text-[#ff4e00] border border-[#ff4e00]/20'
@@ -332,11 +345,7 @@ export default function Results() {
         </div>
       )}
 
-      {/* Actions */}
-      <div className="flex justify-end gap-4 mt-8">
-        <Button variant="filled" onClick={handleExportPdf}>Export PDF</Button>
-        <Button variant="ghost" onClick={() => router.push('/dashboard')}>Back to Dashboard</Button>
-      </div>
+
     </div>
   );
 }
