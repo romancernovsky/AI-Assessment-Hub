@@ -73,7 +73,7 @@ export async function POST() {
     let badge: string;
     let badgeExpiresAt: Date | null = null;
 
-    if (overallScore >= 80) {
+    if (overallScore >= 90) {
       badge = 'AI Enthusiast';
       badgeExpiresAt = new Date();
       badgeExpiresAt.setMonth(badgeExpiresAt.getMonth() + 18);

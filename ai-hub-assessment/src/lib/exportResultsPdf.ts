@@ -124,13 +124,13 @@ export function exportResultsPdf(data: ExportData) {
     doc.roundedRect(margin, y, contentWidth, barHeight, 1, 1, 'F');
 
     // Score bar
-    const barColor = dim.score >= 80 ? COLORS.emerald : hexToRgb(dim.color);
+    const barColor = dim.score >= 90 ? COLORS.emerald : hexToRgb(dim.color);
     doc.setFillColor(...barColor);
     const barWidth = (dim.score / 100) * contentWidth;
     doc.roundedRect(margin, y, Math.max(barWidth, 2), barHeight, 1, 1, 'F');
 
-    // 80% threshold marker
-    const thresholdX = margin + 0.8 * contentWidth;
+    // 90% threshold marker
+    const thresholdX = margin + 0.9 * contentWidth;
     doc.setDrawColor(180, 180, 180);
     doc.line(thresholdX, y, thresholdX, y + barHeight);
 

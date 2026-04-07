@@ -160,7 +160,7 @@ export default function Results() {
         <p className={`mt-3 text-sm ${isEnthusiast ? 'text-[#ff4e00]' : 'text-muted-foreground'}`}>
           {isEnthusiast
             ? `Badge granted! · Completed in ${completionTime || '?'} min`
-            : `Reach 80% to earn AI Enthusiast badge · Completed in ${completionTime || '?'} min`
+            : `Reach 90% to earn AI Enthusiast badge · Completed in ${completionTime || '?'} min`
           }
         </p>
         {(data as any).bankVersionId && (
@@ -191,7 +191,7 @@ export default function Results() {
                     <span className="tabular-nums">{score}%</span>
                   </div>
                   <div className="h-2 bg-border">
-                    <div className="h-full transition-all duration-700" style={{ width: `${score}%`, backgroundColor: score >= 80 ? '#ff4e00' : (dim.color || '#dadada') }} />
+                    <div className="h-full transition-all duration-700" style={{ width: `${score}%`, backgroundColor: score >= 90 ? '#ff4e00' : (dim.color || '#dadada') }} />
                   </div>
                 </div>
               </div>
@@ -220,7 +220,7 @@ export default function Results() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {dimensions.map((dim: any) => {
           const score = dimScores[dim.key] || 0;
-          const passed = score >= 80;
+          const passed = score >= 90;
           return (
             <div key={dim.key} className="border border-border p-7">
               {/* Score bar */}
@@ -234,7 +234,7 @@ export default function Results() {
                 </Badge>
               </div>
 
-              {/* Progress bar with 80% threshold */}
+              {/* Progress bar with 90% threshold */}
               <div className="relative w-full h-2.5 bg-border mb-5">
                 <div
                   className="h-2.5 transition-all duration-700"
@@ -243,8 +243,8 @@ export default function Results() {
                     backgroundColor: passed ? '#ff4e00' : dim.color || '#dadada'
                   }}
                 />
-                <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/30" style={{ left: '80%' }} />
-                <div className="absolute -top-5 text-[9px] text-muted-foreground" style={{ left: '78%' }}>80%</div>
+                <div className="absolute top-0 h-full w-0.5 bg-muted-foreground/30" style={{ left: '90%' }} />
+                <div className="absolute -top-5 text-[9px] text-muted-foreground" style={{ left: '88%' }}>90%</div>
               </div>
 
               <p className="text-xs text-muted-foreground mb-3">

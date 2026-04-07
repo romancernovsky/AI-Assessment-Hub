@@ -105,7 +105,7 @@ export default function BriefScreen({ params }: { params: Promise<{ id: string }
             <span className="text-2xl">🔍</span>
             <h3 className="text-lg font-medium text-foreground">AI Explorer</h3>
           </div>
-          <p className="text-sm text-muted-foreground mb-2">Below 80%</p>
+          <p className="text-sm text-muted-foreground mb-2">Below 90%</p>
           <p className="text-sm text-muted-foreground">
             You're on the path — keep building your AI judgment. You'll receive targeted recommendations for each dimension.
           </p>
@@ -116,7 +116,7 @@ export default function BriefScreen({ params }: { params: Promise<{ id: string }
             <span className="text-2xl">🏆</span>
             <h3 className="text-lg font-medium text-[#ff4e00]">AI Enthusiast</h3>
           </div>
-          <p className="text-sm text-muted-foreground mb-2">80% and above</p>
+          <p className="text-sm text-muted-foreground mb-2">90% and above</p>
           <p className="text-sm text-muted-foreground">
             Badge granted! You demonstrate strong AI competency. Share your expertise with peers and mentor others.
           </p>

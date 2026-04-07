@@ -113,7 +113,7 @@ export default function AboutPage() {
                   <Image src="/icons/Search.svg" alt="" width={24} height={24} className="dark:invert" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-foreground">AI Explorer (0-79%)</h4>
+                  <h4 className="font-medium text-foreground">AI Explorer (0-89%)</h4>
                   <p className="text-sm text-muted-foreground">You're on the path — keep building your AI judgment. You'll receive targeted recommendations for each dimension.</p>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default function AboutPage() {
                   <Image src="/icons/Trophy-award.svg" alt="" width={24} height={24} className="dark:invert" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-[#ff4e00] text-2xl">AI Enthusiast (80%+)</h4>
+                  <h4 className="font-medium text-[#ff4e00] text-2xl">AI Enthusiast (90%+)</h4>
                   <p className="text-sm text-muted-foreground">Demonstrated strong AI competency. Recognized experts who can share knowledge and mentor others.</p>
                 </div>
               </div>
