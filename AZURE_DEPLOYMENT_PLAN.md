@@ -54,7 +54,7 @@ Deploy the Next.js + Prisma + PostgreSQL assessment app to pre-provisioned Azure
 | Phase 4: Configure Web App Settings | **DONE** | All env vars set ✅, runtime NODE\|20-lts ✅, startup command ✅ |
 | Phase 5: Build & ZIP Deploy | **DONE** | App deployed and running ✅. Next.js 16.2.1 starts on port 8080 ✅. Oryx symlink fix works ✅ |
 | Phase 6: Verify Deployment | **PARTIAL** | App starts ✅. DB connected ✅ (secopsai_95021_user). Migrations applied ✅. Admin seeded ✅. Login page loads ✅. SSO blocked ❌ (no client secret + outbound internet blocked by NSG). |
-| Phase 7: Create Redeployment Script | **DONE** | `quick-deploy.ps1` created ✅ |
+| Phase 7: Create Redeployment Script | **DONE** | `azure-redeploy.bat` created ✅ |
 
 ---
 
@@ -340,7 +340,7 @@ Write-Host "Status: $($r.status)"  # 4 = success
 | `ai-hub-assessment/src/lib/auth.ts` | NextAuth config (Azure AD + Credentials providers) |
 | `ai-hub-assessment/startup.sh` | Azure startup: undoes Oryx symlink, then runs `node server.js` |
 | `ai-hub-assessment/src/app/api/health/route.ts` | Diagnostic endpoint: DB test, migrate, seed (auth: `?key=NEXTAUTH_SECRET`) |
-| `quick-deploy.ps1` | Automated build+deploy script (staging assembly, engine download, ZIP, Kudu deploy) |
+| `azure-redeploy.bat` | Automated build+deploy script (staging assembly, engine download, ZIP, Kudu deploy) |
 
 ## Current App Settings (as deployed)
 ```

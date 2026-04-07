@@ -12,6 +12,14 @@
         }
     ],
     "chat.tools.terminal.autoApprove": {
-        "npm install": true
+        "npm install": true,
+        "Copy-Item": true,
+        "/^node -e \"console\\.log\\(require\\('@prisma/engines/package\\.json'\\)\\.version\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "az": true,
+        "ForEach-Object": true,
+        "Set-Content": true
     }
 }

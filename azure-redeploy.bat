@@ -88,6 +88,17 @@ xcopy "%APP_DIR%\prisma" "%STAGING_DIR%\prisma\" /E /Q /Y >nul
 copy /Y "%APP_DIR%\startup.sh" "%STAGING_DIR%\startup.sh" >nul
 copy /Y "%APP_DIR%\seed_admin.js" "%STAGING_DIR%\seed_admin.js" >nul
 
+:: CRITICAL: Convert startup.sh to Unix LF line endings.
+:: Windows editors save CRLF which makes the shebang "#!/bin/bash\r" — Linux
+:: interprets \r as part of the path, can't find the interpreter, exit code 127.
+powershell -NoProfile -Command ^
+  "$f='%STAGING_DIR%\startup.sh'; " ^
+  "$c=[IO.File]::ReadAllText($f); " ^
+  "$c=$c.Replace(\"`r`n\",\"`n\"); " ^
+  "$utf8=New-Object System.Text.UTF8Encoding($false); " ^
+  "[IO.File]::WriteAllText($f,$c,$utf8); " ^
+  "Write-Host '  startup.sh converted to LF'"
+
 :: Prisma CLI + engines (for migrations via SSH)
 xcopy "%APP_DIR%\node_modules\prisma" "%STAGING_DIR%\node_modules\prisma\" /E /Q /Y >nul
 xcopy "%APP_DIR%\node_modules\@prisma\engines" "%STAGING_DIR%\node_modules\@prisma\engines\" /E /Q /Y >nul
@@ -145,20 +156,28 @@ if not exist "%STAGING_DIR%\startup.sh" (echo ERROR: startup.sh missing from sta
 echo   OK — All required files present.
 
 :: -------------------------------------------------------------------
-:: Step 6: Clean Oryx artifacts from server + stop app
+:: Step 6: Remove node_modules symlink + Oryx artifacts from server
 :: -------------------------------------------------------------------
 echo.
-echo [6/8] Cleaning Oryx artifacts from server...
+echo [6/8] Cleaning server before deployment...
 
+:: CRITICAL: Previous Oryx runs create a symlink node_modules -> /node_modules.
+:: If we deploy on top of this, ZIP extraction writes into the symlink target
+:: (/node_modules is ephemeral — wiped on each container restart), so the real
+:: node_modules never lands on disk. We must remove the symlink first.
+:: Also stop the app to prevent it from locking files during extraction.
 powershell -NoProfile -Command ^
   "$ErrorActionPreference='SilentlyContinue'; " ^
   "$kudu='%KUDU_URL%'; " ^
   "$token = az account get-access-token --query accessToken -o tsv; " ^
   "$h = @{ Authorization = \"Bearer $token\"; 'If-Match' = '*' }; " ^
-  "try { Invoke-RestMethod -Uri \"$kudu/api/vfs/site/wwwroot/oryx-manifest.toml\" -Method DELETE -Headers $h; Write-Host '  Deleted oryx-manifest.toml' } catch { Write-Host '  oryx-manifest.toml not found (OK)' }; " ^
-  "try { Invoke-RestMethod -Uri \"$kudu/api/vfs/site/wwwroot/node_modules.tar.gz\" -Method DELETE -Headers $h; Write-Host '  Deleted node_modules.tar.gz' } catch { Write-Host '  node_modules.tar.gz not found (OK)' }; "
+  "$hJson = @{ Authorization = \"Bearer $token\"; 'Content-Type' = 'application/json' }; " ^
+  "$body = '{\"command\":\"rm -rf /home/site/wwwroot/node_modules /home/site/wwwroot/_del_node_modules /home/site/wwwroot/oryx-manifest.toml /home/site/wwwroot/node_modules.tar.gz\",\"dir\":\"/\"}'; " ^
+  "try { Invoke-RestMethod -Uri \"$kudu/api/command\" -Method POST -Headers $hJson -Body $body | Out-Null; Write-Host '  Removed symlink + Oryx artifacts via Kudu command' } catch { Write-Host '  Kudu command cleanup skipped (non-critical)' }; "
 
-echo   OK — Oryx cleanup done.
+echo   Stopping app before deployment...
+az webapp stop --name %WEBAPP_NAME% --resource-group %RESOURCE_GROUP% >nul 2>&1
+echo   OK — Server cleaned and app stopped.
 
 :: -------------------------------------------------------------------
 :: Step 7: Create ZIP and deploy
@@ -178,7 +197,8 @@ if not exist "%ZIP_PATH%" (echo ERROR: deploy.zip was not created. & exit /b 1)
 powershell -NoProfile -Command "Write-Host ('  ZIP size: ' + [math]::Round((Get-Item '%ZIP_PATH%').Length/1MB,1) + ' MB')"
 
 echo   Deploying to %WEBAPP_NAME%...
-az webapp deploy --name %WEBAPP_NAME% --resource-group %RESOURCE_GROUP% --src-path "%ZIP_PATH%" --type zip --async true
+:: --clean true: wipes wwwroot before extraction so stale symlinks can't interfere
+az webapp deploy --name %WEBAPP_NAME% --resource-group %RESOURCE_GROUP% --src-path "%ZIP_PATH%" --type zip --clean true --async true
 if errorlevel 1 (
     echo.
     echo WARNING: az webapp deploy reported an error. This may be a false negative
@@ -187,12 +207,19 @@ if errorlevel 1 (
 )
 
 :: -------------------------------------------------------------------
-:: Step 8: Verify deployment
+:: Step 8: Start app and verify
 :: -------------------------------------------------------------------
 echo.
-echo [8/8] Checking deployment status...
-timeout /t 30 /nobreak >nul
-echo   Waiting 30s for container to start...
+echo [8/8] Starting app and verifying...
+
+:: CRITICAL: We stopped the app in Step 6. After repeated crash failures Azure
+:: disables auto-restart, so a simple 'restart' doesn't work — we need an
+:: explicit start to force a fresh container.
+echo   Starting app...
+az webapp start --name %WEBAPP_NAME% --resource-group %RESOURCE_GROUP% >nul 2>&1
+
+echo   Waiting 90s for container to start...
+timeout /t 90 /nobreak >nul
 
 powershell -NoProfile -Command ^
   "$state = az webapp show --name '%WEBAPP_NAME%' --resource-group '%RESOURCE_GROUP%' --query state -o tsv; " ^

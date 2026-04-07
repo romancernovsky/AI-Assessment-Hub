@@ -204,6 +204,23 @@ export async function GET(req: Request) {
         migrationLog.push(`${m3Name}: already applied`);
       }
 
+      // Migration 4: timer fields on AssessmentAttempt (timeUsedSeconds, isPaused, lastResumedAt)
+      const m4Name = 'add_timer_fields';
+      const m4Exists: Array<Record<string, unknown>> = await prisma.$queryRawUnsafe(
+        `SELECT id FROM "_prisma_migrations" WHERE "migration_name" = $1`, m4Name
+      );
+      if (m4Exists.length === 0) {
+        await prisma.$executeRawUnsafe(`ALTER TABLE "AssessmentAttempt" ADD COLUMN IF NOT EXISTS "timeUsedSeconds" INTEGER NOT NULL DEFAULT 0`);
+        await prisma.$executeRawUnsafe(`ALTER TABLE "AssessmentAttempt" ADD COLUMN IF NOT EXISTS "isPaused" BOOLEAN NOT NULL DEFAULT false`);
+        await prisma.$executeRawUnsafe(`ALTER TABLE "AssessmentAttempt" ADD COLUMN IF NOT EXISTS "lastResumedAt" TIMESTAMP(3)`);
+        await prisma.$executeRawUnsafe(
+          `INSERT INTO "_prisma_migrations" ("id", "checksum", "migration_name", "finished_at", "applied_steps_count") VALUES (gen_random_uuid()::text, 'raw_add_timer_fields', $1, now(), 1)`, m4Name
+        );
+        migrationLog.push(`${m4Name}: applied`);
+      } else {
+        migrationLog.push(`${m4Name}: already applied`);
+      }
+
       results.rawmigrate = { status: 'success', log: migrationLog };
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : String(e);

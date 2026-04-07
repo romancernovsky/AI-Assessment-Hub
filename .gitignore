@@ -43,3 +43,25 @@ ai-hub-assessment/next-env.d.ts
 
 # Database backup dumps (binary, excluded from git — batch file and guide are committed)
 db-backups/*.dump
+
+# Deployment staging artifacts
+deploy-staging/
+deploy.zip
+*.gz
+
+# Downloaded Azure logs
+app-logs/
+app-logs2/
+latest-logs/
+webapp-logs/
+*-logs.zip
+
+# Debug/test output files
+*-output.txt
+*-result*.txt
+health_*.txt
+curl_*.txt
+latest-docker.txt
+
+# Git rewrite artifacts
+.git-rewrite/
