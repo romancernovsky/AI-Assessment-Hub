@@ -26,6 +26,9 @@
     "recharts": "^3.8.0",
     "tailwindcss-animate": "^1.0.7"
   },
+  "prisma": {
+    "seed": "node seed_bank.js"
+  },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
