@@ -27,6 +27,7 @@ next-env.d.ts
 
 # sensitive planning docs
 SSO_IMPLEMENTATION_PLAN.md
+AZURE_AD_SETUP_REQUEST.md
 
 # generated prisma
 src/generated/prisma/
