@@ -30,9 +30,6 @@ SSO_IMPLEMENTATION_PLAN.md
 AZURE_AD_SETUP_REQUEST.md
 AZURE_DEPLOYMENT_PLAN.md
 
-# data files
-AI_Hub_Assessment_v2_Question_Bank.xlsx
-
 # generated prisma
 src/generated/prisma/
 
